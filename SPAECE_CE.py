@@ -1050,7 +1050,7 @@ with aba1: # >>>>> 2º Ano do Ensino Fundamental
 
         # Inserindo um texto sobre as colunas e linhas exibidas
         st.dataframe(dados_ce_2_ano_filtered)
-        st.markdown(f'A tabela possui :blue[{dados_ce_2_ano_filtered.shape[0]}] linhas :blue[{dados_ce_2_ano_filtered.shape[1]}] colunas.')
+        st.markdown(f'A tabela possui :blue[{dados_ce_2_ano_filtered.shape[0]}] linhas e :blue[{dados_ce_2_ano_filtered.shape[1]}] colunas.')
 
     ## ------------------------ DOWNLOAD DAS TABELAS ------------------------ ##
     if componente != 'Matemática':
@@ -1095,7 +1095,7 @@ with aba2: # >>>>> 5º Ano do Ensino Fundamental
 
     # Inserindo um texto sobre as colunas e linhas exibidas
     st.dataframe(dados_ce_5_ano_filtered)
-    st.markdown(f'A tabela possui :blue[{dados_ce_5_ano_filtered.shape[0]}] linhas :blue[{dados_ce_5_ano_filtered.shape[1]}] colunas.')
+    st.markdown(f'A tabela possui :blue[{dados_ce_5_ano_filtered.shape[0]}] linhas e :blue[{dados_ce_5_ano_filtered.shape[1]}] colunas.')
 
     ## ------------------------ DOWNLOAD DAS TABELAS ------------------------ ##
     
@@ -1138,7 +1138,7 @@ with aba3: # >>>>> 9º Ano do Ensino Fundamental
 
     # Inserindo um texto sobre as colunas e linhas exibidas
     st.dataframe(dados_ce_9_ano_filtered)
-    st.markdown(f'A tabela possui :blue[{dados_ce_9_ano_filtered.shape[0]}] linhas :blue[{dados_ce_9_ano_filtered.shape[1]}] colunas.')
+    st.markdown(f'A tabela possui :blue[{dados_ce_9_ano_filtered.shape[0]}] linhas e :blue[{dados_ce_9_ano_filtered.shape[1]}] colunas.')
 
     ## ------------------------ DOWNLOAD DAS TABELAS ------------------------ ##
     
