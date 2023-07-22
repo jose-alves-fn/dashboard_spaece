@@ -18,4 +18,5 @@ st.title('Em breve!')
 image = 'trabalhando.png'
 st.image(image, width = 200)
 
-st.write('Gostou da imagem? Visite https://www.flaticon.com')
+st.write('Gostou da imagem?') 
+st.write('Visite https://www.flaticon.com')
