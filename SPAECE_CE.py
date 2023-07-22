@@ -21,6 +21,7 @@ st.set_page_config(page_title = 'SPAECE ALFA CEARÁ', initial_sidebar_state = 'c
 
 # Mensagem para o usuário (interajir com o side bar)
 st.markdown('<span style="color: blue; font-weight: bold"> :arrow_upper_left: Interaja com a seta para mais opções.</span>', unsafe_allow_html=True)
+st.write(':arrow_upper_left: Interaja com a seta para mais opções.')
 
 #Imagem lateral (sidebar)
 image = "spaece_tp2.png"
