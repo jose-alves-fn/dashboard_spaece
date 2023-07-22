@@ -19,10 +19,6 @@ st.set_page_config(page_title = 'SPAECE ALFA CEARÁ', initial_sidebar_state = 'c
 # image = 'spaece.jpg'
 # st.image(image, use_column_width=False)
 
-# Mensagem para o usuário (interajir com o side bar)
-st.markdown('<span style="color: blue; font-weight: bold"> :arrow_upper_left: Interaja com a seta para mais opções.</span>', unsafe_allow_html=True)
-st.write(':arrow_upper_left: Interaja com a seta para mais opções.')
-
 #Imagem lateral (sidebar)
 image = "spaece_tp2.png"
 st.sidebar.image(image)
@@ -92,6 +88,10 @@ def formata_proficiencia(valor):
 # Definindo o título para o dashboard
 st.title('Plataforma de visualização de dados do SPAECE :chart_with_upwards_trend:')
 #st.markdown('<span style="color: green;"><b>2º Ano Ensino Fundamental - SPAECE ALFA - Dashboard: Estado do Ceará</b></span>', unsafe_allow_html=True)
+
+# Mensagem para o usuário (interajir com o side bar)
+st.markdown('<span style="color: blue; font-weight: bold"> :arrow_upper_left: Interaja com a seta para mais opções.</span>', unsafe_allow_html=True)
+# st.write(':arrow_upper_left: Interaja com a seta para mais opções.')
 
 # Funcoes para dowload de arquivos
 ## Dowmload de .csv
