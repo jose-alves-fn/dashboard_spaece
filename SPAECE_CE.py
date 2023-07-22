@@ -8,8 +8,6 @@ import time                                         # Módulo para pequenas mani
 import io                                           # Lib nativa para input / output binário
 import xlsxwriter                                   # Lib para engine de arquivos excel
 
-# Truque para exibir o sidebar automaticamente
-st.sidebar.checkbox("")
 
 # Configuração para exibir o sidebar por padrão
 st.set_option('deprecation.showPyplotGlobalUse', False)
