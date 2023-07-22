@@ -1194,7 +1194,7 @@ with aba4: # >>>>> 3ª Série do Ensino Médio
 
         # Inserindo um texto sobre as colunas e linhas exibidas
         st.dataframe(dados_ce_3_ano_filtered)
-        st.markdown(f'A tabela possui :blue[{dados_ce_3_ano_filtered.shape[0]}] linhas :blue[{dados_ce_3_ano_filtered.shape[1]}] colunas.')
+        st.markdown(f'A tabela possui :blue[{dados_ce_3_ano_filtered.shape[0]}] linhas e :blue[{dados_ce_3_ano_filtered.shape[1]}] colunas.')
 
     ## ------------------------ DOWNLOAD DAS TABELAS ------------------------ ##
     if rede != 'MUNICIPAL':
