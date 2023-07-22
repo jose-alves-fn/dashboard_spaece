@@ -71,7 +71,6 @@ def formata_numero(valor, prefixo=''):
             return f'{prefixo} {valor_str} {unidade}'
         valor = valor / 1000
 
-
 ## Funcao para valores dos rótulos dos gráficos
 def formata_numero_v2(valor, prefixo=''):
     valor_formatado = f'{prefixo} {valor:.2f}'
@@ -86,7 +85,7 @@ def formata_proficiencia(valor):
     return f'{valor:.1f}'.replace('.', ',')
 
 # Mensagem para o usuário (interajir com o side bar)
-st.markdown('<span style="color: blue; font-weight: bold"> :arrow_upper_left: Interaja com a seta para mais opções.</span>', unsafe_allow_html=True)
+st.markdown('<span style="color: blue; font-weight: bold"> :arrow_upper_left: Interaja para mais opções.</span>', unsafe_allow_html=True)
 # st.write(':arrow_upper_left: Interaja com a seta para mais opções.')
 
 # Definindo o título para o dashboard
@@ -113,19 +112,17 @@ def converte_xlsx(df):
     output.seek(0) # mover o cursor de leitura/escrita para a posição 0 (início) no fluxo de bytes.
     return output.getvalue()
 
-## Mensagem de sucesso
-def mensagem_sucesso():
-    sucesso = st.success('Arquivo baixado com sucesso!', icon="✅")
-    time.sleep(3)  
-    sucesso.empty()
-
+# ## Mensagem de sucesso
+# def mensagem_sucesso():
+#     sucesso = st.success('Arquivo baixado com sucesso!', icon="✅")
+#     time.sleep(3)  
+#     sucesso.empty()
 
 ## ------------------------ SOLICITACOES / FILTRAGENS ------------------------ ##
 
 # Carregar o arquivo para ALFA em CSV do GitHub
 url_ce = 'https://raw.githubusercontent.com/jose-alves-fn/jose-alves-fn-tabelas_spaece_memoria_2008_2022/main/memoria_ce_totas_etapas_v2.csv'
 dados_ce = pd.read_csv(url_ce)
-
 
 ## Titulo do sidebar
 st.sidebar.title('Filtros')
@@ -173,7 +170,6 @@ dados_filtrados = dados_ce[
                           (dados_ce['Indicação do Padrão de Desempenho'].isin(padroes)) &
                           (dados_ce['Proficiência Média'].between(proficiencia[0], proficiencia[1]))
 ]
-
 
 ## ------------------------ TABELAS ------------------------ ##
 
