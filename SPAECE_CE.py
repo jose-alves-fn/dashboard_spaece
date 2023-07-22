@@ -9,9 +9,6 @@ import io                                           # Lib nativa para input / ou
 import xlsxwriter                                   # Lib para engine de arquivos excel
 
 
-# Mensagem para o usuário
-st.write("Clique no ícone do canto superior esquerdo para abrir o Sidebar.")
-
 # Configurações de exibição para o usuário
 st.set_page_config(page_title = 'SPAECE ALFA CEARÁ', initial_sidebar_state = 'collapsed', layout = 'wide',
                    menu_items={'About': 'Desenvolvido por José Alves Ferreira Neto - https://www.linkedin.com/in/jos%C3%A9-alves-ferreira-neto-1bbbb8192/ | jose.alvesfn@gmail.com',
