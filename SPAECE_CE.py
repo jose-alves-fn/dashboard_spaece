@@ -15,12 +15,12 @@ st.set_page_config(page_title = 'SPAECE ALFA CEARÁ', initial_sidebar_state = 'c
                                'Report a bug': 'https://www.linkedin.com/in/jos%C3%A9-alves-ferreira-neto-1bbbb8192/',
                                'Get help': 'https://www.seduc.ce.gov.br/'})
 
-# Mensagem para o usuário (interajir com o side bar)
-st.markdown('<span style="color: blue; font-weight: bold"> :arrow_upper_left: Interaja com a seta para mais opções.</span>', unsafe_allow_html=True)
-
 # Imagem principal do projeto
 # image = 'spaece.jpg'
 # st.image(image, use_column_width=False)
+
+# Mensagem para o usuário (interajir com o side bar)
+st.markdown('<span style="color: blue; font-weight: bold"> :arrow_upper_left: Interaja com a seta para mais opções.</span>', unsafe_allow_html=True)
 
 #Imagem lateral (sidebar)
 image = "spaece_tp2.png"
