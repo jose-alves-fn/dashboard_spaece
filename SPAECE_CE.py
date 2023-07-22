@@ -27,7 +27,8 @@ st.sidebar.image(image)
 ## ------------------------ FUNCOES ------------------------ ##
 
 # Definindo para configuração regional de separador decimal, moeda, horas, etc
-locale.setlocale(locale.LC_ALL, 'pt_BR.UTF-8')
+locale.setlocale(locale.LC_ALL, 'pt_BR')
+#locale.setlocale(locale.LC_ALL, 'pt_BR.UTF-8')
 
 # Funcoes que formatam números, tanto para para utilização nas métricas
 
@@ -266,9 +267,6 @@ if componente == 'Matemática':
 else:
     ### Gráfico de LINHAS para proficiência média longitudinal
 
-    # Definir o locale para o padrão brasileiro
-    locale.setlocale(locale.LC_ALL, 'pt_BR.UTF-8')
-
     # Formatando manualmente os valores do eixo y
     proficiencia_edicao_2_ce['Proficiência Média Formatada'] = proficiencia_edicao_2_ce['Proficiência Média'].apply(lambda x: locale.format('%.1f', x))
 
@@ -326,9 +324,6 @@ else:
         3: 'Suficiente',
         4: 'Desejável'
     }
-
-    # Definir o locale para o padrão brasileiro
-    locale.setlocale(locale.LC_ALL, 'pt_BR.UTF-8')
 
     # Formatando manualmente os valores do eixo y
     proficiencia_edicao_2_ce['Proficiência Média Formatada'] = proficiencia_edicao_2_ce['Proficiência Média'].apply(lambda x: locale.format('%.1f', x))
@@ -417,9 +412,6 @@ else:
 
 ### Gráfico de LINHAS para proficiência média longitudinal
 
-# Definir o locale para o padrão brasileiro
-locale.setlocale(locale.LC_ALL, 'pt_BR.UTF-8')
-
 # Formatando manualmente os valores do eixo y
 proficiencia_edicao_5_ce['Proficiência Média Formatada'] = proficiencia_edicao_5_ce['Proficiência Média'].apply(lambda x: locale.format('%.1f', x))
 
@@ -480,9 +472,6 @@ if componente == 'Língua Portuguesa': # >>>>>> LÍNGUA PORTUGUESA
         3: '% Adequado'
     }
 
-    # Definir o locale para o padrão brasileiro
-    locale.setlocale(locale.LC_ALL, 'pt_BR.UTF-8')
-
     # Formatando manualmente os valores do eixo y
     proficiencia_edicao_5_ce['Proficiência Média Formatada'] = proficiencia_edicao_5_ce['Proficiência Média'].apply(lambda x: locale.format('%.1f', x))
 
@@ -522,9 +511,6 @@ else: # >>>>>> MATEMÁTICA
         2: '% Intermediário',
         3: '% Adequado'
     }
-
-    # Definir o locale para o padrão brasileiro
-    locale.setlocale(locale.LC_ALL, 'pt_BR.UTF-8')
 
     # Formatando manualmente os valores do eixo y
     proficiencia_edicao_5_ce['Proficiência Média Formatada'] = proficiencia_edicao_5_ce['Proficiência Média'].apply(lambda x: locale.format('%.1f', x))
@@ -613,9 +599,6 @@ fig_barras_empilhadas_5_ce.update_layout(
 
 ### Gráfico de LINHAS para proficiência média longitudinal
 
-# Definir o locale para o padrão brasileiro
-locale.setlocale(locale.LC_ALL, 'pt_BR.UTF-8')
-
 # Formatando manualmente os valores do eixo y
 proficiencia_edicao_9_ce['Proficiência Média Formatada'] = proficiencia_edicao_9_ce['Proficiência Média'].apply(lambda x: locale.format('%.1f', x))
 
@@ -675,9 +658,6 @@ if componente == 'Língua Portuguesa': # >>>>>> LÍNGUA PORTUGUESA
         3: '% Adequado'
     }
 
-    # Definir o locale para o padrão brasileiro
-    locale.setlocale(locale.LC_ALL, 'pt_BR.UTF-8')
-
     # Formatando manualmente os valores do eixo y
     proficiencia_edicao_9_ce['Proficiência Média Formatada'] = proficiencia_edicao_9_ce['Proficiência Média'].apply(lambda x: locale.format('%.1f', x))
 
@@ -718,9 +698,6 @@ else: # >>>>>> MATEMÁTICA
         2: '% Intermediário',
         3: '% Adequado'
     }
-
-    # Definir o locale para o padrão brasileiro
-    locale.setlocale(locale.LC_ALL, 'pt_BR.UTF-8')
 
     # Formatando manualmente os valores do eixo y
     proficiencia_edicao_9_ce['Proficiência Média Formatada'] = proficiencia_edicao_9_ce['Proficiência Média'].apply(lambda x: locale.format('%.1f', x))
@@ -811,9 +788,6 @@ else:
 
     ### Gráfico de LINHAS para proficiência média longitudinal
 
-    # Definir o locale para o padrão brasileiro
-    locale.setlocale(locale.LC_ALL, 'pt_BR.UTF-8')
-
     # Formatando manualmente os valores do eixo y
     proficiencia_edicao_3_ce['Proficiência Média Formatada'] = proficiencia_edicao_3_ce['Proficiência Média'].apply(lambda x: locale.format('%.1f', x))
 
@@ -873,9 +847,6 @@ else:
             3: '% Adequado'
         }
 
-        # Definir o locale para o padrão brasileiro
-        locale.setlocale(locale.LC_ALL, 'pt_BR.UTF-8')
-
         # Formatando manualmente os valores do eixo y
         proficiencia_edicao_3_ce['Proficiência Média Formatada'] = proficiencia_edicao_3_ce['Proficiência Média'].apply(lambda x: locale.format('%.1f', x))
 
@@ -916,9 +887,6 @@ else:
             2: '% Intermediário',
             3: '% Adequado'
         }
-
-        # Definir o locale para o padrão brasileiro
-        locale.setlocale(locale.LC_ALL, 'pt_BR.UTF-8')
 
         # Formatando manualmente os valores do eixo y
         proficiencia_edicao_3_ce['Proficiência Média Formatada'] = proficiencia_edicao_3_ce['Proficiência Média'].apply(lambda x: locale.format('%.1f', x))
