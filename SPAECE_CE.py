@@ -27,7 +27,7 @@ st.sidebar.image(image)
 ## ------------------------ FUNCOES ------------------------ ##
 
 # Definindo para configuração regional de separador decimal, moeda, horas, etc
-locale.setlocale(locale.LC_ALL, 'pt_BR')
+locale.setlocale(locale.LC_ALL, 'pt_BR.UTF8')
 #locale.setlocale(locale.LC_ALL, 'pt_BR.UTF-8')
 
 # Funcoes que formatam números, tanto para para utilização nas métricas
