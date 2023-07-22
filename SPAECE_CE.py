@@ -11,7 +11,7 @@ import xlsxwriter                                   # Lib para engine de arquivo
 
 
 # Configurações de exibição para o usuário
-st.set_page_config(page_title = 'SPAECE ALFA CEARÁ', initial_sidebar_state = 'collapsed', layout = 'wide',
+st.set_page_config(page_title = 'SPAECE ALFA CEARÁ', initial_sidebar_state = 'collapsed', layout = 'centered',
                    menu_items={'About': 'Desenvolvido por José Alves Ferreira Neto - https://www.linkedin.com/in/jos%C3%A9-alves-ferreira-neto-1bbbb8192/ | jose.alvesfn@gmail.com',
                                'Report a bug': 'https://www.linkedin.com/in/jos%C3%A9-alves-ferreira-neto-1bbbb8192/',
                                'Get help': 'https://www.seduc.ce.gov.br/'})
