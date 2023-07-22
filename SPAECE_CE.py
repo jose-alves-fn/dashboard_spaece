@@ -9,8 +9,8 @@ import io                                           # Lib nativa para input / ou
 import xlsxwriter                                   # Lib para engine de arquivos excel
 
 
-# Configuração para exibir o sidebar por padrão
-st.set_option('deprecation.showPyplotGlobalUse', False)
+# Mensagem para o usuário
+st.write("Clique no ícone do canto superior esquerdo para abrir o Sidebar.")
 
 # Configurações de exibição para o usuário
 st.set_page_config(page_title = 'SPAECE ALFA CEARÁ', initial_sidebar_state = 'collapsed', layout = 'wide',
