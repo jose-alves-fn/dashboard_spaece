@@ -85,13 +85,13 @@ def formata_taxa(valor):
 def formata_proficiencia(valor):
     return f'{valor:.1f}'.replace('.', ',')
 
-# Definindo o título para o dashboard
-st.title('Plataforma de visualização de dados do SPAECE :chart_with_upwards_trend:')
-#st.markdown('<span style="color: green;"><b>2º Ano Ensino Fundamental - SPAECE ALFA - Dashboard: Estado do Ceará</b></span>', unsafe_allow_html=True)
-
 # Mensagem para o usuário (interajir com o side bar)
 st.markdown('<span style="color: blue; font-weight: bold"> :arrow_upper_left: Interaja com a seta para mais opções.</span>', unsafe_allow_html=True)
 # st.write(':arrow_upper_left: Interaja com a seta para mais opções.')
+
+# Definindo o título para o dashboard
+st.title('Plataforma de visualização de dados do SPAECE :chart_with_upwards_trend:')
+#st.markdown('<span style="color: green;"><b>2º Ano Ensino Fundamental - SPAECE ALFA - Dashboard: Estado do Ceará</b></span>', unsafe_allow_html=True)
 
 # Funcoes para dowload de arquivos
 ## Dowmload de .csv
