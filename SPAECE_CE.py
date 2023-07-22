@@ -27,7 +27,7 @@ st.sidebar.image(image)
 ## ------------------------ FUNCOES ------------------------ ##
 
 # Definindo para configuração regional de separador decimal, moeda, horas, etc
-locale.setlocale(locale.LC_ALL, 'pt_BR.UTF8')
+#locale.setlocale(locale.LC_ALL, 'pt_BR.UTF8')
 #locale.setlocale(locale.LC_ALL, 'pt_BR.UTF-8')
 
 # Funcoes que formatam números, tanto para para utilização nas métricas
@@ -51,16 +51,27 @@ locale.setlocale(locale.LC_ALL, 'pt_BR.UTF8')
 
 
 # Formatando com "," (Padrão nacional)
+# def formata_numero(valor, prefixo=''):
+#     for unidade in ['', 'mil', 'milhões']:
+#         if valor < 1000:
+#             if valor.is_integer():
+#                 return f'{prefixo} {locale.format("%.0f", valor, grouping=True)} {unidade}'
+#             elif 100 <= valor < 1000:
+#                 return f'{prefixo} {locale.format("%.1f", valor, grouping=True)} {unidade}'
+#             else:
+#                 return f'{prefixo} {locale.format("%.2f", valor, grouping=True)} {unidade}'
+#         valor = valor / 1000
+
 def formata_numero(valor, prefixo=''):
     for unidade in ['', 'mil', 'milhões']:
         if valor < 1000:
+            valor_str = f'{valor:.2f}'  # Converte o valor para string com 2 casas decimais
+            valor_str = valor_str.replace('.', '|').replace(',', '.').replace('|', ',')  # Substitui os separadores
             if valor.is_integer():
-                return f'{prefixo} {locale.format("%.0f", valor, grouping=True)} {unidade}'
-            elif 100 <= valor < 1000:
-                return f'{prefixo} {locale.format("%.1f", valor, grouping=True)} {unidade}'
-            else:
-                return f'{prefixo} {locale.format("%.2f", valor, grouping=True)} {unidade}'
+                return f'{prefixo} {valor_str.replace(".00", "")} {unidade}'  # Remove o ".00" quando for um número inteiro
+            return f'{prefixo} {valor_str} {unidade}'
         valor = valor / 1000
+
 
 ## Funcao para valores dos rótulos dos gráficos
 def formata_numero_v2(valor, prefixo=''):
@@ -267,8 +278,9 @@ if componente == 'Matemática':
 else:
     ### Gráfico de LINHAS para proficiência média longitudinal
 
-    # Formatando manualmente os valores do eixo y
-    proficiencia_edicao_2_ce['Proficiência Média Formatada'] = proficiencia_edicao_2_ce['Proficiência Média'].apply(lambda x: locale.format('%.1f', x))
+    # Formatando manualmente os valores do eixo y (atenção o locale-br não funciona em todos as aplicações)
+    # proficiencia_edicao_2_ce['Proficiência Média Formatada'] = proficiencia_edicao_2_ce['Proficiência Média'].apply(lambda x: locale.format('%.1f', x))
+    proficiencia_edicao_2_ce['Proficiência Média Formatada'] = proficiencia_edicao_2_ce['Proficiência Média'].apply(lambda x: f'{x:.1f}'.replace('.', ','))
 
     fig_proficiencia_edicao_2_ce = px.line(proficiencia_edicao_2_ce,
                                 x = 'Edição',
@@ -290,7 +302,8 @@ else:
     ### Gráfico de LINHAS para participação
 
     # Formatando manualmente os valores do eixo y
-    dados_linhas_participação_2_ce['Participação Formatada'] = dados_linhas_participação_2_ce['Participação (%)'].apply(lambda x: locale.format('%.1f', x))
+    #dados_linhas_participação_2_ce['Participação Formatada'] = dados_linhas_participação_2_ce['Participação (%)'].apply(lambda x: locale.format('%.1f', x))
+    dados_linhas_participação_2_ce['Participação Formatada'] = dados_linhas_participação_2_ce['Participação (%)'].apply(lambda x: f'{x:.1f}'.replace('.', ','))
 
     fig_participacao_edicao_2_ce = px.line(dados_linhas_participação_2_ce,
                                 x = 'Edição',
@@ -326,7 +339,9 @@ else:
     }
 
     # Formatando manualmente os valores do eixo y
-    proficiencia_edicao_2_ce['Proficiência Média Formatada'] = proficiencia_edicao_2_ce['Proficiência Média'].apply(lambda x: locale.format('%.1f', x))
+    #proficiencia_edicao_2_ce['Proficiência Média Formatada'] = proficiencia_edicao_2_ce['Proficiência Média'].apply(lambda x: locale.format('%.1f', x))
+    proficiencia_edicao_2_ce['Proficiência Média Formatada'] = proficiencia_edicao_2_ce['Proficiência Média'].apply(lambda x: f'{x:.1f}'.replace('.', ','))
+
 
     fig_proficiencia_edicao_2_ce_bar = go.Figure()
 
@@ -413,7 +428,8 @@ else:
 ### Gráfico de LINHAS para proficiência média longitudinal
 
 # Formatando manualmente os valores do eixo y
-proficiencia_edicao_5_ce['Proficiência Média Formatada'] = proficiencia_edicao_5_ce['Proficiência Média'].apply(lambda x: locale.format('%.1f', x))
+#proficiencia_edicao_5_ce['Proficiência Média Formatada'] = proficiencia_edicao_5_ce['Proficiência Média'].apply(lambda x: locale.format('%.1f', x))
+proficiencia_edicao_5_ce['Proficiência Média Formatada'] = proficiencia_edicao_5_ce['Proficiência Média'].apply(lambda x: f'{x:.1f}'.replace('.',','))
 
 fig_proficiencia_edicao_5_ce = px.line(proficiencia_edicao_5_ce,
                              x = 'Edição',
@@ -435,7 +451,8 @@ fig_proficiencia_edicao_5_ce.update_traces(textposition='bottom center', line=di
 ### Gráfico de LINHAS para participação
 
 # Formatando manualmente os valores do eixo y
-dados_linhas_participação_5_ce['Participação Formatada'] = dados_linhas_participação_5_ce['Participação (%)'].apply(lambda x: locale.format('%.1f', x))
+# dados_linhas_participação_5_ce['Participação Formatada'] = dados_linhas_participação_5_ce['Participação (%)'].apply(lambda x: locale.format('%.1f', x))
+dados_linhas_participação_5_ce['Participação Formatada'] = dados_linhas_participação_5_ce['Participação (%)'].apply(lambda x: f'{x:.1f}'.replace('.',','))
 
 fig_participacao_edicao_5_ce = px.line(dados_linhas_participação_5_ce,
                              x = 'Edição',
@@ -473,7 +490,8 @@ if componente == 'Língua Portuguesa': # >>>>>> LÍNGUA PORTUGUESA
     }
 
     # Formatando manualmente os valores do eixo y
-    proficiencia_edicao_5_ce['Proficiência Média Formatada'] = proficiencia_edicao_5_ce['Proficiência Média'].apply(lambda x: locale.format('%.1f', x))
+    #proficiencia_edicao_5_ce['Proficiência Média Formatada'] = proficiencia_edicao_5_ce['Proficiência Média'].apply(lambda x: locale.format('%.1f', x))
+    proficiencia_edicao_5_ce['Proficiência Média Formatada'] = proficiencia_edicao_5_ce['Proficiência Média'].apply(lambda x: f'{x:.1f}'.replace('.',','))
 
     fig_proficiencia_edicao_5_ce_bar = go.Figure()
 
@@ -513,7 +531,8 @@ else: # >>>>>> MATEMÁTICA
     }
 
     # Formatando manualmente os valores do eixo y
-    proficiencia_edicao_5_ce['Proficiência Média Formatada'] = proficiencia_edicao_5_ce['Proficiência Média'].apply(lambda x: locale.format('%.1f', x))
+    #proficiencia_edicao_5_ce['Proficiência Média Formatada'] = proficiencia_edicao_5_ce['Proficiência Média'].apply(lambda x: locale.format('%.1f', x))
+    proficiencia_edicao_5_ce['Proficiência Média Formatada'] = proficiencia_edicao_5_ce['Proficiência Média'].apply(lambda x: f'{x:.1f}'.replace('.',','))
 
     fig_proficiencia_edicao_5_ce_bar = go.Figure()
 
@@ -600,7 +619,8 @@ fig_barras_empilhadas_5_ce.update_layout(
 ### Gráfico de LINHAS para proficiência média longitudinal
 
 # Formatando manualmente os valores do eixo y
-proficiencia_edicao_9_ce['Proficiência Média Formatada'] = proficiencia_edicao_9_ce['Proficiência Média'].apply(lambda x: locale.format('%.1f', x))
+#proficiencia_edicao_9_ce['Proficiência Média Formatada'] = proficiencia_edicao_9_ce['Proficiência Média'].apply(lambda x: locale.format('%.1f', x))
+proficiencia_edicao_9_ce['Proficiência Média Formatada'] = proficiencia_edicao_9_ce['Proficiência Média'].apply(lambda x: f'{x:.1f}'.replace('.',','))
 
 fig_proficiencia_edicao_9_ce = px.line(proficiencia_edicao_9_ce,
                              x = 'Edição',
@@ -622,7 +642,8 @@ fig_proficiencia_edicao_9_ce.update_traces(textposition='bottom center', line=di
 ### Gráfico de LINHAS para participação
 
 # Formatando manualmente os valores do eixo y
-dados_linhas_participação_9_ce['Participação Formatada'] = dados_linhas_participação_9_ce['Participação (%)'].apply(lambda x: locale.format('%.1f', x))
+# dados_linhas_participação_9_ce['Participação Formatada'] = dados_linhas_participação_9_ce['Participação (%)'].apply(lambda x: locale.format('%.1f', x))
+dados_linhas_participação_9_ce['Participação Formatada'] = dados_linhas_participação_9_ce['Participação (%)'].apply(lambda x: f'{x:.1f}'.replace('.',','))
 
 fig_participacao_edicao_9_ce = px.line(dados_linhas_participação_9_ce,
                              x = 'Edição',
@@ -659,8 +680,9 @@ if componente == 'Língua Portuguesa': # >>>>>> LÍNGUA PORTUGUESA
     }
 
     # Formatando manualmente os valores do eixo y
-    proficiencia_edicao_9_ce['Proficiência Média Formatada'] = proficiencia_edicao_9_ce['Proficiência Média'].apply(lambda x: locale.format('%.1f', x))
-
+    # proficiencia_edicao_9_ce['Proficiência Média Formatada'] = proficiencia_edicao_9_ce['Proficiência Média'].apply(lambda x: locale.format('%.1f', x))
+    proficiencia_edicao_9_ce['Proficiência Média Formatada'] = proficiencia_edicao_9_ce['Proficiência Média'].apply(lambda x: f'{x:.1f}'.replace('.',','))
+    
     fig_proficiencia_edicao_9_ce_bar = go.Figure()
 
     for i, intervalo in enumerate(intervalos_9_ano_lp[:-1]):
@@ -700,7 +722,9 @@ else: # >>>>>> MATEMÁTICA
     }
 
     # Formatando manualmente os valores do eixo y
-    proficiencia_edicao_9_ce['Proficiência Média Formatada'] = proficiencia_edicao_9_ce['Proficiência Média'].apply(lambda x: locale.format('%.1f', x))
+    # proficiencia_edicao_9_ce['Proficiência Média Formatada'] = proficiencia_edicao_9_ce['Proficiência Média'].apply(lambda x: locale.format('%.1f', x))
+    proficiencia_edicao_9_ce['Proficiência Média Formatada'] = proficiencia_edicao_9_ce['Proficiência Média'].apply(lambda x: f'{x:.1f}'.replace('.',','))
+
 
     fig_proficiencia_edicao_9_ce_bar = go.Figure()
 
@@ -789,7 +813,9 @@ else:
     ### Gráfico de LINHAS para proficiência média longitudinal
 
     # Formatando manualmente os valores do eixo y
-    proficiencia_edicao_3_ce['Proficiência Média Formatada'] = proficiencia_edicao_3_ce['Proficiência Média'].apply(lambda x: locale.format('%.1f', x))
+    #proficiencia_edicao_3_ce['Proficiência Média Formatada'] = proficiencia_edicao_3_ce['Proficiência Média'].apply(lambda x: locale.format('%.1f', x))
+    proficiencia_edicao_3_ce['Proficiência Média Formatada'] = proficiencia_edicao_3_ce['Proficiência Média'].apply(lambda x: f'{x:.1f}'.replace('.',','))
+
 
     fig_proficiencia_edicao_3_ce = px.line(proficiencia_edicao_3_ce,
                                 x = 'Edição',
@@ -811,7 +837,8 @@ else:
     ### Gráfico de LINHAS para participação
 
     # Formatando manualmente os valores do eixo y
-    dados_linhas_participação_3_ce['Participação Formatada'] = dados_linhas_participação_3_ce['Participação (%)'].apply(lambda x: locale.format('%.1f', x))
+    # dados_linhas_participação_3_ce['Participação Formatada'] = dados_linhas_participação_3_ce['Participação (%)'].apply(lambda x: locale.format('%.1f', x))
+    dados_linhas_participação_3_ce['Participação Formatada'] = dados_linhas_participação_3_ce['Participação (%)'].apply(lambda x: f'{x:.1f}'.replace('.',','))
 
     fig_participacao_edicao_3_ce = px.line(dados_linhas_participação_3_ce,
                                 x = 'Edição',
@@ -848,7 +875,8 @@ else:
         }
 
         # Formatando manualmente os valores do eixo y
-        proficiencia_edicao_3_ce['Proficiência Média Formatada'] = proficiencia_edicao_3_ce['Proficiência Média'].apply(lambda x: locale.format('%.1f', x))
+        # proficiencia_edicao_3_ce['Proficiência Média Formatada'] = proficiencia_edicao_3_ce['Proficiência Média'].apply(lambda x: locale.format('%.1f', x))
+        proficiencia_edicao_3_ce['Proficiência Média Formatada'] = proficiencia_edicao_3_ce['Proficiência Média'].apply(lambda x: f'{x:.1f}'.replace('.',','))
 
         fig_proficiencia_edicao_3_ce_bar = go.Figure()
 
@@ -889,8 +917,9 @@ else:
         }
 
         # Formatando manualmente os valores do eixo y
-        proficiencia_edicao_3_ce['Proficiência Média Formatada'] = proficiencia_edicao_3_ce['Proficiência Média'].apply(lambda x: locale.format('%.1f', x))
-
+        # proficiencia_edicao_3_ce['Proficiência Média Formatada'] = proficiencia_edicao_3_ce['Proficiência Média'].apply(lambda x: locale.format('%.1f', x))
+        proficiencia_edicao_3_ce['Proficiência Média Formatada'] = proficiencia_edicao_3_ce['Proficiência Média'].apply(lambda x: f'{x:.1f}'.replace('.',','))
+        
         fig_proficiencia_edicao_3_ce_bar = go.Figure()
 
         for i, intervalo in enumerate(intervalos_3_ano_mt[:-1]):
