@@ -9,6 +9,7 @@ import io                                           # Lib nativa para input / ou
 import xlsxwriter                                   # Lib para engine de arquivos excel
 
 
+
 # Configurações de exibição para o usuário
 st.set_page_config(page_title = 'SPAECE ALFA CEARÁ', initial_sidebar_state = 'collapsed', layout = 'wide',
                    menu_items={'About': 'Desenvolvido por José Alves Ferreira Neto - https://www.linkedin.com/in/jos%C3%A9-alves-ferreira-neto-1bbbb8192/ | jose.alvesfn@gmail.com',
@@ -71,6 +72,7 @@ def formata_numero(valor, prefixo=''):
             return f'{prefixo} {valor_str} {unidade}'
         valor = valor / 1000
 
+
 ## Funcao para valores dos rótulos dos gráficos
 def formata_numero_v2(valor, prefixo=''):
     valor_formatado = f'{prefixo} {valor:.2f}'
@@ -86,7 +88,6 @@ def formata_proficiencia(valor):
 
 # Mensagem para o usuário (interajir com o side bar)
 st.markdown('<span style="color: blue; font-weight: bold"> :arrow_upper_left: Interaja para mais opções.</span>', unsafe_allow_html=True)
-# st.write(':arrow_upper_left: Interaja com a seta para mais opções.')
 
 # Definindo o título para o dashboard
 st.title('Plataforma de visualização de dados do SPAECE :chart_with_upwards_trend:')
@@ -112,11 +113,12 @@ def converte_xlsx(df):
     output.seek(0) # mover o cursor de leitura/escrita para a posição 0 (início) no fluxo de bytes.
     return output.getvalue()
 
-# ## Mensagem de sucesso
-# def mensagem_sucesso():
-#     sucesso = st.success('Arquivo baixado com sucesso!', icon="✅")
-#     time.sleep(3)  
-#     sucesso.empty()
+## Mensagem de sucesso
+def mensagem_sucesso():
+    sucesso = st.success('Arquivo baixado com sucesso!', icon="✅")
+    time.sleep(3)  
+    sucesso.empty()
+
 
 ## ------------------------ SOLICITACOES / FILTRAGENS ------------------------ ##
 
@@ -170,6 +172,7 @@ dados_filtrados = dados_ce[
                           (dados_ce['Indicação do Padrão de Desempenho'].isin(padroes)) &
                           (dados_ce['Proficiência Média'].between(proficiencia[0], proficiencia[1]))
 ]
+
 
 ## ------------------------ TABELAS ------------------------ ##
 
