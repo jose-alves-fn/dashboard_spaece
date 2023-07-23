@@ -11,7 +11,7 @@ import xlsxwriter                                   # Lib para engine de arquivo
 
 
 # Configurações de exibição para o usuário
-st.set_page_config(page_title = 'DASHBOARD SPAECE', initial_sidebar_state = 'collapsed', layout = 'wide',
+st.set_page_config(page_title = 'SPAECE ALFA CEARÁ', initial_sidebar_state = 'collapsed', layout = 'wide',
                    menu_items={'About': 'Desenvolvido por José Alves Ferreira Neto - https://www.linkedin.com/in/jos%C3%A9-alves-ferreira-neto-1bbbb8192/ | jose.alvesfn@gmail.com',
                                'Report a bug': 'https://www.linkedin.com/in/jos%C3%A9-alves-ferreira-neto-1bbbb8192/',
                                'Get help': 'https://www.seduc.ce.gov.br/'})
@@ -130,7 +130,8 @@ dados_ce = pd.read_csv(url_ce)
 st.sidebar.title('Filtros')
 
 ## Filtragem de redes
-redes = ['ESTADUAL', 'MUNICIPAL']
+dados_ce['Rede'] = dados_ce['Rede'].str.capitalize()
+redes = ['Estadual', 'Municipal']
 rede = st.sidebar.selectbox('Rede', redes)
 
 # ## Filtragem da etapa
@@ -292,7 +293,7 @@ else:
                                 text='Proficiência Média Formatada',
                                 #color = 'Edição',
                                 #line_dash = 'Edição',
-                                title = f'PROFICIÊNCIA MÉDIA - 2º ANO - REDE {rede}'
+                                title = f'PROFICIÊNCIA MÉDIA - 2º ANO - REDE {(rede).upper()}'
                                 )
 
     #fig_proficiencia_edicao_2_ce.update_layout(yaxis_title = 'Proficiência Média')
@@ -315,7 +316,7 @@ else:
                                 text='Participação Formatada',
                                 #color = 'Edição',
                                 #line_dash = 'Edição',
-                                title = f'PARTICIPAÇÃO - 2º ANO - REDE {rede}'
+                                title = f'PARTICIPAÇÃO - 2º ANO - REDE {(rede).upper()}'
                                 )
 
     fig_participacao_edicao_2_ce.update_layout(xaxis=dict(type='category', categoryorder='category ascending'))  # Definir o tipo de eixo como categoria
@@ -361,7 +362,7 @@ else:
     fig_proficiencia_edicao_2_ce_bar.update_layout(
         xaxis=dict(type='category', categoryorder='category ascending'),
         yaxis=dict(range=[50, 250]),
-        title=f'PADRÃO DE DESEMPENHO - 2º ANO - REDE {rede}'
+        title=f'PADRÃO DE DESEMPENHO - 2º ANO - REDE {(rede).upper()}'
     )
 
     # fig_proficiencia_edicao_2_ce_bar.update_traces(marker=dict(line=dict(color='rgb(8,8,8)',width=1.5)))
@@ -412,7 +413,7 @@ else:
     # Agrupando as barras via layout, barmode = 'stack' (barra empilhada)
     fig_barras_empilhadas_2_ce.update_layout(
         barmode='stack',
-        title=f'DISTRIBUIÇÃO POR PADRÃO DE DESEMPENHO - 2º ANO - REDE {rede}',
+        title=f'DISTRIBUIÇÃO POR PADRÃO DE DESEMPENHO - 2º ANO - REDE {(rede).upper()}',
         xaxis_title='Percentual',
         yaxis_title='Edição',
         showlegend=True,
@@ -441,7 +442,7 @@ fig_proficiencia_edicao_5_ce = px.line(proficiencia_edicao_5_ce,
                              text='Proficiência Média Formatada',
                              #color = 'Edição',
                              #line_dash = 'Edição',
-                             title = f'PROFICIÊNCIA MÉDIA - 5º ANO - REDE {rede} - {(componente).upper()}'
+                             title = f'PROFICIÊNCIA MÉDIA - 5º ANO - REDE {(rede).upper()} - {(componente).upper()}'
                              )
 
 #fig_proficiencia_edicao_5_ce.update_layout(yaxis_title = 'Proficiência Média')
@@ -464,7 +465,7 @@ fig_participacao_edicao_5_ce = px.line(dados_linhas_participação_5_ce,
                              text='Participação Formatada',
                              #color = 'Edição',
                              #line_dash = 'Edição',
-                             title = f'PARTICIPAÇÃO - 5º ANO - REDE {rede}'
+                             title = f'PARTICIPAÇÃO - 5º ANO - REDE {(rede).upper()}'
                              )
 
 fig_participacao_edicao_5_ce.update_layout(xaxis=dict(type='category', categoryorder='category ascending'))  # Definir o tipo de eixo como categoria
@@ -511,7 +512,7 @@ if componente == 'Língua Portuguesa': # >>>>>> LÍNGUA PORTUGUESA
     fig_proficiencia_edicao_5_ce_bar.update_layout(
         xaxis=dict(type='category', categoryorder='category ascending'),
         yaxis=dict(range=[50, 250]),
-        title=f'PADRÃO DE DESEMPENHO - 5º ANO - REDE {rede} - {(componente).upper()}'
+        title=f'PADRÃO DE DESEMPENHO - 5º ANO - REDE {(rede).upper()} - {(componente).upper()}'
     )
 
     # fig_proficiencia_edicao_5_ce_bar.update_traces(marker=dict(line=dict(color='rgb(8,8,8)',width=1.5)))
@@ -552,7 +553,7 @@ else: # >>>>>> MATEMÁTICA
     fig_proficiencia_edicao_5_ce_bar.update_layout(
         xaxis=dict(type='category', categoryorder='category ascending'),
         yaxis=dict(range=[50, 270]),
-        title=f'PADRÃO DE DESEMPENHO - 5º ANO - REDE {rede} - {(componente).upper()}'
+        title=f'PADRÃO DE DESEMPENHO - 5º ANO - REDE {(rede).upper()} - {(componente).upper()}'
     )
 
     # fig_proficiencia_edicao_5_ce_bar.update_traces(marker=dict(line=dict(color='rgb(8,8,8)',width=1.5)))
@@ -604,7 +605,7 @@ for intervalo in intervalos_5_ano:
 # Agrupando as barras via layout, barmode = 'stack' (barra empilhada)
 fig_barras_empilhadas_5_ce.update_layout(
     barmode='stack',
-    title=f'DISTRIBUIÇÃO POR PADRÃO DE DESEMPENHO - 5º ANO - REDE {rede} - {(componente).upper()}',
+    title=f'DISTRIBUIÇÃO POR PADRÃO DE DESEMPENHO - 5º ANO - REDE {(rede).upper()} - {(componente).upper()}',
     xaxis_title='Percentual',
     yaxis_title='Edição',
     showlegend=True,
@@ -632,7 +633,7 @@ fig_proficiencia_edicao_9_ce = px.line(proficiencia_edicao_9_ce,
                              text='Proficiência Média Formatada',
                              #color = 'Edição',
                              #line_dash = 'Edição',
-                             title = f'PROFICIÊNCIA MÉDIA - 9º ANO - REDE {rede} - {(componente).upper()}'
+                             title = f'PROFICIÊNCIA MÉDIA - 9º ANO - REDE {(rede).upper()} - {(componente).upper()}'
                              )
 
 #fig_proficiencia_edicao_9_ce.update_layout(yaxis_title = 'Proficiência Média')
@@ -655,7 +656,7 @@ fig_participacao_edicao_9_ce = px.line(dados_linhas_participação_9_ce,
                              text='Participação Formatada',
                              #color = 'Edição',
                              #line_dash = 'Edição',
-                             title = f'PARTICIPAÇÃO - 9º ANO - REDE {rede}'
+                             title = f'PARTICIPAÇÃO - 9º ANO - REDE {(rede).upper()}'
                              )
 
 fig_participacao_edicao_9_ce.update_layout(xaxis=dict(type='category', categoryorder='category ascending'))  # Definir o tipo de eixo como categoria
@@ -701,7 +702,7 @@ if componente == 'Língua Portuguesa': # >>>>>> LÍNGUA PORTUGUESA
     fig_proficiencia_edicao_9_ce_bar.update_layout(
         xaxis=dict(type='category', categoryorder='category ascending'),
         yaxis=dict(range=[50, 300]),
-        title=f'PADRÃO DE DESEMPENHO - 9º ANO - REDE {rede} - {(componente).upper()}'
+        title=f'PADRÃO DE DESEMPENHO - 9º ANO - REDE {(rede).upper()} - {(componente).upper()}'
     )
 
     # fig_proficiencia_edicao_9_ce_bar.update_traces(marker=dict(line=dict(color='rgb(8,8,8)',width=1.5)))
@@ -744,7 +745,7 @@ else: # >>>>>> MATEMÁTICA
     fig_proficiencia_edicao_9_ce_bar.update_layout(
         xaxis=dict(type='category', categoryorder='category ascending'),
         yaxis=dict(range=[50, 300]),
-        title=f'PADRÃO DE DESEMPENHO - 9º ANO - REDE {rede} - {(componente).upper()}'
+        title=f'PADRÃO DE DESEMPENHO - 9º ANO - REDE {(rede).upper()} - {(componente).upper()}'
     )
 
     # fig_proficiencia_edicao_9_ce_bar.update_traces(marker=dict(line=dict(color='rgb(8,8,8)',width=1.5)))
@@ -794,7 +795,7 @@ for intervalo in intervalos_9_ano:
 # Agrupando as barras via layout, barmode = 'stack' (barra empilhada)
 fig_barras_empilhadas_9_ce.update_layout(
     barmode='stack',
-    title=f'DISTRIBUIÇÃO POR PADRÃO DE DESEMPENHO - 9º ANO - REDE {rede} - {(componente).upper()}', 
+    title=f'DISTRIBUIÇÃO POR PADRÃO DE DESEMPENHO - 9º ANO - REDE {(rede).upper()} - {(componente).upper()}', 
     xaxis_title='Percentual',
     yaxis_title='Edição',
     showlegend=True,
@@ -827,7 +828,7 @@ else:
                                 text='Proficiência Média Formatada',
                                 #color = 'Edição',
                                 #line_dash = 'Edição',
-                                title = f'PROFICIÊNCIA MÉDIA - 3ª SÉRIE - REDE {rede} - {(componente).upper()}'
+                                title = f'PROFICIÊNCIA MÉDIA - 3ª SÉRIE - REDE {(rede).upper()} - {(componente).upper()}'
                                 )
 
     #fig_proficiencia_edicao_3_ce.update_layout(yaxis_title = 'Proficiência Média')
@@ -850,7 +851,7 @@ else:
                                 text='Participação Formatada',
                                 #color = 'Edição',
                                 #line_dash = 'Edição',
-                                title = f'PARTICIPAÇÃO - 3ª SÉRIE - REDE {rede}'
+                                title = f'PARTICIPAÇÃO - 3ª SÉRIE - REDE {(rede).upper()}'
                                 )
 
     fig_participacao_edicao_3_ce.update_layout(xaxis=dict(type='category', categoryorder='category ascending'))  # Definir o tipo de eixo como categoria
@@ -896,7 +897,7 @@ else:
         fig_proficiencia_edicao_3_ce_bar.update_layout(
             xaxis=dict(type='category', categoryorder='category ascending'),
             yaxis=dict(range=[100, 350]),
-            title=f'PADRÃO DE DESEMPENHO - 3ª SÉRIE - REDE {rede} - {(componente).upper()}'
+            title=f'PADRÃO DE DESEMPENHO - 3ª SÉRIE - REDE {(rede).upper()} - {(componente).upper()}'
         )
 
         # fig_proficiencia_edicao_3_ce_bar.update_traces(marker=dict(line=dict(color='rgb(8,8,8)',width=1.5)))
@@ -938,7 +939,7 @@ else:
         fig_proficiencia_edicao_3_ce_bar.update_layout(
             xaxis=dict(type='category', categoryorder='category ascending'),
             yaxis=dict(range=[100, 350]),
-            title=f'PADRÃO DE DESEMPENHO - 3ª SÉRIE - REDE {rede} - {(componente).upper()}'
+            title=f'PADRÃO DE DESEMPENHO - 3ª SÉRIE - REDE {(rede).upper()} - {(componente).upper()}'
         )
 
         # fig_proficiencia_edicao_3_ce_bar.update_traces(marker=dict(line=dict(color='rgb(8,8,8)',width=1.5)))
@@ -989,7 +990,7 @@ else:
     # Agrupando as barras via layout, barmode = 'stack' (barra empilhada)
     fig_barras_empilhadas_3_ce.update_layout(
         barmode='stack',
-        title=f'DISTRIBUIÇÃO POR PADRÃO DE DESEMPENHO - 3ª SÉRIE - REDE {rede} - {(componente).upper()}',
+        title=f'DISTRIBUIÇÃO POR PADRÃO DE DESEMPENHO - 3ª SÉRIE - REDE {(rede).upper()} - {(componente).upper()}',
         xaxis_title='Percentual',
         yaxis_title='Edição',
         showlegend=True,
