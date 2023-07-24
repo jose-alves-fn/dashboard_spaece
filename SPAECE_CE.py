@@ -1050,7 +1050,7 @@ with aba1: # >>>>> 2º Ano do Ensino Fundamental
             dados_ce_2_ano_filtered = dados_ce_2_ano[colunas]  # Filter the DataFrame based on the selected columns
 
         # Inserindo um texto sobre as colunas e linhas exibidas
-        st.dataframe(dados_ce_2_ano_filtered)
+        st.dataframe(dados_ce_2_ano_filtered, hide_index = True)
         st.markdown(f'A tabela possui :blue[{dados_ce_2_ano_filtered.shape[0]}] linhas e :blue[{dados_ce_2_ano_filtered.shape[1]}] colunas.')
 
     ## ------------------------ DOWNLOAD DAS TABELAS ------------------------ ##
@@ -1095,7 +1095,7 @@ with aba2: # >>>>> 5º Ano do Ensino Fundamental
         dados_ce_5_ano_filtered = dados_ce_5_ano[colunas]  # Filter the DataFrame based on the selected columns
 
     # Inserindo um texto sobre as colunas e linhas exibidas
-    st.dataframe(dados_ce_5_ano_filtered)
+    st.dataframe(dados_ce_5_ano_filtered, hide_index = True)
     st.markdown(f'A tabela possui :blue[{dados_ce_5_ano_filtered.shape[0]}] linhas e :blue[{dados_ce_5_ano_filtered.shape[1]}] colunas.')
 
     ## ------------------------ DOWNLOAD DAS TABELAS ------------------------ ##
@@ -1138,7 +1138,7 @@ with aba3: # >>>>> 9º Ano do Ensino Fundamental
     dados_ce_9_ano_filtered = dados_ce_9_ano[colunas]  # Filter the DataFrame based on the selected columns
 
     # Inserindo um texto sobre as colunas e linhas exibidas
-    st.dataframe(dados_ce_9_ano_filtered)
+    st.dataframe(dados_ce_9_ano_filtered, hide_index = True)
     st.markdown(f'A tabela possui :blue[{dados_ce_9_ano_filtered.shape[0]}] linhas e :blue[{dados_ce_9_ano_filtered.shape[1]}] colunas.')
 
     ## ------------------------ DOWNLOAD DAS TABELAS ------------------------ ##
@@ -1194,7 +1194,7 @@ with aba4: # >>>>> 3ª Série do Ensino Médio
             dados_ce_3_ano_filtered = dados_ce_3_ano[colunas]  # Filter the DataFrame based on the selected columns
 
         # Inserindo um texto sobre as colunas e linhas exibidas
-        st.dataframe(dados_ce_3_ano_filtered)
+        st.dataframe(dados_ce_3_ano_filtered, hide_index = True)
         st.markdown(f'A tabela possui :blue[{dados_ce_3_ano_filtered.shape[0]}] linhas e :blue[{dados_ce_3_ano_filtered.shape[1]}] colunas.')
 
     ## ------------------------ DOWNLOAD DAS TABELAS ------------------------ ##
