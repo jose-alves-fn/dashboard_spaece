@@ -194,6 +194,103 @@ dados_filtrados = dados_mun[
                           (dados_mun['Proficiência Média'].between(proficiencia[0], proficiencia[1]))
 ]
 
+## ------------------------ TABELAS ------------------------ ##
+
+## ------------------------ 2º ANO ------------------------- ##
+
+
+dados_mun_2_ano = dados_filtrados[['Etapa', 'Componente', 'Rede', 'Código da CREDE', 'CREDE', 'Município', 
+                                   'Edição', 'Proficiência Média', 'Desvio Padrão', 'Indicação do Padrão de Desempenho',
+                                   '% Não Alfabetizado', '% Alfabetização Incompleta',
+                                   '% Intermediário (2º Ano)', '% Suficiente', '% Desejável',
+                                   'Nº de Alunos Previstos', 'Nº de Alunos Avaliados', 'Participação (%)']]
+
+### Filtro de etapa para a tabela
+dados_mun_2_ano = dados_mun_2_ano[dados_mun_2_ano['Etapa'] == '2º Ano do Ensino Fundamental'] 
+
+### Renomeando o padrão Intermediário (por default na base vem diferente)
+dados_mun_2_ano = dados_mun_2_ano.rename(columns={'% Intermediário (2º Ano)': '% Intermediário'})
+
+### Criando tabelas para a proficiencia por edicao
+proficiencia_edicao_2_mun = dados_mun_2_ano.groupby('Edição')['Proficiência Média'].mean().reset_index()
+proficiencia_edicao_2_mun['Proficiência Média'] = proficiencia_edicao_2_mun['Proficiência Média'].round(1)
+
+### Criando tabela para a distribuição por padrão de desempenho
+dados_barras_empilhadas_2_mun = dados_mun_2_ano[['Edição', '% Não Alfabetizado', '% Alfabetização Incompleta', '% Intermediário', '% Suficiente', '% Desejável']]
+
+### Criando tabela para participação por edição 
+dados_linhas_participação_2_mun = dados_mun_2_ano[['Edição', 'Participação (%)']]
+
+
+## ------------------------ 5º ANO ------------------------- ##
+
+dados_mun_5_ano = dados_filtrados[['Etapa', 'Componente', 'Rede', 'Código da CREDE', 'CREDE', 'Município', 
+                                 'Edição', 'Proficiência Média', 'Desvio Padrão', 'Indicação do Padrão de Desempenho',
+                                 '% Muito Crítico', '% Crítico', '% Intermediário', '% Adequado',
+                                 'Nº de Alunos Previstos', 'Nº de Alunos Avaliados', 'Participação (%)']]
+
+### Filtro de etapa para a tabela
+dados_mun_5_ano = dados_mun_5_ano[dados_mun_5_ano['Etapa'] == '5º Ano do Ensino Fundamental']    
+
+### Criando tabelas para a proficiencia por edicao
+proficiencia_edicao_5_mun = dados_mun_5_ano.groupby('Edição')['Proficiência Média'].mean().reset_index()
+proficiencia_edicao_5_mun['Proficiência Média'] = proficiencia_edicao_5_mun['Proficiência Média'].round(1)
+
+### Criando tabela para a distribuição por padrão de desempenho
+dados_barras_empilhadas_5_mun = dados_mun_5_ano[['Edição', '% Muito Crítico', '% Crítico', '% Intermediário', '% Adequado',]]
+
+### Criando tabela para participação por edição 
+dados_linhas_participação_5_mun = dados_mun_5_ano[['Edição', 'Participação (%)']]
+
+
+
+## ------------------------ 9º ANO ------------------------- ##
+
+dados_mun_9_ano = dados_filtrados[['Etapa', 'Componente', 'Rede', 'Código da CREDE', 'CREDE', 'Município', 
+                                'Edição', 'Proficiência Média', 'Desvio Padrão', 'Indicação do Padrão de Desempenho',
+                                '% Muito Crítico', '% Crítico', '% Intermediário', '% Adequado',
+                                'Nº de Alunos Previstos', 'Nº de Alunos Avaliados', 'Participação (%)']]
+
+dados_mun_9_ano = dados_mun_9_ano[dados_mun_9_ano['Etapa'] == '9º Ano do Ensino Fundamental']    
+
+### Criando tabelas para a proficiencia por edicao
+proficiencia_edicao_9_mun = dados_mun_9_ano.groupby('Edição')['Proficiência Média'].mean().reset_index()
+proficiencia_edicao_9_mun['Proficiência Média'] = proficiencia_edicao_9_mun['Proficiência Média'].round(1)
+
+### Criando tabela para a distribuição por padrão de desempenho
+dados_barras_empilhadas_9_mun = dados_mun_9_ano[['Edição', '% Muito Crítico', '% Crítico', '% Intermediário', '% Adequado',]]
+
+### Criando tabela para participação por edição 
+dados_linhas_participação_9_mun = dados_mun_9_ano[['Edição', 'Participação (%)']]
+
+
+## ------------------------ 3ª SERIE ------------------------- ##
+
+dados_mun_3_ano = dados_filtrados[['Etapa', 'Componente', 'Rede', 'Código da CREDE', 'CREDE', 'Município', 
+                                'Edição', 'Proficiência Média', 'Desvio Padrão', 'Indicação do Padrão de Desempenho',
+                                '% Muito Crítico', '% Crítico', '% Intermediário', '% Adequado',
+                                'Nº de Alunos Previstos', 'Nº de Alunos Avaliados', 'Participação (%)']]
+
+dados_mun_3_ano = dados_mun_3_ano[dados_mun_3_ano['Etapa'] == '3ª Série do Ensino Médio']    
+
+### Criando tabelas para a proficiencia por edicao
+proficiencia_edicao_3_mun = dados_mun_3_ano.groupby('Edição')['Proficiência Média'].mean().reset_index()
+proficiencia_edicao_3_mun['Proficiência Média'] = proficiencia_edicao_3_mun['Proficiência Média'].round(1)
+
+### Criando tabela para a distribuição por padrão de desempenho
+dados_barras_empilhadas_3_mun = dados_mun_3_ano[['Edição', '% Muito Crítico', '% Crítico', '% Intermediário', '% Adequado',]]
+
+### Criando tabela para participação por edição 
+dados_linhas_participação_3_mun = dados_mun_3_ano[['Edição', 'Participação (%)']]
+
+
+
+
+
+
+
+
+
 
 
 
@@ -208,63 +305,85 @@ dados_filtrados = dados_mun[
 
 aba1, aba2, aba3, aba4 = st.tabs(['2º Ano do Ensino Fundamental', '5º Ano do Ensino Fundamental', '9º Ano do Ensino Fundamental', '3ª Série do Ensino Médio'])
 
-# with aba1: # >>>>> 2º Ano do Ensino Fundamental
-    
+
+with aba1: # >>>>> 2º Ano do Ensino Fundamental
+  
 
     ## ------------------------ VISUALIZAÇÃO DA TABELA ------------------------ ##
+
+
     
+    # Adicionando a tabela para visualização e download
+       
+
+    # Acionando os filtros (inside the expander)
+           
+
+    # Inserindo um texto sobre as colunas e linhas exibidas
+    st.dataframe(dados_mun_2_ano, hide_index = True)
+    st.markdown(f'A tabela possui :blue[{dados_mun_2_ano.shape[0]}] linhas e :blue[{dados_mun_2_ano.shape[1]}] colunas.')
 
     ## ------------------------ DOWNLOAD DAS TABELAS ------------------------ ##
+   
+
     
 
 
-# with aba2: # >>>>> 5º Ano do Ensino Fundamental
+with aba2: # >>>>> 5º Ano do Ensino Fundamental
     
     ## ------------------------ VISUALIZAÇÃO DA TABELA ------------------------ ##
    
-
-    # Adicionando a tabela para visualização e download
+    
    
-        # Acionando os filtros (inside the expander)
+    # Acionando os filtros (inside the expander)
         
 
     # Inserindo um texto sobre as colunas e linhas exibidas
+    st.dataframe(dados_mun_5_ano, hide_index = True)
+    st.markdown(f'A tabela possui :blue[{dados_mun_5_ano.shape[0]}] linhas e :blue[{dados_mun_5_ano.shape[1]}] colunas.')
+
     
     ## ------------------------ DOWNLOAD DAS TABELAS ------------------------ ##
     
     
-# with aba3: # >>>>> 9º Ano do Ensino Fundamental
+with aba3: # >>>>> 9º Ano do Ensino Fundamental
     
             
     ## ------------------------ VISUALIZAÇÃO DA TABELA ------------------------ ##
 
   
     # Adicionando a tabela para visualização e download
+
     
     # Acionando os filtros (inside the expander)
    
 
     # Inserindo um texto sobre as colunas e linhas exibidas
-    
+    st.dataframe(dados_mun_9_ano, hide_index = True)
+    st.markdown(f'A tabela possui :blue[{dados_mun_9_ano.shape[0]}] linhas e :blue[{dados_mun_9_ano.shape[1]}] colunas.')
+
 
     ## ------------------------ DOWNLOAD DAS TABELAS ------------------------ ##
     
 
 
 
-# with aba4: # >>>>> 3ª Série do Ensino Médio
-    
-
-    ## ------------------------ VISUALIZAÇÃO DA TABELA ------------------------ ##
+with aba4: # >>>>> 3ª Série do Ensino Médio
    
-        # Adicionando a tabela para visualização e download
+       
+    ## ------------------------ VISUALIZAÇÃO DA TABELA ------------------------ ##
+
+    
+   
+    # Adicionando a tabela para visualização e download
         
 
-            # Acionando os filtros (inside the expander)
+    # Acionando os filtros (inside the expander)
             
 
-        # Inserindo um texto sobre as colunas e linhas exibidas
-        
+    # Inserindo um texto sobre as colunas e linhas exibidas
+    st.dataframe(dados_mun_3_ano, hide_index = True)
+    st.markdown(f'A tabela possui :blue[{dados_mun_3_ano.shape[0]}] linhas e :blue[{dados_mun_3_ano.shape[1]}] colunas.')
 
     ## ------------------------ DOWNLOAD DAS TABELAS ------------------------ ##
     
