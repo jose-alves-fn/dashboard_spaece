@@ -123,7 +123,7 @@ def mensagem_sucesso():
 ## ------------------------ SOLICITACOES / FILTRAGENS ------------------------ ##
 
 # Carregar o arquivo para ALFA em CSV do GitHub
-url_ce = 'https://raw.githubusercontent.com/jose-alves-fn/jose-alves-fn-tabelas_spaece_memoria_2008_2022/main/memoria_ce_totas_etapas_v2.csv'
+url_ce = 'https://raw.githubusercontent.com/jose-alves-fn/jose-alves-fn-tabelas_spaece_memoria_2008_2022/main/memoria_ce_totas_etapas.csv'
 dados_ce = pd.read_csv(url_ce)
 
 ## Titulo do sidebar
