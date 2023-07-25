@@ -68,7 +68,7 @@ def formata_numero(valor, prefixo=''):
             valor_str = f'{valor:.2f}'  # Converte o valor para string com 2 casas decimais
             valor_str = valor_str.replace('.', '|').replace(',', '.').replace('|', ',')  # Substitui os separadores
             if valor.is_integer():
-                return f'{prefixo} {valor_str.replace(".00", "")} {unidade}'  # Remove o ".00" quando for um número inteiro
+                return f'{prefixo} {valor_str.replace(",00", "")} {unidade}'  # Remove o ",00" quando for um número inteiro
             return f'{prefixo} {valor_str} {unidade}'
         valor = valor / 1000
 
@@ -145,7 +145,7 @@ st.sidebar.title('Filtros')
 
 ## Filtragem de redes
 dados_mun['Rede'] = dados_mun['Rede'].str.capitalize()
-redes = ['Estadual', 'Municipal']
+redes = ['Municipal', 'Estadual']
 rede = st.sidebar.selectbox('Rede', redes)
 
 # ## Filtragem da etapa
@@ -243,7 +243,6 @@ dados_barras_empilhadas_5_mun = dados_mun_5_ano[['Edição', '% Muito Crítico',
 dados_linhas_participação_5_mun = dados_mun_5_ano[['Edição', 'Participação (%)']]
 
 
-
 ## ------------------------ 9º ANO ------------------------- ##
 
 dados_mun_9_ano = dados_filtrados[['Etapa', 'Componente', 'Rede', 'Código da CREDE', 'CREDE', 'Município', 
@@ -283,12 +282,65 @@ dados_barras_empilhadas_3_mun = dados_mun_3_ano[['Edição', '% Muito Crítico',
 ### Criando tabela para participação por edição 
 dados_linhas_participação_3_mun = dados_mun_3_ano[['Edição', 'Participação (%)']]
 
+## ------------------------ GRÁFICOS ------------------------ ##
+
+## ------------------------ 2º ANO ------------------------- ##
+
+# Criação das figuras vazias para os gráficos
+fig_proficiencia_edicao_2_ce = go.Figure()
+fig_participacao_edicao_2_ce = go.Figure()
+fig_proficiencia_edicao_2_ce_bar = go.Figure()
+fig_barras_empilhadas_2_ce = go.Figure()
+
+if componente == 'Matemática':
+    pass
+else:
+
+    ### Gráfico de LINHAS para proficiência média longitudinal
+
+    # Formatando manualmente os valores do eixo y (atenção o locale-br não funciona em todos as aplicações)
+    # proficiencia_edicao_2_ce['Proficiência Média Formatada'] = proficiencia_edicao_2_ce['Proficiência Média'].apply(lambda x: locale.format('%.1f', x))
+    proficiencia_edicao_2_mun['Proficiência Média Formatada'] = proficiencia_edicao_2_mun['Proficiência Média'].apply(lambda x: f'{x:.1f}'.replace('.', ','))
+
+    fig_proficiencia_edicao_2_ce = px.line(proficiencia_edicao_2_mun,
+                                x = 'Edição',
+                                y = 'Proficiência Média',
+                                markers=True,
+                                range_y = (75, 240),
+                                text='Proficiência Média Formatada',
+                                #color = 'Edição',
+                                #line_dash = 'Edição',
+                                title = f'PROFICIÊNCIA MÉDIA - 2º ANO - {(municipio).upper()}'
+                                )
+
+    #fig_proficiencia_edicao_2_ce.update_layout(yaxis_title = 'Proficiência Média')
+    fig_proficiencia_edicao_2_ce.update_layout(xaxis=dict(type='category', categoryorder='category ascending'))  # Definir o tipo de eixo como categoria
+    #proficiencia_edicao_2_ce.update_xaxes(showgrid=False, showline=True, linecolor='lightgray')
+    #proficiencia_edicao_2_ce.update_yaxes(showgrid=True, showline=True, linecolor='lightgray')
+    fig_proficiencia_edicao_2_ce.update_traces(textposition='bottom center', line=dict(color='#548235'))  # Ajustar a posição dos rótulos de dados
 
 
+### Gráfico de LINHAS para participação
 
+    # Formatando manualmente os valores do eixo y
+    dados_linhas_participação_2_mun['Participação Formatada'] = dados_linhas_participação_2_mun['Participação (%)'].apply(lambda x: f'{x:.1f}'.replace('.', ','))
 
+    fig_participacao_edicao_2_mun = px.line(dados_linhas_participação_2_mun,
+                                x = 'Edição',
+                                y = 'Participação (%)',
+                                markers=True,
+                                range_y = (30, 110),
+                                text='Participação Formatada',
+                                #color = 'Edição',
+                                #line_dash = 'Edição',
+                                title = f'PARTICIPAÇÃO - 2º ANO - {(municipio).upper()}'
+                                )
 
-
+    fig_participacao_edicao_2_mun.update_layout(xaxis=dict(type='category', categoryorder='category ascending'))  # Definir o tipo de eixo como categoria
+    # Usar o parametro do xaxis title = 0.25 ou mais para ajustar o titulo
+    # fig_participacao_edicao_2_ce.update_xaxes(showgrid=False, showline=True, linecolor='lightgray')
+    # fig_participacao_edicao_2_ce.update_yaxes(showgrid=True, showline=True, linecolor='lightgray')
+    fig_participacao_edicao_2_mun.update_traces(textposition='bottom center', line=dict(color='#548235'))  # Ajustar a posição dos rótulos de dados
 
 
 
@@ -303,11 +355,53 @@ dados_linhas_participação_3_mun = dados_mun_3_ano[['Edição', 'Participação
 
 ## ------------------------ VISUALIZAÇÕES NO STREAMLIT ------------------------ ##
 
+# aba1, aba2, aba3, aba4 = st.tabs(['2º Ano do Ensino Fundamental', '5º Ano do Ensino Fundamental', '9º Ano do Ensino Fundamental', '3ª Série do Ensino Médio'])
+
+
+# with aba1: # >>>>> 2º Ano do Ensino Fundamental
+#     coluna1, coluna2 = st.columns(2)
+#     with coluna1:
+#         if componente != 'Matemática': # Condicional para exibir somente Língua Portuguesa
+#             st.metric('População prevista', formata_numero(dados_mun_2_ano['Nº de Alunos Previstos'].sum()), help='População prevista somada de acordo coms os filtros selecionados')
+#             st.metric('População avaliada', formata_numero(dados_mun_2_ano['Nº de Alunos Avaliados'].sum()), help='População avaliada somada de acordo coms os filtros selecionados')
+
+#         if componente != 'Matemática':  # Exibir o gráfico de participação apenas se não for Matemática
+#             st.plotly_chart(fig_participacao_edicao_2_mun, use_container_width=True) # GRAFICO LINHAS PARTICIPACAO LONGITUDINAL
+        
+#         else:
+#             st.markdown('<span style="color: red; font-weight: bold">Dados não encontrados! :no_entry_sign:</span>', unsafe_allow_html=True)
+#             st.markdown('<span style="color: red; font-weight: bold">A série histórica do SPAECE não conta com Matemática no 2º Ano.</span>', unsafe_allow_html=True)
+
+
 aba1, aba2, aba3, aba4 = st.tabs(['2º Ano do Ensino Fundamental', '5º Ano do Ensino Fundamental', '9º Ano do Ensino Fundamental', '3ª Série do Ensino Médio'])
 
 
 with aba1: # >>>>> 2º Ano do Ensino Fundamental
-  
+    coluna1, coluna2 = st.columns(2)
+    with coluna1:
+        # Verificar se há dados para a rede estadual em Língua Portuguesa
+        lingua_portuguesa_estadual_data_available = (dados_mun['Rede'] == 'Estadual') & (dados_mun['Componente'] == 'Língua Portuguesa')
+
+        # Verificar se o município possui dados para a rede estadual em Língua Portuguesa
+        municipio_lingua_portuguesa_estadual_data_available = lingua_portuguesa_estadual_data_available & (dados_mun['Município'] == municipio)
+
+        if componente != 'Matemática' and municipio_lingua_portuguesa_estadual_data_available.any():
+            # Exibir os gráficos de Língua Portuguesa
+            st.plotly_chart(fig_participacao_edicao_2_mun, use_container_width=True) # GRAFICO LINHAS PARTICIPACAO LONGITUDINAL
+        elif componente == 'Matemática':
+            # Exibir mensagem de que não há dados disponíveis
+            st.markdown('<span style="color: red; font-weight: bold">Dados não encontrados! :no_entry_sign:</span>', unsafe_allow_html=True)
+            st.markdown('<span style="color: red; font-weight: bold">A série histórica do SPAECE não conta com Matemática no 2º Ano.</span>', unsafe_allow_html=True)
+        else:
+            # Exibir mensagem de que não há dados disponíveis para o município na rede estadual em Língua Portuguesa
+            st.markdown('<span style="color: red; font-weight: bold">Dados não encontrados! :no_entry_sign:</span>', unsafe_allow_html=True)
+            st.markdown('<span style="color: red; font-weight: bold">Não há informações disponíveis para o município nesta rede e componente.</span>', unsafe_allow_html=True)
+
+
+
+
+
+
 
     ## ------------------------ VISUALIZAÇÃO DA TABELA ------------------------ ##
 
