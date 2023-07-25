@@ -68,7 +68,7 @@ def formata_numero(valor, prefixo=''):
             valor_str = f'{valor:.2f}'  # Converte o valor para string com 2 casas decimais
             valor_str = valor_str.replace('.', '|').replace(',', '.').replace('|', ',')  # Substitui os separadores
             if valor.is_integer():
-                return f'{prefixo} {valor_str.replace(".00", "")} {unidade}'  # Remove o ".00" quando for um número inteiro
+                return f'{prefixo} {valor_str.replace(",00", "")} {unidade}'  # Remove o ",00" quando for um número inteiro
             return f'{prefixo} {valor_str} {unidade}'
         valor = valor / 1000
 
@@ -1012,7 +1012,7 @@ with aba1: # >>>>> 2º Ano do Ensino Fundamental
     with coluna1:
         if componente != 'Matemática': # Condicional para exibir somente Língua Portuguesa
             st.metric('População prevista', formata_numero(dados_ce_2_ano['Nº de Alunos Previstos'].sum()), help='População prevista somada de acordo coms os filtros selecionados')
-            st.metric('População avaliada', formata_numero(dados_ce_2_ano['Nº de Alunos Avaliados'].sum()), help='População alaliada somada de acordo coms os filtros selecionados')
+            st.metric('População avaliada', formata_numero(dados_ce_2_ano['Nº de Alunos Avaliados'].sum()), help='População avaliada somada de acordo coms os filtros selecionados')
        
         if componente != 'Matemática':  # Exibir o gráfico de participação apenas se não for Matemática
             st.plotly_chart(fig_participacao_edicao_2_ce, use_container_width=True) # GRAFICO LINHAS PARTICIPACAO LONGITUDINAL
@@ -1068,7 +1068,7 @@ with aba2: # >>>>> 5º Ano do Ensino Fundamental
     coluna1, coluna2 = st.columns(2)
     with coluna1:
         st.metric('População prevista', formata_numero(dados_ce_5_ano['Nº de Alunos Previstos'].sum()), help='População prevista somada de acordo coms os filtros selecionados')
-        st.metric('População avaliada', formata_numero(dados_ce_5_ano['Nº de Alunos Avaliados'].sum()), help='População alaliada somada de acordo coms os filtros selecionados')
+        st.metric('População avaliada', formata_numero(dados_ce_5_ano['Nº de Alunos Avaliados'].sum()), help='População avaliada somada de acordo coms os filtros selecionados')
         st.plotly_chart(fig_participacao_edicao_5_ce, use_container_width=True) # GRAFICO LINHAS PARTICIPACAO LONGITUDINAL
         
     with coluna2:
@@ -1111,7 +1111,7 @@ with aba3: # >>>>> 9º Ano do Ensino Fundamental
     coluna1, coluna2 = st.columns(2)
     with coluna1:
         st.metric('População prevista', formata_numero(dados_ce_9_ano['Nº de Alunos Previstos'].sum()), help='População prevista somada de acordo coms os filtros selecionados')
-        st.metric('População avaliada', formata_numero(dados_ce_9_ano['Nº de Alunos Avaliados'].sum()), help='População alaliada somada de acordo coms os filtros selecionados')
+        st.metric('População avaliada', formata_numero(dados_ce_9_ano['Nº de Alunos Avaliados'].sum()), help='População alvliada somada de acordo coms os filtros selecionados')
         st.plotly_chart(fig_participacao_edicao_9_ce, use_container_width=True) # GRAFICO LINHAS PARTICIPACAO LONGITUDINAL
 
     with coluna2:
@@ -1156,7 +1156,7 @@ with aba4: # >>>>> 3ª Série do Ensino Médio
     with coluna1:
         if rede != 'MUNICIPAL': # Condicional para exibir somente rede estadual
             st.metric('População prevista', formata_numero(dados_ce_3_ano['Nº de Alunos Previstos'].sum()), help='População prevista somada de acordo coms os filtros selecionados')
-            st.metric('População avaliada', formata_numero(dados_ce_3_ano['Nº de Alunos Avaliados'].sum()), help='População alaliada somada de acordo coms os filtros selecionados')
+            st.metric('População avaliada', formata_numero(dados_ce_3_ano['Nº de Alunos Avaliados'].sum()), help='População avaliada somada de acordo coms os filtros selecionados')
 
         if rede != 'MUNICIPAL':  # Exibir o gráfico de participação apenas se não rede municipal
             st.plotly_chart(fig_participacao_edicao_3_ce, use_container_width=True) # GRAFICO LINHAS PARTICIPACAO LONGITUDINAL
