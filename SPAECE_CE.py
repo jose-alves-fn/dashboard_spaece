@@ -150,12 +150,12 @@ if todos_as_edicoes:
 else:
     edicao = st.sidebar.multiselect('Edição', dados_ce['Edição'].unique())
 
-# Filtragem dos padroes de desempenho
-todos_os_padroes = st.sidebar.checkbox('Todos os padrões de desempenho', value = True)
-if todos_os_padroes:
-    padroes = dados_ce['Indicação do Padrão de Desempenho'].unique()
-else:
-    padroes = st.sidebar.multiselect('Indicação do Padrão de Desempenho', dados_ce['Indicação do Padrão de Desempenho'].unique())
+# # Filtragem dos padroes de desempenho
+# todos_os_padroes = st.sidebar.checkbox('Todos os padrões de desempenho', value = True)
+# if todos_os_padroes:
+#     padroes = dados_ce['Indicação do Padrão de Desempenho'].unique()
+# else:
+#     padroes = st.sidebar.multiselect('Indicação do Padrão de Desempenho', dados_ce['Indicação do Padrão de Desempenho'].unique())
 
 ## Filtragem da proficiencia media
 todas_as_proficiencias = st.sidebar.checkbox('Todas as proficiências médias', value = True)
@@ -170,7 +170,7 @@ dados_filtrados = dados_ce[
                           #(dados_ce['Etapa'] == etapa) &
                           (dados_ce['Componente'] == componente) &
                           (dados_ce['Edição'].isin(edicao)) &
-                          (dados_ce['Indicação do Padrão de Desempenho'].isin(padroes)) &
+                          #(dados_ce['Indicação do Padrão de Desempenho'].isin(padroes)) &
                           (dados_ce['Proficiência Média'].between(proficiencia[0], proficiencia[1]))
 ]
 
@@ -1018,8 +1018,9 @@ with aba1: # >>>>> 2º Ano do Ensino Fundamental
             st.plotly_chart(fig_participacao_edicao_2_ce, use_container_width=True) # GRAFICO LINHAS PARTICIPACAO LONGITUDINAL
         
         else:
-            st.markdown('<span style="color: red; font-weight: bold">Dados não encontrados! :no_entry_sign:</span>', unsafe_allow_html=True)
-            st.markdown('<span style="color: red; font-weight: bold">A série histórica do SPAECE não conta com Matemática no 2º Ano.</span>', unsafe_allow_html=True)
+            st.error(':no_entry_sign: Dados não encontrados. A série histórica do SPAECE não conta com Matemática no 2º Ano.')
+            # st.markdown('<span style="color: red; font-weight: bold">Dados não encontrados! :no_entry_sign:</span>', unsafe_allow_html=True)
+            # st.markdown('<span style="color: red; font-weight: bold">A série histórica do SPAECE não conta com Matemática no 2º Ano.</span>', unsafe_allow_html=True)
         
     with coluna2:
         if componente != 'Matemática':  # Condicional para exibir somente Língua Portuguesa
@@ -1154,19 +1155,18 @@ with aba3: # >>>>> 9º Ano do Ensino Fundamental
 with aba4: # >>>>> 3ª Série do Ensino Médio
     coluna1, coluna2 = st.columns(2)
     with coluna1:
-        if rede != 'MUNICIPAL': # Condicional para exibir somente rede estadual
+        if rede != 'Municipal': # Condicional para exibir somente rede estadual
             st.metric('População prevista', formata_numero(dados_ce_3_ano['Nº de Alunos Previstos'].sum()), help='População prevista somada de acordo coms os filtros selecionados')
             st.metric('População avaliada', formata_numero(dados_ce_3_ano['Nº de Alunos Avaliados'].sum()), help='População avaliada somada de acordo coms os filtros selecionados')
 
-        if rede != 'MUNICIPAL':  # Exibir o gráfico de participação apenas se não rede municipal
+        if rede != 'Municipal':  # Exibir o gráfico de participação apenas se não rede municipal
             st.plotly_chart(fig_participacao_edicao_3_ce, use_container_width=True) # GRAFICO LINHAS PARTICIPACAO LONGITUDINAL
         
         else:
-            st.markdown('<span style="color: red; font-weight: bold">Dados não encontrados! :no_entry_sign:</span>', unsafe_allow_html=True)
-            st.markdown('<span style="color: red; font-weight: bold">Não há oferta municipal para 3ª Série.</span>', unsafe_allow_html=True)
+            st.error(':no_entry_sign: Dados não encontrados. Não há oferta municipal para 3ª Série.')
 
     with coluna2:
-        if rede != 'MUNICIPAL': # Condicional para exibir somente rede estadual
+        if rede != 'Municipal': # Condicional para exibir somente rede estadual
             num_alunos_previstos = dados_ce_3_ano['Nº de Alunos Previstos'].sum()
             num_alunos_avaliados = dados_ce_3_ano['Nº de Alunos Avaliados'].sum()
             if num_alunos_previstos > 0:
@@ -1176,15 +1176,15 @@ with aba4: # >>>>> 3ª Série do Ensino Médio
             st.metric('Taxa de participação', f'{formata_taxa(taxa_participacao_3_ce)}%', help='Taxa de participação calculada de acordo com os filtros selecionados')
             st.metric('Proficiência Média', f'{formata_proficiencia(dados_ce_3_ano["Proficiência Média"].mean())}', help='Proficiência Média de acordo com os filtros selecionados')
 
-        if rede != 'MUNICIPAL':  # Exibir o gráfico de participação apenas se não rede municipal
+        if rede != 'Municipal':  # Exibir o gráfico de participação apenas se não rede municipal
             st.plotly_chart(fig_proficiencia_edicao_3_ce, use_container_width=True) # GRAFICO LINHAS PROFICIENCIA LOGITUDINAL
 
-    if rede != 'MUNICIPAL': # Exibir o gráfico de padrão de desempenho apenas se para a rede estadual
+    if rede != 'Municipal': # Exibir o gráfico de padrão de desempenho apenas se para a rede estadual
         st.plotly_chart(fig_proficiencia_edicao_3_ce_bar, use_container_width=True) # GRAFICO BARRAS PADRAO DE DESEMPENHO    
         st.plotly_chart(fig_barras_empilhadas_3_ce, use_container_width=True) # GRAFICO BARRAS EMPILHADAS DISTRIBUICAO DOS PADROES DE DESEMPENHO
 
     ## ------------------------ VISUALIZAÇÃO DA TABELA ------------------------ ##
-    if rede != 'MUNICIPAL':
+    if rede != 'Municipal':
         st.markdown('---')
         # Adicionando a tabela para visualização e download
         with st.expander('Colunas da Tabela'):
@@ -1198,7 +1198,7 @@ with aba4: # >>>>> 3ª Série do Ensino Médio
         st.markdown(f'A tabela possui :blue[{dados_ce_3_ano_filtered.shape[0]}] linhas e :blue[{dados_ce_3_ano_filtered.shape[1]}] colunas.')
 
     ## ------------------------ DOWNLOAD DAS TABELAS ------------------------ ##
-    if rede != 'MUNICIPAL':
+    if rede != 'Municipal':
         st.markdown('---')
         st.markdown('**Download da tabela** :envelope_with_arrow:')
         st.download_button('Formato em CSV :page_facing_up:', data = converte_csv(dados_ce_3_ano_filtered), file_name = f'tabela_3ª_série_{componente}.csv', mime = 'text/csv', on_click = mensagem_sucesso)  
