@@ -1021,7 +1021,7 @@ with aba1: # >>>>> 2º Ano do Ensino Fundamental
             st.plotly_chart(fig_participacao_edicao_2_ce, use_container_width=True) # GRAFICO LINHAS PARTICIPACAO LONGITUDINAL
         
         else:
-            st.error('Dados não encontrados. Verifique as opções nos filtros.', icon="🚨")
+            st.error('Dados não encontrados. Verifique as opções nos filtros ou recarregue a página (F5 no teclado).', icon="🚨")
             # st.markdown('<span style="color: red; font-weight: bold">Dados não encontrados! :no_entry_sign:</span>', unsafe_allow_html=True)
             # st.markdown('<span style="color: red; font-weight: bold">A série histórica do SPAECE não conta com Matemática no 2º Ano.</span>', unsafe_allow_html=True)
         
@@ -1166,7 +1166,7 @@ with aba4: # >>>>> 3ª Série do Ensino Médio
             st.plotly_chart(fig_participacao_edicao_3_ce, use_container_width=True) # GRAFICO LINHAS PARTICIPACAO LONGITUDINAL
         
         else:
-            st.error('Dados não encontrados. Verifique as opções nos filtros.', icon="🚨")
+            st.error('Dados não encontrados. Verifique as opções nos filtros ou recarregue a página (F5 no teclado).', icon="🚨")
 
     with coluna2:
         if rede != 'Municipal': # Condicional para exibir somente rede estadual
