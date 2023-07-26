@@ -7,6 +7,7 @@ import locale                                       # Lib para setar o padrão d
 import time                                         # Módulo para pequenas manipulações de tempo interativo
 import io                                           # Lib nativa para input / output binário
 import xlsxwriter                                   # Lib para engine de arquivos excel
+ 
 
 
 
@@ -122,6 +123,8 @@ def mensagem_sucesso():
 
 ## ------------------------ SOLICITACOES / FILTRAGENS ------------------------ ##
 
+
+
 # Carregar o arquivo para ALFA em CSV do GitHub
 url_ce = 'https://raw.githubusercontent.com/jose-alves-fn/jose-alves-fn-tabelas_spaece_memoria_2008_2022/main/memoria_ce_totas_etapas.csv'
 dados_ce = pd.read_csv(url_ce)
@@ -162,16 +165,16 @@ todas_as_proficiencias = st.sidebar.checkbox('Todas as proficiências médias', 
 if todas_as_proficiencias: # Aqui por hora definimos o default acima como True, ou seja, não ocorrerá filtragem
     proficiencia = (0, 500)
 else:
-    proficiencia = st.sidebar.slider('Selecione um intervalo', 0, 500, value = (0,500)) # Três parâmetros, sendo 1. Label, 2. Min, 3. Max
+    proficiencia = st.sidebar.slider('Selecione um intervalo', 0, 500, value = (0,500))
 
 # Filtrar os dados com base na seleção dos filtros acima
 dados_filtrados = dados_ce[
-                          (dados_ce['Rede'] == rede) &
-                          #(dados_ce['Etapa'] == etapa) &
-                          (dados_ce['Componente'] == componente) &
-                          (dados_ce['Edição'].isin(edicao)) &
-                          #(dados_ce['Indicação do Padrão de Desempenho'].isin(padroes)) &
-                          (dados_ce['Proficiência Média'].between(proficiencia[0], proficiencia[1]))
+                        (dados_ce['Rede'] == rede) &
+                        #(dados_ce['Etapa'] == etapa) &
+                        (dados_ce['Componente'] == componente) &
+                        (dados_ce['Edição'].isin(edicao)) &
+                        #(dados_ce['Indicação do Padrão de Desempenho'].isin(padroes)) &
+                        (dados_ce['Proficiência Média'].between(proficiencia[0], proficiencia[1]))
 ]
 
 
@@ -181,10 +184,10 @@ dados_filtrados = dados_ce[
 
 
 dados_ce_2_ano = dados_filtrados[['Etapa', 'Componente', 'Rede', 'Edição', 'Proficiência Média',
-       'Desvio Padrão', 'Indicação do Padrão de Desempenho',
-       '% Não Alfabetizado', '% Alfabetização Incompleta',
-       '% Intermediário (2º Ano)', '% Suficiente', '% Desejável',
-       'Nº de Alunos Previstos', 'Nº de Alunos Avaliados', 'Participação (%)']]
+    'Desvio Padrão', 'Indicação do Padrão de Desempenho',
+    '% Não Alfabetizado', '% Alfabetização Incompleta',
+    '% Intermediário (2º Ano)', '% Suficiente', '% Desejável',
+    'Nº de Alunos Previstos', 'Nº de Alunos Avaliados', 'Participação (%)']]
 
 ### Filtro de etapa para a tabela
 dados_ce_2_ano = dados_ce_2_ano[dados_ce_2_ano['Etapa'] == '2º Ano do Ensino Fundamental'] 
@@ -207,9 +210,9 @@ dados_linhas_participação_2_ce = dados_ce_2_ano[['Edição', 'Participação (
 ## ------------------------ 5º ANO ------------------------- ##
 
 dados_ce_5_ano = dados_filtrados[['Etapa', 'Componente', 'Rede', 'Edição', 'Proficiência Média',
-       'Desvio Padrão', 'Indicação do Padrão de Desempenho',
-       '% Muito Crítico', '% Crítico', '% Intermediário', '% Adequado',
-       'Nº de Alunos Previstos', 'Nº de Alunos Avaliados', 'Participação (%)']]
+    'Desvio Padrão', 'Indicação do Padrão de Desempenho',
+    '% Muito Crítico', '% Crítico', '% Intermediário', '% Adequado',
+    'Nº de Alunos Previstos', 'Nº de Alunos Avaliados', 'Participação (%)']]
 
 ### Filtro de etapa para a tabela
 dados_ce_5_ano = dados_ce_5_ano[dados_ce_5_ano['Etapa'] == '5º Ano do Ensino Fundamental']    
@@ -229,9 +232,9 @@ dados_linhas_participação_5_ce = dados_ce_5_ano[['Edição', 'Participação (
 ## ------------------------ 9º ANO ------------------------- ##
 
 dados_ce_9_ano = dados_filtrados[['Etapa', 'Componente', 'Rede', 'Edição', 'Proficiência Média',
-       'Desvio Padrão', 'Indicação do Padrão de Desempenho',
-       '% Muito Crítico', '% Crítico', '% Intermediário', '% Adequado',
-       'Nº de Alunos Previstos', 'Nº de Alunos Avaliados', 'Participação (%)']]
+    'Desvio Padrão', 'Indicação do Padrão de Desempenho',
+    '% Muito Crítico', '% Crítico', '% Intermediário', '% Adequado',
+    'Nº de Alunos Previstos', 'Nº de Alunos Avaliados', 'Participação (%)']]
 
 dados_ce_9_ano = dados_ce_9_ano[dados_ce_9_ano['Etapa'] == '9º Ano do Ensino Fundamental']    
 
@@ -248,9 +251,9 @@ dados_linhas_participação_9_ce = dados_ce_9_ano[['Edição', 'Participação (
 ## ------------------------ 3ª SERIE ------------------------- ##
 
 dados_ce_3_ano = dados_filtrados[['Etapa', 'Componente', 'Rede', 'Edição', 'Proficiência Média',
-       'Desvio Padrão', 'Indicação do Padrão de Desempenho',
-       '% Muito Crítico', '% Crítico', '% Intermediário', '% Adequado',
-       'Nº de Alunos Previstos', 'Nº de Alunos Avaliados', 'Participação (%)']]
+    'Desvio Padrão', 'Indicação do Padrão de Desempenho',
+    '% Muito Crítico', '% Crítico', '% Intermediário', '% Adequado',
+    'Nº de Alunos Previstos', 'Nº de Alunos Avaliados', 'Participação (%)']]
 
 dados_ce_3_ano = dados_ce_3_ano[dados_ce_3_ano['Etapa'] == '3ª Série do Ensino Médio']    
 
@@ -334,7 +337,7 @@ else:
     proficiencia_edicao_2_ce['Intervalo'] = pd.cut(proficiencia_edicao_2_ce['Proficiência Média'], bins=intervalos_2_ano, labels=False)
 
     padrao_map = {
-        0: 'Não alfanetizado',
+        0: 'Não alfabetizado',
         1: 'Alfabetização incompleta',
         2: 'Intermediário',
         3: 'Suficiente',
@@ -435,15 +438,15 @@ else:
 proficiencia_edicao_5_ce['Proficiência Média Formatada'] = proficiencia_edicao_5_ce['Proficiência Média'].apply(lambda x: f'{x:.1f}'.replace('.',','))
 
 fig_proficiencia_edicao_5_ce = px.line(proficiencia_edicao_5_ce,
-                             x = 'Edição',
-                             y = 'Proficiência Média',
-                             markers=True,
-                             range_y = (75, 275),
-                             text='Proficiência Média Formatada',
-                             #color = 'Edição',
-                             #line_dash = 'Edição',
-                             title = f'PROFICIÊNCIA MÉDIA - 5º ANO - REDE {(rede).upper()} - {(componente).upper()}'
-                             )
+                            x = 'Edição',
+                            y = 'Proficiência Média',
+                            markers=True,
+                            range_y = (75, 275),
+                            text='Proficiência Média Formatada',
+                            #color = 'Edição',
+                            #line_dash = 'Edição',
+                            title = f'PROFICIÊNCIA MÉDIA - 5º ANO - REDE {(rede).upper()} - {(componente).upper()}'
+                            )
 
 #fig_proficiencia_edicao_5_ce.update_layout(yaxis_title = 'Proficiência Média')
 fig_proficiencia_edicao_5_ce.update_layout(xaxis=dict(type='category', categoryorder='category ascending'))  # Definir o tipo de eixo como categoria
@@ -458,15 +461,15 @@ fig_proficiencia_edicao_5_ce.update_traces(textposition='bottom center', line=di
 dados_linhas_participação_5_ce['Participação Formatada'] = dados_linhas_participação_5_ce['Participação (%)'].apply(lambda x: f'{x:.1f}'.replace('.',','))
 
 fig_participacao_edicao_5_ce = px.line(dados_linhas_participação_5_ce,
-                             x = 'Edição',
-                             y = 'Participação (%)',
-                             markers=True,
-                             range_y = (30, 110),
-                             text='Participação Formatada',
-                             #color = 'Edição',
-                             #line_dash = 'Edição',
-                             title = f'PARTICIPAÇÃO - 5º ANO - REDE {(rede).upper()}'
-                             )
+                            x = 'Edição',
+                            y = 'Participação (%)',
+                            markers=True,
+                            range_y = (30, 110),
+                            text='Participação Formatada',
+                            #color = 'Edição',
+                            #line_dash = 'Edição',
+                            title = f'PARTICIPAÇÃO - 5º ANO - REDE {(rede).upper()}'
+                            )
 
 fig_participacao_edicao_5_ce.update_layout(xaxis=dict(type='category', categoryorder='category ascending'))  # Definir o tipo de eixo como categoria
 # fig_participacao_edicao_5_ce.update_xaxes(showgrid=False, showline=True, linecolor='lightgray')
@@ -626,15 +629,15 @@ fig_barras_empilhadas_5_ce.update_layout(
 proficiencia_edicao_9_ce['Proficiência Média Formatada'] = proficiencia_edicao_9_ce['Proficiência Média'].apply(lambda x: f'{x:.1f}'.replace('.',','))
 
 fig_proficiencia_edicao_9_ce = px.line(proficiencia_edicao_9_ce,
-                             x = 'Edição',
-                             y = 'Proficiência Média',
-                             markers=True,
-                             range_y = (180, 280),
-                             text='Proficiência Média Formatada',
-                             #color = 'Edição',
-                             #line_dash = 'Edição',
-                             title = f'PROFICIÊNCIA MÉDIA - 9º ANO - REDE {(rede).upper()} - {(componente).upper()}'
-                             )
+                            x = 'Edição',
+                            y = 'Proficiência Média',
+                            markers=True,
+                            range_y = (180, 280),
+                            text='Proficiência Média Formatada',
+                            #color = 'Edição',
+                            #line_dash = 'Edição',
+                            title = f'PROFICIÊNCIA MÉDIA - 9º ANO - REDE {(rede).upper()} - {(componente).upper()}'
+                            )
 
 #fig_proficiencia_edicao_9_ce.update_layout(yaxis_title = 'Proficiência Média')
 fig_proficiencia_edicao_9_ce.update_layout(xaxis=dict(type='category', categoryorder='category ascending'))  # Definir o tipo de eixo como categoria
@@ -649,15 +652,15 @@ fig_proficiencia_edicao_9_ce.update_traces(textposition='bottom center', line=di
 dados_linhas_participação_9_ce['Participação Formatada'] = dados_linhas_participação_9_ce['Participação (%)'].apply(lambda x: f'{x:.1f}'.replace('.',','))
 
 fig_participacao_edicao_9_ce = px.line(dados_linhas_participação_9_ce,
-                             x = 'Edição',
-                             y = 'Participação (%)',
-                             markers=True,
-                             range_y = (30, 110),
-                             text='Participação Formatada',
-                             #color = 'Edição',
-                             #line_dash = 'Edição',
-                             title = f'PARTICIPAÇÃO - 9º ANO - REDE {(rede).upper()}'
-                             )
+                            x = 'Edição',
+                            y = 'Participação (%)',
+                            markers=True,
+                            range_y = (30, 110),
+                            text='Participação Formatada',
+                            #color = 'Edição',
+                            #line_dash = 'Edição',
+                            title = f'PARTICIPAÇÃO - 9º ANO - REDE {(rede).upper()}'
+                            )
 
 fig_participacao_edicao_9_ce.update_layout(xaxis=dict(type='category', categoryorder='category ascending'))  # Definir o tipo de eixo como categoria
 # fig_participacao_edicao_9_ce.update_xaxes(showgrid=False, showline=True, linecolor='lightgray')
@@ -1013,12 +1016,12 @@ with aba1: # >>>>> 2º Ano do Ensino Fundamental
         if componente != 'Matemática': # Condicional para exibir somente Língua Portuguesa
             st.metric('População prevista', formata_numero(dados_ce_2_ano['Nº de Alunos Previstos'].sum()), help='População prevista somada de acordo coms os filtros selecionados')
             st.metric('População avaliada', formata_numero(dados_ce_2_ano['Nº de Alunos Avaliados'].sum()), help='População avaliada somada de acordo coms os filtros selecionados')
-       
+    
         if componente != 'Matemática':  # Exibir o gráfico de participação apenas se não for Matemática
             st.plotly_chart(fig_participacao_edicao_2_ce, use_container_width=True) # GRAFICO LINHAS PARTICIPACAO LONGITUDINAL
         
         else:
-            st.error(':no_entry_sign: Dados não encontrados. A série histórica do SPAECE não conta com Matemática no 2º Ano.')
+            st.error('Dados não encontrados. Verifique as opções nos filtros.', icon="🚨")
             # st.markdown('<span style="color: red; font-weight: bold">Dados não encontrados! :no_entry_sign:</span>', unsafe_allow_html=True)
             # st.markdown('<span style="color: red; font-weight: bold">A série histórica do SPAECE não conta com Matemática no 2º Ano.</span>', unsafe_allow_html=True)
         
@@ -1032,7 +1035,7 @@ with aba1: # >>>>> 2º Ano do Ensino Fundamental
                 taxa_participacao_2_ce = 0
             st.metric('Taxa de participação', f'{formata_taxa(taxa_participacao_2_ce)}%', help='Taxa de participação calculada de acordo com os filtros selecionados')
             st.metric('Proficiência Média', f'{formata_proficiencia(dados_ce_2_ano["Proficiência Média"].mean())}', help='Proficiência Média de acordo com os filtros selecionados')
-       
+    
         if componente != 'Matemática':  # Exibir o gráfico de proficiência apenas se não for Matemática
             st.plotly_chart(fig_proficiencia_edicao_2_ce, use_container_width=True) # GRAFICO LINHAS PROFICIENCIA LOGITUDINAL
     
@@ -1086,7 +1089,7 @@ with aba2: # >>>>> 5º Ano do Ensino Fundamental
     st.plotly_chart(fig_barras_empilhadas_5_ce, use_container_width=True) # GRAFICO BARRAS EMPILHADAS DISTRIBUICAO DOS PADROES DE DESEMPENHO
 
     ## ------------------------ VISUALIZAÇÃO DA TABELA ------------------------ ##
-   
+
     st.markdown('---')
     # Adicionando a tabela para visualização e download
     with st.expander('Colunas da Tabela'):
@@ -1163,7 +1166,7 @@ with aba4: # >>>>> 3ª Série do Ensino Médio
             st.plotly_chart(fig_participacao_edicao_3_ce, use_container_width=True) # GRAFICO LINHAS PARTICIPACAO LONGITUDINAL
         
         else:
-            st.error(':no_entry_sign: Dados não encontrados. Não há oferta municipal para 3ª Série.')
+            st.error('Dados não encontrados. Verifique as opções nos filtros.', icon="🚨")
 
     with coluna2:
         if rede != 'Municipal': # Condicional para exibir somente rede estadual
@@ -1216,9 +1219,6 @@ st.markdown("""
     - LinkedIn: [José Alves Ferreira Neto](https://www.linkedin.com/in/jos%C3%A9-alves-ferreira-neto-1bbbb8192/)  
     - E-mail: jose.alvesfn@gmail.com
 """)
-
-
-
 
 
 
