@@ -16,6 +16,7 @@ st.set_page_config(page_title = 'DASHBOARD SPAECE', initial_sidebar_state = 'col
                                'Report a bug': 'https://www.linkedin.com/in/jos%C3%A9-alves-ferreira-neto-1bbbb8192/',
                                'Get help': 'https://www.seduc.ce.gov.br/'})
 
+
 # Imagem principal do projeto
 # image = 'spaece.jpg'
 # st.image(image, use_column_width=False)
@@ -136,8 +137,7 @@ def mensagem_sucesso():
 # ------------------------ SOLICITACOES / FILTRAGENS ------------------------ ##
 
 # Carregar o arquivo para MUN em CSV do GitHub
-
-url_mun = 'https://raw.githubusercontent.com/jose-alves-fn/jose-alves-fn-tabelas_spaece_memoria_2008_2022/main/memoria_mun_todas_etapas.csv'
+url_mun = 'https://raw.githubusercontent.com/jose-alves-fn/jose-alves-fn-tabelas_spaece_memoria_2008_2022/main/memoria_mun_todas_etapas_v2.csv'
 dados_mun = pd.read_csv(url_mun)
 
 ## Titulo do sidebar
@@ -168,7 +168,6 @@ if todos_as_edicoes:
     edicao = dados_mun['Edição'].unique()
 else:
     edicao = st.sidebar.multiselect('Edição', dados_mun['Edição'].unique())
-
 # # Filtragem dos padroes de desempenho
 # todos_os_padroes = st.sidebar.checkbox('Todos os padrões de desempenho', value = True)
 # if todos_os_padroes:
@@ -185,13 +184,13 @@ else:
 
 # Filtrar os dados com base na seleção dos filtros acima
 dados_filtrados = dados_mun[
-                          (dados_mun['Rede'] == rede) &
-                          #(dados_mun['Etapa'] == etapa) &
-                          (dados_mun['Município'] == municipio) &
-                          (dados_mun['Componente'] == componente) &
-                          (dados_mun['Edição'].isin(edicao)) &
-                          #(dados_mun['Indicação do Padrão de Desempenho'].isin(padroes)) &
-                          (dados_mun['Proficiência Média'].between(proficiencia[0], proficiencia[1]))
+                        (dados_mun['Rede'] == rede) &
+                        #(dados_mun['Etapa'] == etapa) &
+                        (dados_mun['Município'] == municipio) &
+                        (dados_mun['Componente'] == componente) &
+                        (dados_mun['Edição'].isin(edicao)) &
+                        #(dados_mun['Indicação do Padrão de Desempenho'].isin(padroes)) &
+                        (dados_mun['Proficiência Média'].between(proficiencia[0], proficiencia[1]))
 ]
 
 ## ------------------------ TABELAS ------------------------ ##
@@ -200,10 +199,10 @@ dados_filtrados = dados_mun[
 
 
 dados_mun_2_ano = dados_filtrados[['Etapa', 'Componente', 'Rede', 'Código da CREDE', 'CREDE', 'Município', 
-                                   'Edição', 'Proficiência Média', 'Desvio Padrão', 'Indicação do Padrão de Desempenho',
-                                   '% Não Alfabetizado', '% Alfabetização Incompleta',
-                                   '% Intermediário (2º Ano)', '% Suficiente', '% Desejável',
-                                   'Nº de Alunos Previstos', 'Nº de Alunos Avaliados', 'Participação (%)']]
+                                'Edição', 'Proficiência Média', 'Desvio Padrão', 'Indicação do Padrão de Desempenho',
+                                '% Não Alfabetizado', '% Alfabetização Incompleta',
+                                '% Intermediário (2º Ano)', '% Suficiente', '% Desejável',
+                                'Nº de Alunos Previstos', 'Nº de Alunos Avaliados', 'Participação (%)']]
 
 ### Filtro de etapa para a tabela
 dados_mun_2_ano = dados_mun_2_ano[dados_mun_2_ano['Etapa'] == '2º Ano do Ensino Fundamental'] 
@@ -225,9 +224,9 @@ dados_linhas_participação_2_mun = dados_mun_2_ano[['Edição', 'Participação
 ## ------------------------ 5º ANO ------------------------- ##
 
 dados_mun_5_ano = dados_filtrados[['Etapa', 'Componente', 'Rede', 'Código da CREDE', 'CREDE', 'Município', 
-                                 'Edição', 'Proficiência Média', 'Desvio Padrão', 'Indicação do Padrão de Desempenho',
-                                 '% Muito Crítico', '% Crítico', '% Intermediário', '% Adequado',
-                                 'Nº de Alunos Previstos', 'Nº de Alunos Avaliados', 'Participação (%)']]
+                                'Edição', 'Proficiência Média', 'Desvio Padrão', 'Indicação do Padrão de Desempenho',
+                                '% Muito Crítico', '% Crítico', '% Intermediário', '% Adequado',
+                                'Nº de Alunos Previstos', 'Nº de Alunos Avaliados', 'Participação (%)']]
 
 ### Filtro de etapa para a tabela
 dados_mun_5_ano = dados_mun_5_ano[dados_mun_5_ano['Etapa'] == '5º Ano do Ensino Fundamental']    
@@ -306,11 +305,11 @@ else:
                                 x = 'Edição',
                                 y = 'Proficiência Média',
                                 markers=True,
-                                range_y = (75, 240),
+                                range_y = (75, 270),
                                 text='Proficiência Média Formatada',
                                 #color = 'Edição',
                                 #line_dash = 'Edição',
-                                title = f'PROFICIÊNCIA MÉDIA - 2º ANO - {(municipio).upper()}'
+                                title = f'PROFICIÊNCIA MÉDIA - 2º ANO - {(componente).upper()} - {(municipio).upper()}'
                                 )
 
     #fig_proficiencia_edicao_2_mun.update_layout(yaxis_title = 'Proficiência Média')
@@ -329,7 +328,7 @@ else:
                                 x = 'Edição',
                                 y = 'Participação (%)',
                                 markers=True,
-                                range_y = (30, 110),
+                                range_y = (30, 135),
                                 text='Participação Formatada',
                                 #color = 'Edição',
                                 #line_dash = 'Edição',
@@ -342,8 +341,105 @@ else:
     # fig_participacao_edicao_2_mun.update_yaxes(showgrid=True, showline=True, linecolor='lightgray')
     fig_participacao_edicao_2_mun.update_traces(textposition='bottom center', line=dict(color='#548235'))  # Ajustar a posição dos rótulos de dados
 
+### Gráfico de BARRAS para padrões de desempenho longitudinal
+
+    # Definir os intervalos de cores e as respectivas cores
+    intervalos_2_ano = [0, 75, 100, 125, 150, 500]
+    cores = ['#FF0000', '#FFC000', '#FFFF00', '#C6E0B4', '#548235']
+
+    # Adicionar uma coluna "Intervalo" ao DataFrame com base nos intervalos
+    proficiencia_edicao_2_mun['Intervalo'] = pd.cut(proficiencia_edicao_2_mun['Proficiência Média'], bins=intervalos_2_ano, labels=False)
+
+    padrao_map = {
+        0: 'Não alfabetizado',
+        1: 'Alfabetização incompleta',
+        2: 'Intermediário',
+        3: 'Suficiente',
+        4: 'Desejável'
+    }
+
+    # Formatando manualmente os valores do eixo y
+    #proficiencia_edicao_2_ce['Proficiência Média Formatada'] = proficiencia_edicao_2_ce['Proficiência Média'].apply(lambda x: locale.format('%.1f', x))
+    proficiencia_edicao_2_mun['Proficiência Média Formatada'] = proficiencia_edicao_2_mun['Proficiência Média'].apply(lambda x: f'{x:.1f}'.replace('.', ','))
 
 
+    fig_proficiencia_edicao_2_mun_bar = go.Figure()
+
+    for i, intervalo in enumerate(intervalos_2_ano[:-1]):
+        data = proficiencia_edicao_2_mun[proficiencia_edicao_2_mun['Intervalo'] == i]
+        fig_proficiencia_edicao_2_mun_bar.add_trace(go.Bar(
+            x=data['Edição'],
+            y=data['Proficiência Média'],
+            marker=dict(color=cores[i]),
+            name=padrao_map[i],
+            text=data['Proficiência Média Formatada'],
+            textposition='outside'
+        ))
+
+    fig_proficiencia_edicao_2_mun_bar.update_layout(
+        xaxis=dict(type='category', categoryorder='category ascending'),
+        yaxis=dict(range=[50, 270]),
+        title=f'PADRÃO DE DESEMPENHO - 2º ANO - {(municipio.upper())}'
+    )
+
+    # fig_proficiencia_edicao_2_ce_bar.update_traces(marker=dict(line=dict(color='rgb(8,8,8)',width=1.5)))
+    # fig_proficiencia_edicao_2_ce_bar.show()
+
+### Gráfico de BARRAS EMPILHADAS para padrões de desempenho percentual
+
+    # Alterando as edições localmente para que o eixo y compreenda
+    mapeamento_edicoes = {
+        '2019': '(2019)',
+        '2018': '(2018)',
+        '2017': '(2017)',
+        '2016': '(2016)',
+        '2015': '(2015)',
+        '2014': '(2014)',
+        '2013': '(2013)',
+        '2012': '(2012)',
+        '2011': '(2011)',
+        '2010': '(2010)',
+        '2009': '(2009)',
+        '2008': '(2008)',
+        '2007': '(2007)'
+    }
+
+    dados_barras_empilhadas_2_mun['Edição'] = dados_barras_empilhadas_2_mun['Edição'].replace(mapeamento_edicoes)
+
+    # Criando um dict para passar as cores para os padrões
+    intervalos_2_ano = ['% Não Alfabetizado', '% Alfabetização Incompleta', '% Intermediário', '% Suficiente', '% Desejável']
+    cores = ['#FF0000', '#FFC000', '#FFFF00', '#C6E0B4', '#548235']
+    mapeamento_cores = dict(zip(intervalos_2_ano, cores))
+
+    # Criação da figura
+    fig_barras_empilhadas_2_mun = go.Figure()
+
+    # Usando um loop for para iterar e gerar cada barra
+    for intervalo in intervalos_2_ano:
+            fig_barras_empilhadas_2_mun.add_trace(go.Bar(
+            y=dados_barras_empilhadas_2_mun['Edição'],
+            x=dados_barras_empilhadas_2_mun[intervalo],
+            name=intervalo,
+            orientation='h',
+            text = dados_barras_empilhadas_2_mun[intervalo].apply(lambda x: f'{x:.1f}'.replace('.', ',')),  # Formatação BR
+            textposition='inside',
+            width=0.7,
+            marker=dict(color=mapeamento_cores[intervalo])
+        ))
+
+    # Agrupando as barras via layout, barmode = 'stack' (barra empilhada)
+    fig_barras_empilhadas_2_mun.update_layout(
+        barmode='stack',
+        title=f'DISTRIBUIÇÃO POR PADRÃO DE DESEMPENHO - 2º ANO - {(municipio).upper()}',
+        xaxis_title='Percentual',
+        yaxis_title='Edição',
+        showlegend=True,
+        xaxis=dict(range=[0, 100],  showticklabels = False),
+        height=675,
+        bargap=0.1 # ajuste de espaçamento das barras 
+        #margin=dict(l=300)  # Ajuste a margem esquerda conforme necessário
+    )
+    #fig_barras_empilhadas_2_ce.update_layout(width=1400)
 
 
 
@@ -376,7 +472,7 @@ aba1, aba2, aba3, aba4 = st.tabs(['2º Ano do Ensino Fundamental', '5º Ano do E
 with aba1: # >>>>> 2º Ano do Ensino Fundamental
     coluna1, coluna2 = st.columns(2)
     if dados_mun_2_ano['Proficiência Média'].empty:
-            st.error(f':no_entry_sign: O município de {municipio} não possui dados para o 2º Ano com os filtros selecionados.')
+            st.error(f'Dados não encontrados para o município de {municipio}. Verifique as opções nos filtros.', icon="🚨")
     else:
         with coluna1:
                 st.metric('População prevista', formata_numero(dados_mun_2_ano['Nº de Alunos Previstos'].sum()), help='População prevista somada de acordo coms os filtros selecionados')
@@ -393,8 +489,9 @@ with aba1: # >>>>> 2º Ano do Ensino Fundamental
                     taxa_participacao_2_mun = 0
                 st.metric('Taxa de participação', f'{formata_taxa(taxa_participacao_2_mun)}%', help='Taxa de participação calculada de acordo com os filtros selecionados')
                 st.metric('Proficiência Média', f'{formata_proficiencia(dados_mun_2_ano["Proficiência Média"].mean())}', help='Proficiência Média de acordo com os filtros selecionados')    
-            
-
+                st.plotly_chart(fig_proficiencia_edicao_2_mun, use_container_width=True) # GRAFICO LINHAS PROFICIENCIA LOGITUDINAL
+        st.plotly_chart(fig_proficiencia_edicao_2_mun_bar, use_container_width=True) # GRAFICO BARRAS PADRAO DE DESEMPENHO
+        st.plotly_chart(fig_barras_empilhadas_2_mun, use_container_width=True) # GRAFICO BARRAS EMPILHADAS DISTRIBUICAO DOS PADROES DE DESEMPENHO
 
 
 
@@ -404,17 +501,17 @@ with aba1: # >>>>> 2º Ano do Ensino Fundamental
 
     
     # Adicionando a tabela para visualização e download
-       
+    
 
     # Acionando os filtros (inside the expander)
-           
+        
 
     # Inserindo um texto sobre as colunas e linhas exibidas
     st.dataframe(dados_mun_2_ano, hide_index = True)
     st.markdown(f'A tabela possui :blue[{dados_mun_2_ano.shape[0]}] linhas e :blue[{dados_mun_2_ano.shape[1]}] colunas.')
 
     ## ------------------------ DOWNLOAD DAS TABELAS ------------------------ ##
-   
+
 
     
 
@@ -422,9 +519,9 @@ with aba1: # >>>>> 2º Ano do Ensino Fundamental
 with aba2: # >>>>> 5º Ano do Ensino Fundamental
     
     ## ------------------------ VISUALIZAÇÃO DA TABELA ------------------------ ##
-   
+
     
-   
+
     # Acionando os filtros (inside the expander)
         
 
@@ -441,12 +538,12 @@ with aba3: # >>>>> 9º Ano do Ensino Fundamental
             
     ## ------------------------ VISUALIZAÇÃO DA TABELA ------------------------ ##
 
-  
+
     # Adicionando a tabela para visualização e download
 
     
     # Acionando os filtros (inside the expander)
-   
+
 
     # Inserindo um texto sobre as colunas e linhas exibidas
     st.dataframe(dados_mun_9_ano, hide_index = True)
@@ -459,12 +556,12 @@ with aba3: # >>>>> 9º Ano do Ensino Fundamental
 
 
 with aba4: # >>>>> 3ª Série do Ensino Médio
-   
-       
+
+    
     ## ------------------------ VISUALIZAÇÃO DA TABELA ------------------------ ##
 
     
-   
+
     # Adicionando a tabela para visualização e download
         
 
@@ -487,3 +584,6 @@ st.markdown("""
     - LinkedIn: [José Alves Ferreira Neto](https://www.linkedin.com/in/jos%C3%A9-alves-ferreira-neto-1bbbb8192/)  
     - E-mail: jose.alvesfn@gmail.com
 """)
+
+
+
