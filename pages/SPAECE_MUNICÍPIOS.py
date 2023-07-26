@@ -149,7 +149,7 @@ redes = ['Municipal', 'Estadual']
 rede = st.sidebar.selectbox('Rede', redes)
 
 # ## Filtragem da etapa
-# etapas = dados_ce['Etapa'].unique()
+# etapas = dados_mun['Etapa'].unique()
 # etapa = st.sidebar.selectbox('Etapa', etapas)
 
 ## Filtragem de município
@@ -169,12 +169,12 @@ if todos_as_edicoes:
 else:
     edicao = st.sidebar.multiselect('Edição', dados_mun['Edição'].unique())
 
-# Filtragem dos padroes de desempenho
-todos_os_padroes = st.sidebar.checkbox('Todos os padrões de desempenho', value = True)
-if todos_os_padroes:
-    padroes = dados_mun['Indicação do Padrão de Desempenho'].unique()
-else:
-    padroes = st.sidebar.multiselect('Indicação do Padrão de Desempenho', dados_mun['Indicação do Padrão de Desempenho'].unique())
+# # Filtragem dos padroes de desempenho
+# todos_os_padroes = st.sidebar.checkbox('Todos os padrões de desempenho', value = True)
+# if todos_os_padroes:
+#     padroes = dados_mun['Indicação do Padrão de Desempenho'].unique()
+# else:
+#     padroes = st.sidebar.multiselect('Indicação do Padrão de Desempenho', dados_mun['Indicação do Padrão de Desempenho'].unique())
 
 ## Filtragem da proficiencia media
 todas_as_proficiencias = st.sidebar.checkbox('Todas as proficiências médias', value = True)
@@ -190,7 +190,7 @@ dados_filtrados = dados_mun[
                           (dados_mun['Município'] == municipio) &
                           (dados_mun['Componente'] == componente) &
                           (dados_mun['Edição'].isin(edicao)) &
-                          (dados_mun['Indicação do Padrão de Desempenho'].isin(padroes)) &
+                          #(dados_mun['Indicação do Padrão de Desempenho'].isin(padroes)) &
                           (dados_mun['Proficiência Média'].between(proficiencia[0], proficiencia[1]))
 ]
 
@@ -287,10 +287,10 @@ dados_linhas_participação_3_mun = dados_mun_3_ano[['Edição', 'Participação
 ## ------------------------ 2º ANO ------------------------- ##
 
 # Criação das figuras vazias para os gráficos
-fig_proficiencia_edicao_2_ce = go.Figure()
-fig_participacao_edicao_2_ce = go.Figure()
-fig_proficiencia_edicao_2_ce_bar = go.Figure()
-fig_barras_empilhadas_2_ce = go.Figure()
+fig_proficiencia_edicao_2_mun = go.Figure()
+fig_participacao_edicao_2_mun = go.Figure()
+fig_proficiencia_edicao_2_mun_bar = go.Figure()
+fig_barras_empilhadas_2_mun = go.Figure()
 
 if componente == 'Matemática':
     pass
@@ -299,10 +299,10 @@ else:
     ### Gráfico de LINHAS para proficiência média longitudinal
 
     # Formatando manualmente os valores do eixo y (atenção o locale-br não funciona em todos as aplicações)
-    # proficiencia_edicao_2_ce['Proficiência Média Formatada'] = proficiencia_edicao_2_ce['Proficiência Média'].apply(lambda x: locale.format('%.1f', x))
+    # proficiencia_edicao_2_mun['Proficiência Média Formatada'] = proficiencia_edicao_2_mun['Proficiência Média'].apply(lambda x: locale.format('%.1f', x))
     proficiencia_edicao_2_mun['Proficiência Média Formatada'] = proficiencia_edicao_2_mun['Proficiência Média'].apply(lambda x: f'{x:.1f}'.replace('.', ','))
 
-    fig_proficiencia_edicao_2_ce = px.line(proficiencia_edicao_2_mun,
+    fig_proficiencia_edicao_2_mun = px.line(proficiencia_edicao_2_mun,
                                 x = 'Edição',
                                 y = 'Proficiência Média',
                                 markers=True,
@@ -313,11 +313,11 @@ else:
                                 title = f'PROFICIÊNCIA MÉDIA - 2º ANO - {(municipio).upper()}'
                                 )
 
-    #fig_proficiencia_edicao_2_ce.update_layout(yaxis_title = 'Proficiência Média')
-    fig_proficiencia_edicao_2_ce.update_layout(xaxis=dict(type='category', categoryorder='category ascending'))  # Definir o tipo de eixo como categoria
-    #proficiencia_edicao_2_ce.update_xaxes(showgrid=False, showline=True, linecolor='lightgray')
-    #proficiencia_edicao_2_ce.update_yaxes(showgrid=True, showline=True, linecolor='lightgray')
-    fig_proficiencia_edicao_2_ce.update_traces(textposition='bottom center', line=dict(color='#548235'))  # Ajustar a posição dos rótulos de dados
+    #fig_proficiencia_edicao_2_mun.update_layout(yaxis_title = 'Proficiência Média')
+    fig_proficiencia_edicao_2_mun.update_layout(xaxis=dict(type='category', categoryorder='category ascending'))  # Definir o tipo de eixo como categoria
+    #proficiencia_edicao_2_mun.update_xaxes(showgrid=False, showline=True, linecolor='lightgray')
+    #proficiencia_edicao_2_mun.update_yaxes(showgrid=True, showline=True, linecolor='lightgray')
+    fig_proficiencia_edicao_2_mun.update_traces(textposition='bottom center', line=dict(color='#548235'))  # Ajustar a posição dos rótulos de dados
 
 
 ### Gráfico de LINHAS para participação
@@ -338,8 +338,8 @@ else:
 
     fig_participacao_edicao_2_mun.update_layout(xaxis=dict(type='category', categoryorder='category ascending'))  # Definir o tipo de eixo como categoria
     # Usar o parametro do xaxis title = 0.25 ou mais para ajustar o titulo
-    # fig_participacao_edicao_2_ce.update_xaxes(showgrid=False, showline=True, linecolor='lightgray')
-    # fig_participacao_edicao_2_ce.update_yaxes(showgrid=True, showline=True, linecolor='lightgray')
+    # fig_participacao_edicao_2_mun.update_xaxes(showgrid=False, showline=True, linecolor='lightgray')
+    # fig_participacao_edicao_2_mun.update_yaxes(showgrid=True, showline=True, linecolor='lightgray')
     fig_participacao_edicao_2_mun.update_traces(textposition='bottom center', line=dict(color='#548235'))  # Ajustar a posição dos rótulos de dados
 
 
@@ -355,12 +355,13 @@ else:
 
 ## ------------------------ VISUALIZAÇÕES NO STREAMLIT ------------------------ ##
 
-# aba1, aba2, aba3, aba4 = st.tabs(['2º Ano do Ensino Fundamental', '5º Ano do Ensino Fundamental', '9º Ano do Ensino Fundamental', '3ª Série do Ensino Médio'])
+aba1, aba2, aba3, aba4 = st.tabs(['2º Ano do Ensino Fundamental', '5º Ano do Ensino Fundamental', '9º Ano do Ensino Fundamental', '3ª Série do Ensino Médio'])
 
 
 # with aba1: # >>>>> 2º Ano do Ensino Fundamental
 #     coluna1, coluna2 = st.columns(2)
 #     with coluna1:
+    
 #         if componente != 'Matemática': # Condicional para exibir somente Língua Portuguesa
 #             st.metric('População prevista', formata_numero(dados_mun_2_ano['Nº de Alunos Previstos'].sum()), help='População prevista somada de acordo coms os filtros selecionados')
 #             st.metric('População avaliada', formata_numero(dados_mun_2_ano['Nº de Alunos Avaliados'].sum()), help='População avaliada somada de acordo coms os filtros selecionados')
@@ -369,35 +370,30 @@ else:
 #             st.plotly_chart(fig_participacao_edicao_2_mun, use_container_width=True) # GRAFICO LINHAS PARTICIPACAO LONGITUDINAL
         
 #         else:
-#             st.markdown('<span style="color: red; font-weight: bold">Dados não encontrados! :no_entry_sign:</span>', unsafe_allow_html=True)
-#             st.markdown('<span style="color: red; font-weight: bold">A série histórica do SPAECE não conta com Matemática no 2º Ano.</span>', unsafe_allow_html=True)
-
-
-aba1, aba2, aba3, aba4 = st.tabs(['2º Ano do Ensino Fundamental', '5º Ano do Ensino Fundamental', '9º Ano do Ensino Fundamental', '3ª Série do Ensino Médio'])
-
+#             st.error(':no_entry_sign: Dados não encontrados. A série histórica do SPAECE não conta com Matemática no 2º Ano.')
+            
 
 with aba1: # >>>>> 2º Ano do Ensino Fundamental
     coluna1, coluna2 = st.columns(2)
-    with coluna1:
-        # Verificar se há dados para a rede estadual em Língua Portuguesa
-        lingua_portuguesa_estadual_data_available = (dados_mun['Rede'] == 'Estadual') & (dados_mun['Componente'] == 'Língua Portuguesa')
+    if dados_mun_2_ano['Proficiência Média'].empty:
+            st.error(f':no_entry_sign: O município de {municipio} não possui dados para o 2º Ano com os filtros selecionados.')
+    else:
+        with coluna1:
+                st.metric('População prevista', formata_numero(dados_mun_2_ano['Nº de Alunos Previstos'].sum()), help='População prevista somada de acordo coms os filtros selecionados')
+                st.metric('População avaliada', formata_numero(dados_mun_2_ano['Nº de Alunos Avaliados'].sum()), help='População avaliada somada de acordo coms os filtros selecionados')
+                st.plotly_chart(fig_participacao_edicao_2_mun, use_container_width=True) # GRAFICO LINHAS PARTICIPACAO LONGITUDINAL
 
-        # Verificar se o município possui dados para a rede estadual em Língua Portuguesa
-        municipio_lingua_portuguesa_estadual_data_available = lingua_portuguesa_estadual_data_available & (dados_mun['Município'] == municipio)
-
-        if componente != 'Matemática' and municipio_lingua_portuguesa_estadual_data_available.any():
-            # Exibir os gráficos de Língua Portuguesa
-            st.plotly_chart(fig_participacao_edicao_2_mun, use_container_width=True) # GRAFICO LINHAS PARTICIPACAO LONGITUDINAL
-        elif componente == 'Matemática':
-            # Exibir mensagem de que não há dados disponíveis
-            st.markdown('<span style="color: red; font-weight: bold">Dados não encontrados! :no_entry_sign:</span>', unsafe_allow_html=True)
-            st.markdown('<span style="color: red; font-weight: bold">A série histórica do SPAECE não conta com Matemática no 2º Ano.</span>', unsafe_allow_html=True)
-        else:
-            # Exibir mensagem de que não há dados disponíveis para o município na rede estadual em Língua Portuguesa
-            st.markdown('<span style="color: red; font-weight: bold">Dados não encontrados! :no_entry_sign:</span>', unsafe_allow_html=True)
-            st.markdown('<span style="color: red; font-weight: bold">Não há informações disponíveis para o município nesta rede e componente.</span>', unsafe_allow_html=True)
-
-
+        with coluna2:
+            if componente != 'Matemática':  # Condicional para exibir somente Língua Portuguesa
+                num_alunos_previstos = dados_mun_2_ano['Nº de Alunos Previstos'].sum()
+                num_alunos_avaliados = dados_mun_2_ano['Nº de Alunos Avaliados'].sum()
+                if num_alunos_previstos > 0:
+                    taxa_participacao_2_mun = (num_alunos_avaliados / num_alunos_previstos) * 100
+                else:
+                    taxa_participacao_2_mun = 0
+                st.metric('Taxa de participação', f'{formata_taxa(taxa_participacao_2_mun)}%', help='Taxa de participação calculada de acordo com os filtros selecionados')
+                st.metric('Proficiência Média', f'{formata_proficiencia(dados_mun_2_ano["Proficiência Média"].mean())}', help='Proficiência Média de acordo com os filtros selecionados')    
+            
 
 
 
@@ -491,10 +487,3 @@ st.markdown("""
     - LinkedIn: [José Alves Ferreira Neto](https://www.linkedin.com/in/jos%C3%A9-alves-ferreira-neto-1bbbb8192/)  
     - E-mail: jose.alvesfn@gmail.com
 """)
-
-
-
-
-
-
-
