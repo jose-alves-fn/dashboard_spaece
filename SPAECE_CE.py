@@ -9,7 +9,8 @@ import io                                           # Lib nativa para input / ou
 import xlsxwriter                                   # Lib para engine de arquivos excel
  
 
-
+# # Desabilita o aviso de Clear caches
+# st.set_option('deprecation.showfileUploaderEncoding', False)
 
 # Configurações de exibição para o usuário
 st.set_page_config(page_title = 'DASHBOARD SPAECE', initial_sidebar_state = 'collapsed', layout = 'wide',
@@ -114,7 +115,7 @@ def converte_xlsx(df):
     output.seek(0) # mover o cursor de leitura/escrita para a posição 0 (início) no fluxo de bytes.
     return output.getvalue()
 
-## Mensagem de sucesso
+# Mensagem de sucesso
 def mensagem_sucesso():
     sucesso = st.success('Arquivo baixado com sucesso!', icon="✅")
     time.sleep(3)  
@@ -143,11 +144,11 @@ rede = st.sidebar.selectbox('Rede', redes)
 
 # Filtragem de componente
 componentes = ['Língua Portuguesa', 'Matemática']
-componente = st.sidebar.selectbox('Componente', componentes)
+componente = st.sidebar.selectbox('Componente ', componentes)  # Acresci um ' ' ao final do albel, para evitar que a seleção do filtro seja carregada nas demais páginas
 
 # Filtragem das edições
 st.sidebar.markdown('<span style="font-size: 13.7px;">Desmarque para escolher uma ou mais opções</span>', unsafe_allow_html=True)
-todos_as_edicoes = st.sidebar.checkbox('Todas as edições', value = True)
+todos_as_edicoes = st.sidebar.checkbox('Todas as edições ', value = True) # Acresci um ' ' ao final do albel, para evitar que a seleção do filtro seja carregada nas demais páginas
 if todos_as_edicoes: 
     edicao = dados_ce['Edição'].unique()
 else:
@@ -161,7 +162,7 @@ else:
 #     padroes = st.sidebar.multiselect('Indicação do Padrão de Desempenho', dados_ce['Indicação do Padrão de Desempenho'].unique())
 
 ## Filtragem da proficiencia media
-todas_as_proficiencias = st.sidebar.checkbox('Todas as proficiências médias', value = True)
+todas_as_proficiencias = st.sidebar.checkbox('Todas as proficiências médias ', value = True) # Acresci um ' ' ao final do albel, para evitar que a seleção do filtro seja carregada nas demais páginas
 if todas_as_proficiencias: # Aqui por hora definimos o default acima como True, ou seja, não ocorrerá filtragem
     proficiencia = (0, 500)
 else:
@@ -753,6 +754,7 @@ else: # >>>>>> MATEMÁTICA
 
     # fig_proficiencia_edicao_9_ce_bar.update_traces(marker=dict(line=dict(color='rgb(8,8,8)',width=1.5)))
     # fig_proficiencia_edicao_9_ce_bar.show()
+    
 ### Gráfico de BARRAS EMPILHADAS para padrões de desempenho percentual
 
 # Alterando as edições localmente para que o eixo y compreenda
@@ -812,7 +814,7 @@ fig_barras_empilhadas_9_ce.update_layout(
 
 ## ------------------------ 3ª SERIE  ------------------------- ##
 
-if rede == 'MUNICIPAL':
+if rede == 'Municipal':
     pass
 else:
 
@@ -1010,23 +1012,17 @@ else:
 
 aba1, aba2, aba3, aba4 = st.tabs(['2º Ano do Ensino Fundamental', '5º Ano do Ensino Fundamental', '9º Ano do Ensino Fundamental', '3ª Série do Ensino Médio'])
 
-with aba1: # >>>>> 2º Ano do Ensino Fundamental
+with aba1: # >>>>> 2º Ano do Ensino Fundamental <<<<<
     coluna1, coluna2 = st.columns(2)
-    with coluna1:
-        if componente != 'Matemática': # Condicional para exibir somente Língua Portuguesa
+    if dados_ce_2_ano['Proficiência Média'].empty:
+        st.error(f'Dados não encontrados. Verifique as opções nos filtros ou recarregue a página (F5 no teclado).', icon="🚨")
+    else:
+        with coluna1:
             st.metric('População prevista', formata_numero(dados_ce_2_ano['Nº de Alunos Previstos'].sum()), help='População prevista somada de acordo coms os filtros selecionados')
             st.metric('População avaliada', formata_numero(dados_ce_2_ano['Nº de Alunos Avaliados'].sum()), help='População avaliada somada de acordo coms os filtros selecionados')
-    
-        if componente != 'Matemática':  # Exibir o gráfico de participação apenas se não for Matemática
             st.plotly_chart(fig_participacao_edicao_2_ce, use_container_width=True) # GRAFICO LINHAS PARTICIPACAO LONGITUDINAL
         
-        else:
-            st.error('Dados não encontrados. Verifique as opções nos filtros ou recarregue a página (F5 no teclado).', icon="🚨")
-            # st.markdown('<span style="color: red; font-weight: bold">Dados não encontrados! :no_entry_sign:</span>', unsafe_allow_html=True)
-            # st.markdown('<span style="color: red; font-weight: bold">A série histórica do SPAECE não conta com Matemática no 2º Ano.</span>', unsafe_allow_html=True)
-        
-    with coluna2:
-        if componente != 'Matemática':  # Condicional para exibir somente Língua Portuguesa
+        with coluna2:
             num_alunos_previstos = dados_ce_2_ano['Nº de Alunos Previstos'].sum()
             num_alunos_avaliados = dados_ce_2_ano['Nº de Alunos Avaliados'].sum()
             if num_alunos_previstos > 0:
@@ -1034,17 +1030,12 @@ with aba1: # >>>>> 2º Ano do Ensino Fundamental
             else:
                 taxa_participacao_2_ce = 0
             st.metric('Taxa de participação', f'{formata_taxa(taxa_participacao_2_ce)}%', help='Taxa de participação calculada de acordo com os filtros selecionados')
-            st.metric('Proficiência Média', f'{formata_proficiencia(dados_ce_2_ano["Proficiência Média"].mean())}', help='Proficiência Média de acordo com os filtros selecionados')
-    
-        if componente != 'Matemática':  # Exibir o gráfico de proficiência apenas se não for Matemática
+            st.metric('Proficiência Média', f'{formata_proficiencia(dados_ce_2_ano["Proficiência Média"].mean())}', help='Proficiência Média de acordo com os filtros selecionados')                   
             st.plotly_chart(fig_proficiencia_edicao_2_ce, use_container_width=True) # GRAFICO LINHAS PROFICIENCIA LOGITUDINAL
-    
-    if componente != 'Matemática':  # Exibir o gráfico de padrão de desempenho apenas se não for Matemática
         st.plotly_chart(fig_proficiencia_edicao_2_ce_bar, use_container_width=True) # GRAFICO BARRAS PADRAO DE DESEMPENHO
         st.plotly_chart(fig_barras_empilhadas_2_ce, use_container_width=True) # GRAFICO BARRAS EMPILHADAS DISTRIBUICAO DOS PADROES DE DESEMPENHO
 
     ## ------------------------ VISUALIZAÇÃO DA TABELA ------------------------ ##
-    if componente != 'Matemática':
         st.markdown('---')
         # Adicionando a tabela para visualização e download
         with st.expander('Colunas da Tabela'):
@@ -1058,15 +1049,13 @@ with aba1: # >>>>> 2º Ano do Ensino Fundamental
         st.markdown(f'A tabela possui :blue[{dados_ce_2_ano_filtered.shape[0]}] linhas e :blue[{dados_ce_2_ano_filtered.shape[1]}] colunas.')
 
     ## ------------------------ DOWNLOAD DAS TABELAS ------------------------ ##
-    if componente != 'Matemática':
         st.markdown('---')
         st.markdown('**Download da tabela** :envelope_with_arrow:')
-        st.download_button('Formato em CSV :page_facing_up:', data = converte_csv(dados_ce_2_ano_filtered), file_name = 'tabela_2º_ano.csv', mime = 'text/csv', on_click = mensagem_sucesso)  
+        st.download_button('Formato em CSV :page_facing_up:', data = converte_csv(dados_ce_2_ano_filtered), file_name = 'tabela_2º_ano.csv', mime = 'text/csv') # on_click = mensagem_sucesso)  
         st.download_button('Formato em XSLS :page_with_curl:', data = converte_xlsx(dados_ce_2_ano_filtered), file_name = 'tabela_2º_ano.xlsx',
-                                mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', on_click=mensagem_sucesso)
+                                mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet') # on_click=mensagem_sucesso
         st.markdown('---')
-
-
+    
 
 with aba2: # >>>>> 5º Ano do Ensino Fundamental
     coluna1, coluna2 = st.columns(2)
@@ -1106,9 +1095,9 @@ with aba2: # >>>>> 5º Ano do Ensino Fundamental
     
     st.markdown('---')
     st.markdown('**Download da tabela** :envelope_with_arrow:')
-    st.download_button('Formato em CSV :page_facing_up:', data = converte_csv(dados_ce_5_ano_filtered), file_name = f'tabela_5º_ano_rede_{componente}.csv', mime = 'text/csv', on_click = mensagem_sucesso)  
+    st.download_button('Formato em CSV :page_facing_up:', data = converte_csv(dados_ce_5_ano_filtered), file_name = f'tabela_5º_ano_rede_{componente}.csv', mime = 'text/csv') # on_click = mensagem_sucesso)  
     st.download_button('Formato em XSLS :page_with_curl:', data = converte_xlsx(dados_ce_5_ano_filtered), file_name = f'tabela_5º_ano_rede_{componente}.xlsx',
-                            mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', on_click=mensagem_sucesso)
+                            mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet') # on_click=mensagem_sucesso)
     st.markdown('---')
 
 with aba3: # >>>>> 9º Ano do Ensino Fundamental
@@ -1149,27 +1138,23 @@ with aba3: # >>>>> 9º Ano do Ensino Fundamental
     
     st.markdown('---')
     st.markdown('**Download da tabela** :envelope_with_arrow:')
-    st.download_button('Formato em CSV :page_facing_up:', data = converte_csv(dados_ce_9_ano_filtered), file_name = f'tabela_9º_ano_rede_{componente}.csv', mime = 'text/csv', on_click = mensagem_sucesso)  
+    st.download_button('Formato em CSV :page_facing_up:', data = converte_csv(dados_ce_9_ano_filtered), file_name = f'tabela_9º_ano_rede_{componente}.csv', mime = 'text/csv') # on_click = mensagem_sucesso)  
     st.download_button('Formato em XSLS :page_with_curl:', data = converte_xlsx(dados_ce_9_ano_filtered), file_name = f'tabela_9º_ano_rede_{componente}.xlsx',
-                            mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', on_click=mensagem_sucesso)
+                            mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet') # on_click=mensagem_sucesso)
     st.markdown('---')
 
 
 with aba4: # >>>>> 3ª Série do Ensino Médio
     coluna1, coluna2 = st.columns(2)
-    with coluna1:
-        if rede != 'Municipal': # Condicional para exibir somente rede estadual
+    if dados_ce_3_ano['Proficiência Média'].empty:
+            st.error(f'Dados não encontrados. Verifique as opções nos filtros ou recarregue a página (F5 no teclado).', icon="🚨")
+    else:
+        with coluna1:
             st.metric('População prevista', formata_numero(dados_ce_3_ano['Nº de Alunos Previstos'].sum()), help='População prevista somada de acordo coms os filtros selecionados')
             st.metric('População avaliada', formata_numero(dados_ce_3_ano['Nº de Alunos Avaliados'].sum()), help='População avaliada somada de acordo coms os filtros selecionados')
-
-        if rede != 'Municipal':  # Exibir o gráfico de participação apenas se não rede municipal
             st.plotly_chart(fig_participacao_edicao_3_ce, use_container_width=True) # GRAFICO LINHAS PARTICIPACAO LONGITUDINAL
-        
-        else:
-            st.error('Dados não encontrados. Verifique as opções nos filtros ou recarregue a página (F5 no teclado).', icon="🚨")
 
-    with coluna2:
-        if rede != 'Municipal': # Condicional para exibir somente rede estadual
+        with coluna2:
             num_alunos_previstos = dados_ce_3_ano['Nº de Alunos Previstos'].sum()
             num_alunos_avaliados = dados_ce_3_ano['Nº de Alunos Avaliados'].sum()
             if num_alunos_previstos > 0:
@@ -1178,16 +1163,12 @@ with aba4: # >>>>> 3ª Série do Ensino Médio
                 taxa_participacao_3_ce = 0
             st.metric('Taxa de participação', f'{formata_taxa(taxa_participacao_3_ce)}%', help='Taxa de participação calculada de acordo com os filtros selecionados')
             st.metric('Proficiência Média', f'{formata_proficiencia(dados_ce_3_ano["Proficiência Média"].mean())}', help='Proficiência Média de acordo com os filtros selecionados')
-
-        if rede != 'Municipal':  # Exibir o gráfico de participação apenas se não rede municipal
             st.plotly_chart(fig_proficiencia_edicao_3_ce, use_container_width=True) # GRAFICO LINHAS PROFICIENCIA LOGITUDINAL
-
-    if rede != 'Municipal': # Exibir o gráfico de padrão de desempenho apenas se para a rede estadual
         st.plotly_chart(fig_proficiencia_edicao_3_ce_bar, use_container_width=True) # GRAFICO BARRAS PADRAO DE DESEMPENHO    
         st.plotly_chart(fig_barras_empilhadas_3_ce, use_container_width=True) # GRAFICO BARRAS EMPILHADAS DISTRIBUICAO DOS PADROES DE DESEMPENHO
 
-    ## ------------------------ VISUALIZAÇÃO DA TABELA ------------------------ ##
-    if rede != 'Municipal':
+
+## ------------------------ VISUALIZAÇÃO DA TABELA ------------------------ ##
         st.markdown('---')
         # Adicionando a tabela para visualização e download
         with st.expander('Colunas da Tabela'):
@@ -1201,15 +1182,13 @@ with aba4: # >>>>> 3ª Série do Ensino Médio
         st.markdown(f'A tabela possui :blue[{dados_ce_3_ano_filtered.shape[0]}] linhas e :blue[{dados_ce_3_ano_filtered.shape[1]}] colunas.')
 
     ## ------------------------ DOWNLOAD DAS TABELAS ------------------------ ##
-    if rede != 'Municipal':
         st.markdown('---')
         st.markdown('**Download da tabela** :envelope_with_arrow:')
-        st.download_button('Formato em CSV :page_facing_up:', data = converte_csv(dados_ce_3_ano_filtered), file_name = f'tabela_3ª_série_{componente}.csv', mime = 'text/csv', on_click = mensagem_sucesso)  
+        st.download_button('Formato em CSV :page_facing_up:', data = converte_csv(dados_ce_3_ano_filtered), file_name = f'tabela_3ª_série_{componente}.csv', mime = 'text/csv') # on_click = mensagem_sucesso)  
         st.download_button('Formato em XSLS :page_with_curl:', data = converte_xlsx(dados_ce_3_ano_filtered), file_name = f'tabela_3ª_série_{componente}.xlsx',
-                                mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', on_click=mensagem_sucesso)
+                                mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet') # on_click=mensagem_sucesso
         st.markdown('---')
-
-
+    
 
 ## ------------------------ CRÉDITOS ------------------------ ##
 
