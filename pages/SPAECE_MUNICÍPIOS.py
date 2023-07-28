@@ -990,6 +990,7 @@ with aba1: # >>>>> 2º Ano do Ensino Fundamental
     coluna1, coluna2 = st.columns(2)
     if dados_mun_2_ano['Proficiência Média'].empty:
             st.error(f'Dados não encontrados para o município de {municipio}. Verifique as opções nos filtros ou recarregue a página (F5 no teclado).', icon="🚨")
+            st.error('**Matemática** não é uma componente avaliada para o **2º Ano do Ensino Fundamental**.', icon = "⚠️")
     else:
         with coluna1:
                 st.metric('População prevista', formata_numero(dados_mun_2_ano['Nº de Alunos Previstos'].sum()), help='População prevista somada de acordo com os filtros selecionados')
@@ -1128,7 +1129,8 @@ with aba3: # >>>>> 9º Ano do Ensino Fundamental
 with aba4: # >>>>> 3ª Série do Ensino Médio
     coluna1, coluna2 = st.columns(2)
     if dados_mun_3_ano['Proficiência Média'].empty:
-            st.error(f'Dados para **3ª Série do Ensino Médio** não encontrados para o município de {municipio}. Verifique as opções nos filtros ou recarregue a página (F5 no teclado).', icon="🚨")
+            st.error(f'Dados não encontrados para o município de {municipio}. Verifique as opções nos filtros ou recarregue a página (F5 no teclado).', icon="🚨")
+            st.error('Não há oferta para **3ª Série do Ensino Médio** na **rede municipal** do Ceará.', icon = "⚠️")
     else:
         with coluna1:
                 st.metric('População prevista', formata_numero(dados_mun_3_ano['Nº de Alunos Previstos'].sum()), help='População prevista somada de acordo com os filtros selecionados')
