@@ -1015,7 +1015,8 @@ aba1, aba2, aba3, aba4 = st.tabs(['2º Ano do Ensino Fundamental', '5º Ano do E
 with aba1: # >>>>> 2º Ano do Ensino Fundamental <<<<<
     coluna1, coluna2 = st.columns(2)
     if dados_ce_2_ano['Proficiência Média'].empty:
-        st.error(f'Dados não encontrados para a componente de **Matemática**. Verifique as opções nos filtros ou recarregue a página (F5 no teclado).', icon="🚨")
+        st.error(f'Dados não encontrados. Verifique as opções nos filtros ou recarregue a página (F5 no teclado).', icon="🚨")
+        st.error('**Matemática** não é uma componente avaliada para o **2º Ano do Ensino Fundamental**.', icon = "⚠️")
     else:
         with coluna1:
             st.metric('População prevista', formata_numero(dados_ce_2_ano['Nº de Alunos Previstos'].sum()), help='População prevista somada de acordo com os filtros selecionados')
@@ -1059,95 +1060,102 @@ with aba1: # >>>>> 2º Ano do Ensino Fundamental <<<<<
 
 with aba2: # >>>>> 5º Ano do Ensino Fundamental
     coluna1, coluna2 = st.columns(2)
-    with coluna1:
-        st.metric('População prevista', formata_numero(dados_ce_5_ano['Nº de Alunos Previstos'].sum()), help='População prevista somada de acordo com os filtros selecionados')
-        st.metric('População avaliada', formata_numero(dados_ce_5_ano['Nº de Alunos Avaliados'].sum()), help='População avaliada somada de acordo com os filtros selecionados')
-        st.plotly_chart(fig_participacao_edicao_5_ce, use_container_width=True) # GRAFICO LINHAS PARTICIPACAO LONGITUDINAL
+    if dados_ce_5_ano['Proficiência Média'].empty:
+        st.error(f'Dados não encontrados. Verifique as opções nos filtros ou recarregue a página (F5 no teclado).', icon="🚨")
+    else:
+        with coluna1:
+            st.metric('População prevista', formata_numero(dados_ce_5_ano['Nº de Alunos Previstos'].sum()), help='População prevista somada de acordo com os filtros selecionados')
+            st.metric('População avaliada', formata_numero(dados_ce_5_ano['Nº de Alunos Avaliados'].sum()), help='População avaliada somada de acordo com os filtros selecionados')
+            st.plotly_chart(fig_participacao_edicao_5_ce, use_container_width=True) # GRAFICO LINHAS PARTICIPACAO LONGITUDINAL
+            
+        with coluna2:
+            num_alunos_previstos = dados_ce_5_ano['Nº de Alunos Previstos'].sum()
+            num_alunos_avaliados = dados_ce_5_ano['Nº de Alunos Avaliados'].sum()
+            if num_alunos_previstos > 0:
+                taxa_participacao_5_ce = (num_alunos_avaliados / num_alunos_previstos) * 100
+            else:
+                taxa_participacao_5_ce = 0
+            st.metric('Taxa de participação', f'{formata_taxa(taxa_participacao_5_ce)}%', help='Taxa de participação calculada de acordo com os filtros selecionados')
+            st.metric('Proficiência Média', f'{formata_proficiencia(dados_ce_5_ano["Proficiência Média"].mean())}', help='Proficiência Média de acordo com os filtros selecionados')
+            st.plotly_chart(fig_proficiencia_edicao_5_ce, use_container_width=True) # GRAFICO LINHAS PROFICIENCIA LOGITUDINAL
+        st.plotly_chart(fig_proficiencia_edicao_5_ce_bar, use_container_width=True) # GRAFICO BARRAS PADRAO DE DESEMPENHO    
+        st.plotly_chart(fig_barras_empilhadas_5_ce, use_container_width=True) # GRAFICO BARRAS EMPILHADAS DISTRIBUICAO DOS PADROES DE DESEMPENHO
+
+        ## ------------------------ VISUALIZAÇÃO DA TABELA ------------------------ ##
+
+        st.markdown('---')
+        # Adicionando a tabela para visualização e download
+        with st.expander('Colunas da Tabela'):
+            colunas = st.multiselect('Selecione as colunas', list(dados_ce_5_ano.columns), list(dados_ce_5_ano.columns), key='multiselect_expander_5_ce')
+
+            # Acionando os filtros (inside the expander)
+            dados_ce_5_ano_filtered = dados_ce_5_ano[colunas]  # Filter the DataFrame based on the selected columns
+
+        # Inserindo um texto sobre as colunas e linhas exibidas
+        st.dataframe(dados_ce_5_ano_filtered, hide_index = True)
+        st.markdown(f'A tabela possui :blue[{dados_ce_5_ano_filtered.shape[0]}] linhas e :blue[{dados_ce_5_ano_filtered.shape[1]}] colunas.')
+
+        ## ------------------------ DOWNLOAD DAS TABELAS ------------------------ ##
         
-    with coluna2:
-        num_alunos_previstos = dados_ce_5_ano['Nº de Alunos Previstos'].sum()
-        num_alunos_avaliados = dados_ce_5_ano['Nº de Alunos Avaliados'].sum()
-        if num_alunos_previstos > 0:
-            taxa_participacao_5_ce = (num_alunos_avaliados / num_alunos_previstos) * 100
-        else:
-            taxa_participacao_5_ce = 0
-        st.metric('Taxa de participação', f'{formata_taxa(taxa_participacao_5_ce)}%', help='Taxa de participação calculada de acordo com os filtros selecionados')
-        st.metric('Proficiência Média', f'{formata_proficiencia(dados_ce_5_ano["Proficiência Média"].mean())}', help='Proficiência Média de acordo com os filtros selecionados')
-        st.plotly_chart(fig_proficiencia_edicao_5_ce, use_container_width=True) # GRAFICO LINHAS PROFICIENCIA LOGITUDINAL
-    st.plotly_chart(fig_proficiencia_edicao_5_ce_bar, use_container_width=True) # GRAFICO BARRAS PADRAO DE DESEMPENHO    
-    st.plotly_chart(fig_barras_empilhadas_5_ce, use_container_width=True) # GRAFICO BARRAS EMPILHADAS DISTRIBUICAO DOS PADROES DE DESEMPENHO
-
-    ## ------------------------ VISUALIZAÇÃO DA TABELA ------------------------ ##
-
-    st.markdown('---')
-    # Adicionando a tabela para visualização e download
-    with st.expander('Colunas da Tabela'):
-        colunas = st.multiselect('Selecione as colunas', list(dados_ce_5_ano.columns), list(dados_ce_5_ano.columns), key='multiselect_expander_5_ce')
-
-        # Acionando os filtros (inside the expander)
-        dados_ce_5_ano_filtered = dados_ce_5_ano[colunas]  # Filter the DataFrame based on the selected columns
-
-    # Inserindo um texto sobre as colunas e linhas exibidas
-    st.dataframe(dados_ce_5_ano_filtered, hide_index = True)
-    st.markdown(f'A tabela possui :blue[{dados_ce_5_ano_filtered.shape[0]}] linhas e :blue[{dados_ce_5_ano_filtered.shape[1]}] colunas.')
-
-    ## ------------------------ DOWNLOAD DAS TABELAS ------------------------ ##
-    
-    st.markdown('---')
-    st.markdown('**Download da tabela** :envelope_with_arrow:')
-    st.download_button('Formato em CSV :page_facing_up:', data = converte_csv(dados_ce_5_ano_filtered), file_name = f'tabela_5º_ano_rede_{componente}.csv', mime = 'text/csv') # on_click = mensagem_sucesso)  
-    st.download_button('Formato em XSLS :page_with_curl:', data = converte_xlsx(dados_ce_5_ano_filtered), file_name = f'tabela_5º_ano_rede_{componente}.xlsx',
-                            mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet') # on_click=mensagem_sucesso)
-    st.markdown('---')
+        st.markdown('---')
+        st.markdown('**Download da tabela** :envelope_with_arrow:')
+        st.download_button('Formato em CSV :page_facing_up:', data = converte_csv(dados_ce_5_ano_filtered), file_name = f'tabela_5º_ano_rede_{componente}.csv', mime = 'text/csv') # on_click = mensagem_sucesso)  
+        st.download_button('Formato em XSLS :page_with_curl:', data = converte_xlsx(dados_ce_5_ano_filtered), file_name = f'tabela_5º_ano_rede_{componente}.xlsx',
+                                mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet') # on_click=mensagem_sucesso)
+        st.markdown('---')
 
 with aba3: # >>>>> 9º Ano do Ensino Fundamental
     coluna1, coluna2 = st.columns(2)
-    with coluna1:
-        st.metric('População prevista', formata_numero(dados_ce_9_ano['Nº de Alunos Previstos'].sum()), help='População prevista somada de acordo com os filtros selecionados')
-        st.metric('População avaliada', formata_numero(dados_ce_9_ano['Nº de Alunos Avaliados'].sum()), help='População alvliada somada de acordo com os filtros selecionados')
-        st.plotly_chart(fig_participacao_edicao_9_ce, use_container_width=True) # GRAFICO LINHAS PARTICIPACAO LONGITUDINAL
+    if dados_ce_9_ano['Proficiência Média'].empty:
+        st.error(f'Dados não encontrados. Verifique as opções nos filtros ou recarregue a página (F5 no teclado).', icon="🚨")
+    else:
+        with coluna1:
+            st.metric('População prevista', formata_numero(dados_ce_9_ano['Nº de Alunos Previstos'].sum()), help='População prevista somada de acordo com os filtros selecionados')
+            st.metric('População avaliada', formata_numero(dados_ce_9_ano['Nº de Alunos Avaliados'].sum()), help='População alvliada somada de acordo com os filtros selecionados')
+            st.plotly_chart(fig_participacao_edicao_9_ce, use_container_width=True) # GRAFICO LINHAS PARTICIPACAO LONGITUDINAL
 
-    with coluna2:
-        num_alunos_previstos = dados_ce_9_ano['Nº de Alunos Previstos'].sum()
-        num_alunos_avaliados = dados_ce_9_ano['Nº de Alunos Avaliados'].sum()
-        if num_alunos_previstos > 0:
-            taxa_participacao_9_ce = (num_alunos_avaliados / num_alunos_previstos) * 100
-        else:
-            taxa_participacao_9_ce = 0
-        st.metric('Taxa de participação', f'{formata_taxa(taxa_participacao_9_ce)}%', help='Taxa de participação calculada de acordo com os filtros selecionados')
-        st.metric('Proficiência Média', f'{formata_proficiencia(dados_ce_9_ano["Proficiência Média"].mean())}', help='Proficiência Média de acordo com os filtros selecionados')
-        st.plotly_chart(fig_proficiencia_edicao_9_ce, use_container_width=True) # GRAFICO LINHAS PROFICIENCIA LOGITUDINAL
-    st.plotly_chart(fig_proficiencia_edicao_9_ce_bar, use_container_width=True) # GRAFICO BARRAS PADRAO DE DESEMPENHO    
-    st.plotly_chart(fig_barras_empilhadas_9_ce, use_container_width=True) # GRAFICO BARRAS EMPILHADAS DISTRIBUICAO DOS PADROES DE DESEMPENHO
+        with coluna2:
+            num_alunos_previstos = dados_ce_9_ano['Nº de Alunos Previstos'].sum()
+            num_alunos_avaliados = dados_ce_9_ano['Nº de Alunos Avaliados'].sum()
+            if num_alunos_previstos > 0:
+                taxa_participacao_9_ce = (num_alunos_avaliados / num_alunos_previstos) * 100
+            else:
+                taxa_participacao_9_ce = 0
+            st.metric('Taxa de participação', f'{formata_taxa(taxa_participacao_9_ce)}%', help='Taxa de participação calculada de acordo com os filtros selecionados')
+            st.metric('Proficiência Média', f'{formata_proficiencia(dados_ce_9_ano["Proficiência Média"].mean())}', help='Proficiência Média de acordo com os filtros selecionados')
+            st.plotly_chart(fig_proficiencia_edicao_9_ce, use_container_width=True) # GRAFICO LINHAS PROFICIENCIA LOGITUDINAL
+        st.plotly_chart(fig_proficiencia_edicao_9_ce_bar, use_container_width=True) # GRAFICO BARRAS PADRAO DE DESEMPENHO    
+        st.plotly_chart(fig_barras_empilhadas_9_ce, use_container_width=True) # GRAFICO BARRAS EMPILHADAS DISTRIBUICAO DOS PADROES DE DESEMPENHO
 
-    ## ------------------------ VISUALIZAÇÃO DA TABELA ------------------------ ##
+        ## ------------------------ VISUALIZAÇÃO DA TABELA ------------------------ ##
 
-    st.markdown('---')
-    # Adicionando a tabela para visualização e download
-    with st.expander('Colunas da Tabela'):
-        colunas = st.multiselect('Selecione as colunas', list(dados_ce_9_ano.columns), list(dados_ce_9_ano.columns), key='multiselect_expander_9_ce')
+        st.markdown('---')
+        # Adicionando a tabela para visualização e download
+        with st.expander('Colunas da Tabela'):
+            colunas = st.multiselect('Selecione as colunas', list(dados_ce_9_ano.columns), list(dados_ce_9_ano.columns), key='multiselect_expander_9_ce')
 
-    # Acionando os filtros (inside the expander)
-    dados_ce_9_ano_filtered = dados_ce_9_ano[colunas]  # Filter the DataFrame based on the selected columns
+        # Acionando os filtros (inside the expander)
+        dados_ce_9_ano_filtered = dados_ce_9_ano[colunas]  # Filter the DataFrame based on the selected columns
 
-    # Inserindo um texto sobre as colunas e linhas exibidas
-    st.dataframe(dados_ce_9_ano_filtered, hide_index = True)
-    st.markdown(f'A tabela possui :blue[{dados_ce_9_ano_filtered.shape[0]}] linhas e :blue[{dados_ce_9_ano_filtered.shape[1]}] colunas.')
+        # Inserindo um texto sobre as colunas e linhas exibidas
+        st.dataframe(dados_ce_9_ano_filtered, hide_index = True)
+        st.markdown(f'A tabela possui :blue[{dados_ce_9_ano_filtered.shape[0]}] linhas e :blue[{dados_ce_9_ano_filtered.shape[1]}] colunas.')
 
-    ## ------------------------ DOWNLOAD DAS TABELAS ------------------------ ##
-    
-    st.markdown('---')
-    st.markdown('**Download da tabela** :envelope_with_arrow:')
-    st.download_button('Formato em CSV :page_facing_up:', data = converte_csv(dados_ce_9_ano_filtered), file_name = f'tabela_9º_ano_rede_{componente}.csv', mime = 'text/csv') # on_click = mensagem_sucesso)  
-    st.download_button('Formato em XSLS :page_with_curl:', data = converte_xlsx(dados_ce_9_ano_filtered), file_name = f'tabela_9º_ano_rede_{componente}.xlsx',
-                            mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet') # on_click=mensagem_sucesso)
-    st.markdown('---')
+        ## ------------------------ DOWNLOAD DAS TABELAS ------------------------ ##
+        
+        st.markdown('---')
+        st.markdown('**Download da tabela** :envelope_with_arrow:')
+        st.download_button('Formato em CSV :page_facing_up:', data = converte_csv(dados_ce_9_ano_filtered), file_name = f'tabela_9º_ano_rede_{componente}.csv', mime = 'text/csv') # on_click = mensagem_sucesso)  
+        st.download_button('Formato em XSLS :page_with_curl:', data = converte_xlsx(dados_ce_9_ano_filtered), file_name = f'tabela_9º_ano_rede_{componente}.xlsx',
+                                mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet') # on_click=mensagem_sucesso)
+        st.markdown('---')
 
 
 with aba4: # >>>>> 3ª Série do Ensino Médio
     coluna1, coluna2 = st.columns(2)
     if dados_ce_3_ano['Proficiência Média'].empty:
-            st.error(f'Dados não encontrados para **3ª Série do Ensino Médio** na rede **municipal**. Verifique as opções nos filtros ou recarregue a página (F5 no teclado).', icon="🚨")
+            st.error(f'Dados não encontrados. Verifique as opções nos filtros ou recarregue a página (F5 no teclado).', icon="🚨")
+            st.error('Não há oferta para **3ª Série do Ensino Médio** na **rede municipal** do Ceará.', icon = "⚠️")
     else:
         with coluna1:
             st.metric('População prevista', formata_numero(dados_ce_3_ano['Nº de Alunos Previstos'].sum()), help='População prevista somada de acordo com os filtros selecionados')
