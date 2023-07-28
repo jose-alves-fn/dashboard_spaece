@@ -293,7 +293,7 @@ else:
                                 x = 'Edição',
                                 y = 'Proficiência Média',
                                 markers=True,
-                                range_y = (75, 240),
+                                # range_y = (70, 240),
                                 text='Proficiência Média Formatada',
                                 #color = 'Edição',
                                 #line_dash = 'Edição',
@@ -316,7 +316,7 @@ else:
                                 x = 'Edição',
                                 y = 'Participação (%)',
                                 markers=True,
-                                range_y = (30, 110),
+                                # range_y = (30, 110),
                                 text='Participação Formatada',
                                 #color = 'Edição',
                                 #line_dash = 'Edição',
@@ -365,7 +365,7 @@ else:
 
     fig_proficiencia_edicao_2_ce_bar.update_layout(
         xaxis=dict(type='category', categoryorder='category ascending'),
-        yaxis=dict(range=[50, 250]),
+        yaxis=dict(range=[50, 300]),
         title=f'PADRÃO DE DESEMPENHO - 2º ANO - REDE {(rede).upper()}'
     )
 
@@ -442,7 +442,7 @@ fig_proficiencia_edicao_5_ce = px.line(proficiencia_edicao_5_ce,
                             x = 'Edição',
                             y = 'Proficiência Média',
                             markers=True,
-                            range_y = (75, 275),
+                            # range_y = (75, 275),
                             text='Proficiência Média Formatada',
                             #color = 'Edição',
                             #line_dash = 'Edição',
@@ -465,7 +465,7 @@ fig_participacao_edicao_5_ce = px.line(dados_linhas_participação_5_ce,
                             x = 'Edição',
                             y = 'Participação (%)',
                             markers=True,
-                            range_y = (30, 110),
+                            # range_y = (30, 110),
                             text='Participação Formatada',
                             #color = 'Edição',
                             #line_dash = 'Edição',
@@ -515,7 +515,7 @@ if componente == 'Língua Portuguesa': # >>>>>> LÍNGUA PORTUGUESA
 
     fig_proficiencia_edicao_5_ce_bar.update_layout(
         xaxis=dict(type='category', categoryorder='category ascending'),
-        yaxis=dict(range=[50, 250]),
+        yaxis=dict(range=[150, 250]),
         title=f'PADRÃO DE DESEMPENHO - 5º ANO - REDE {(rede).upper()} - {(componente).upper()}'
     )
 
@@ -556,7 +556,7 @@ else: # >>>>>> MATEMÁTICA
 
     fig_proficiencia_edicao_5_ce_bar.update_layout(
         xaxis=dict(type='category', categoryorder='category ascending'),
-        yaxis=dict(range=[50, 270]),
+        yaxis=dict(range=[150, 250]),
         title=f'PADRÃO DE DESEMPENHO - 5º ANO - REDE {(rede).upper()} - {(componente).upper()}'
     )
 
@@ -633,7 +633,7 @@ fig_proficiencia_edicao_9_ce = px.line(proficiencia_edicao_9_ce,
                             x = 'Edição',
                             y = 'Proficiência Média',
                             markers=True,
-                            range_y = (180, 280),
+                            # range_y = (180, 280),
                             text='Proficiência Média Formatada',
                             #color = 'Edição',
                             #line_dash = 'Edição',
@@ -656,7 +656,7 @@ fig_participacao_edicao_9_ce = px.line(dados_linhas_participação_9_ce,
                             x = 'Edição',
                             y = 'Participação (%)',
                             markers=True,
-                            range_y = (30, 110),
+                            # range_y = (30, 110),
                             text='Participação Formatada',
                             #color = 'Edição',
                             #line_dash = 'Edição',
@@ -705,7 +705,7 @@ if componente == 'Língua Portuguesa': # >>>>>> LÍNGUA PORTUGUESA
 
     fig_proficiencia_edicao_9_ce_bar.update_layout(
         xaxis=dict(type='category', categoryorder='category ascending'),
-        yaxis=dict(range=[50, 300]),
+        yaxis=dict(range=[150, 300]),
         title=f'PADRÃO DE DESEMPENHO - 9º ANO - REDE {(rede).upper()} - {(componente).upper()}'
     )
 
@@ -748,7 +748,7 @@ else: # >>>>>> MATEMÁTICA
 
     fig_proficiencia_edicao_9_ce_bar.update_layout(
         xaxis=dict(type='category', categoryorder='category ascending'),
-        yaxis=dict(range=[50, 300]),
+        yaxis=dict(range=[150, 300]),
         title=f'PADRÃO DE DESEMPENHO - 9º ANO - REDE {(rede).upper()} - {(componente).upper()}'
     )
 
@@ -829,7 +829,7 @@ else:
                                 x = 'Edição',
                                 y = 'Proficiência Média',
                                 markers=True,
-                                range_y = (100, 350),
+                                # range_y = (100, 350),
                                 text='Proficiência Média Formatada',
                                 #color = 'Edição',
                                 #line_dash = 'Edição',
@@ -852,7 +852,7 @@ else:
                                 x = 'Edição',
                                 y = 'Participação (%)',
                                 markers=True,
-                                range_y = (30, 110),
+                                # range_y = (30, 110),
                                 text='Participação Formatada',
                                 #color = 'Edição',
                                 #line_dash = 'Edição',
@@ -901,7 +901,7 @@ else:
 
         fig_proficiencia_edicao_3_ce_bar.update_layout(
             xaxis=dict(type='category', categoryorder='category ascending'),
-            yaxis=dict(range=[100, 350]),
+            yaxis=dict(range=[150, 300]),
             title=f'PADRÃO DE DESEMPENHO - 3ª SÉRIE - REDE {(rede).upper()} - {(componente).upper()}'
         )
 
@@ -943,7 +943,7 @@ else:
 
         fig_proficiencia_edicao_3_ce_bar.update_layout(
             xaxis=dict(type='category', categoryorder='category ascending'),
-            yaxis=dict(range=[100, 350]),
+            yaxis=dict(range=[150, 300]),
             title=f'PADRÃO DE DESEMPENHO - 3ª SÉRIE - REDE {(rede).upper()} - {(componente).upper()}'
         )
 
@@ -1015,11 +1015,11 @@ aba1, aba2, aba3, aba4 = st.tabs(['2º Ano do Ensino Fundamental', '5º Ano do E
 with aba1: # >>>>> 2º Ano do Ensino Fundamental <<<<<
     coluna1, coluna2 = st.columns(2)
     if dados_ce_2_ano['Proficiência Média'].empty:
-        st.error(f'Dados não encontrados. Verifique as opções nos filtros ou recarregue a página (F5 no teclado).', icon="🚨")
+        st.error(f'Dados não encontrados para a componente de **Matemática**. Verifique as opções nos filtros ou recarregue a página (F5 no teclado).', icon="🚨")
     else:
         with coluna1:
-            st.metric('População prevista', formata_numero(dados_ce_2_ano['Nº de Alunos Previstos'].sum()), help='População prevista somada de acordo coms os filtros selecionados')
-            st.metric('População avaliada', formata_numero(dados_ce_2_ano['Nº de Alunos Avaliados'].sum()), help='População avaliada somada de acordo coms os filtros selecionados')
+            st.metric('População prevista', formata_numero(dados_ce_2_ano['Nº de Alunos Previstos'].sum()), help='População prevista somada de acordo com os filtros selecionados')
+            st.metric('População avaliada', formata_numero(dados_ce_2_ano['Nº de Alunos Avaliados'].sum()), help='População avaliada somada de acordo com os filtros selecionados')
             st.plotly_chart(fig_participacao_edicao_2_ce, use_container_width=True) # GRAFICO LINHAS PARTICIPACAO LONGITUDINAL
         
         with coluna2:
@@ -1060,8 +1060,8 @@ with aba1: # >>>>> 2º Ano do Ensino Fundamental <<<<<
 with aba2: # >>>>> 5º Ano do Ensino Fundamental
     coluna1, coluna2 = st.columns(2)
     with coluna1:
-        st.metric('População prevista', formata_numero(dados_ce_5_ano['Nº de Alunos Previstos'].sum()), help='População prevista somada de acordo coms os filtros selecionados')
-        st.metric('População avaliada', formata_numero(dados_ce_5_ano['Nº de Alunos Avaliados'].sum()), help='População avaliada somada de acordo coms os filtros selecionados')
+        st.metric('População prevista', formata_numero(dados_ce_5_ano['Nº de Alunos Previstos'].sum()), help='População prevista somada de acordo com os filtros selecionados')
+        st.metric('População avaliada', formata_numero(dados_ce_5_ano['Nº de Alunos Avaliados'].sum()), help='População avaliada somada de acordo com os filtros selecionados')
         st.plotly_chart(fig_participacao_edicao_5_ce, use_container_width=True) # GRAFICO LINHAS PARTICIPACAO LONGITUDINAL
         
     with coluna2:
@@ -1103,8 +1103,8 @@ with aba2: # >>>>> 5º Ano do Ensino Fundamental
 with aba3: # >>>>> 9º Ano do Ensino Fundamental
     coluna1, coluna2 = st.columns(2)
     with coluna1:
-        st.metric('População prevista', formata_numero(dados_ce_9_ano['Nº de Alunos Previstos'].sum()), help='População prevista somada de acordo coms os filtros selecionados')
-        st.metric('População avaliada', formata_numero(dados_ce_9_ano['Nº de Alunos Avaliados'].sum()), help='População alvliada somada de acordo coms os filtros selecionados')
+        st.metric('População prevista', formata_numero(dados_ce_9_ano['Nº de Alunos Previstos'].sum()), help='População prevista somada de acordo com os filtros selecionados')
+        st.metric('População avaliada', formata_numero(dados_ce_9_ano['Nº de Alunos Avaliados'].sum()), help='População alvliada somada de acordo com os filtros selecionados')
         st.plotly_chart(fig_participacao_edicao_9_ce, use_container_width=True) # GRAFICO LINHAS PARTICIPACAO LONGITUDINAL
 
     with coluna2:
@@ -1147,11 +1147,11 @@ with aba3: # >>>>> 9º Ano do Ensino Fundamental
 with aba4: # >>>>> 3ª Série do Ensino Médio
     coluna1, coluna2 = st.columns(2)
     if dados_ce_3_ano['Proficiência Média'].empty:
-            st.error(f'Dados não encontrados. Verifique as opções nos filtros ou recarregue a página (F5 no teclado).', icon="🚨")
+            st.error(f'Dados não encontrados para **3ª Série do Ensino Médio** na rede **municipal**. Verifique as opções nos filtros ou recarregue a página (F5 no teclado).', icon="🚨")
     else:
         with coluna1:
-            st.metric('População prevista', formata_numero(dados_ce_3_ano['Nº de Alunos Previstos'].sum()), help='População prevista somada de acordo coms os filtros selecionados')
-            st.metric('População avaliada', formata_numero(dados_ce_3_ano['Nº de Alunos Avaliados'].sum()), help='População avaliada somada de acordo coms os filtros selecionados')
+            st.metric('População prevista', formata_numero(dados_ce_3_ano['Nº de Alunos Previstos'].sum()), help='População prevista somada de acordo com os filtros selecionados')
+            st.metric('População avaliada', formata_numero(dados_ce_3_ano['Nº de Alunos Avaliados'].sum()), help='População avaliada somada de acordo com os filtros selecionados')
             st.plotly_chart(fig_participacao_edicao_3_ce, use_container_width=True) # GRAFICO LINHAS PARTICIPACAO LONGITUDINAL
 
         with coluna2:
