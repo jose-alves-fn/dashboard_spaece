@@ -352,6 +352,7 @@ else:
     fig_proficiencia_edicao_2_mun_bar.update_layout(
         xaxis=dict(type='category', categoryorder='category ascending'),
         yaxis=dict(range=[50, 300]),
+        showlegend=True,
         title=f'PADRÃO DE DESEMPENHO - 2º ANO - {(municipio.upper())}'
     )
 
@@ -535,6 +536,7 @@ if componente == 'Língua Portuguesa': # >>>>>> LÍNGUA PORTUGUESA
     fig_proficiencia_edicao_5_mun_bar.update_layout(
         xaxis=dict(type='category', categoryorder='category ascending'),
         yaxis=dict(range=[100, 350]),
+        showlegend=True,
         title=f'PADRÃO DE DESEMPENHO - 5º ANO - REDE {(rede).upper()} - {(municipio).upper()} - {(componente).upper()}'
     )
 
@@ -590,6 +592,7 @@ else: # >>>>>> MATEMÁTICA
     fig_proficiencia_edicao_5_mun_bar.update_layout(
         xaxis=dict(type='category', categoryorder='category ascending'),
         yaxis=dict(range=[130, 360]),
+        showlegend=True,
         title=f'PADRÃO DE DESEMPENHO - 5º ANO - REDE {(rede).upper()} - {(municipio).upper()} - {(componente).upper()}'
     )
 
@@ -772,6 +775,7 @@ if componente == 'Língua Portuguesa': # >>>>>> LÍNGUA PORTUGUESA
     fig_proficiencia_edicao_9_mun_bar.update_layout(
         xaxis=dict(type='category', categoryorder='category ascending'),
         yaxis=dict(range=[150, 365]),
+        showlegend=True,
         title=f'PADRÃO DE DESEMPENHO - 9º ANO - REDE {(rede).upper()} - {(municipio).upper()} - {(componente).upper()}'
     )
 
@@ -828,6 +832,7 @@ else: # >>>>>> MATEMÁTICA
     fig_proficiencia_edicao_9_mun_bar.update_layout(
         xaxis=dict(type='category', categoryorder='category ascending'),
         yaxis=dict(range=[160, 410]),
+        showlegend=True,
         title=f'PADRÃO DE DESEMPENHO - 9º ANO - REDE {(rede).upper()} - {(municipio).upper()} - {(componente).upper()}'
     )
 
@@ -1012,6 +1017,7 @@ else:
         fig_proficiencia_edicao_3_mun_bar.update_layout(
             xaxis=dict(type='category', categoryorder='category ascending'),
             yaxis=dict(range=[200, 330]),
+            showlegend=True,
             title=f'PADRÃO DE DESEMPENHO - 3ª SÉRIE - REDE {(rede).upper()} - {(municipio).upper()} - {(componente).upper()}'
         )
 
@@ -1068,6 +1074,7 @@ else:
         fig_proficiencia_edicao_3_mun_bar.update_layout(
             xaxis=dict(type='category', categoryorder='category ascending'),
             yaxis=dict(range=[210, 410]),
+            showlegend=True,
             title=f'PADRÃO DE DESEMPENHO - 3ª SÉRIE - REDE {(rede).upper()} - {(municipio).upper()} - {(componente).upper()}'
         )
 
