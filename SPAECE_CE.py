@@ -440,6 +440,8 @@ else:
             orientation='h',
             text = dados_barras_empilhadas_2_ce[intervalo].apply(lambda x: f'{x:.1f}'.replace('.', ',')),  # Formatação BR
             textposition='inside',
+            textfont=dict(size=12),  # Tamanho da fonte do texto
+            insidetextanchor='middle',  # Centralizar o texto dentro da barra
             width=0.7,
             marker=dict(color=mapeamento_cores[intervalo])
         ))
@@ -673,6 +675,8 @@ for intervalo in intervalos_5_ano:
         orientation='h',
         text = dados_barras_empilhadas_5_ce[intervalo].apply(lambda x: f'{x:.1f}'.replace('.', ',')),  # Formatação BR
         textposition='inside',
+        textfont=dict(size=12),  # Tamanho da fonte do texto
+        insidetextanchor='middle',  # Centralizar o texto dentro da barra
         width=0.7,
         marker=dict(color=mapeamento_cores[intervalo])
     ))
@@ -909,6 +913,8 @@ for intervalo in intervalos_9_ano:
         orientation='h',
         text = dados_barras_empilhadas_9_ce[intervalo].apply(lambda x: f'{x:.1f}'.replace('.', ',')),  # Formatação BR
         textposition='inside',
+        textfont=dict(size=12),  # Tamanho da fonte do texto
+        insidetextanchor='middle',  # Centralizar o texto dentro da barra
         width=0.7,
         marker=dict(color=mapeamento_cores[intervalo])
     ))
@@ -1147,6 +1153,8 @@ else:
             orientation='h',
             text = dados_barras_empilhadas_3_ce[intervalo].apply(lambda x: f'{x:.1f}'.replace('.', ',')),  # Formatação BR
             textposition='inside',
+            textfont=dict(size=12),  # Tamanho da fonte do texto
+            insidetextanchor='middle',  # Centralizar o texto dentro da barra
             width=0.7,
             marker=dict(color=mapeamento_cores[intervalo])
         ))
