@@ -300,8 +300,9 @@ else:
                                 title = f'PROFICIÊNCIA MÉDIA - 2º ANO - REDE {(rede).upper()}'
                                 )
 
+    
     #fig_proficiencia_edicao_2_ce.update_layout(yaxis_title = 'Proficiência Média')
-    fig_proficiencia_edicao_2_ce.update_layout(xaxis=dict(type='category', categoryorder='category ascending'))  # Definir o tipo de eixo como categoria
+    fig_proficiencia_edicao_2_ce.update_layout(xaxis=dict(type='category', categoryorder='category ascending', title_text=''))  # Definir o tipo de eixo como categoria
     #proficiencia_edicao_2_ce.update_xaxes(showgrid=False, showline=True, linecolor='lightgray')
     #proficiencia_edicao_2_ce.update_yaxes(showgrid=True, showline=True, linecolor='lightgray')
     fig_proficiencia_edicao_2_ce.update_traces(textposition='bottom center', line=dict(color='#548235'))  # Ajustar a posição dos rótulos de dados
@@ -323,7 +324,7 @@ else:
                                 title = f'PARTICIPAÇÃO - 2º ANO - REDE {(rede).upper()}'
                                 )
 
-    fig_participacao_edicao_2_ce.update_layout(xaxis=dict(type='category', categoryorder='category ascending'))  # Definir o tipo de eixo como categoria
+    fig_participacao_edicao_2_ce.update_layout(xaxis=dict(type='category', categoryorder='category ascending', title_text=''))  # Definir o tipo de eixo como categoria
     # fig_participacao_edicao_2_ce.update_xaxes(showgrid=False, showline=True, linecolor='lightgray')
     # fig_participacao_edicao_2_ce.update_yaxes(showgrid=True, showline=True, linecolor='lightgray')
     fig_participacao_edicao_2_ce.update_traces(textposition='bottom center', line=dict(color='#548235'))  # Ajustar a posição dos rótulos de dados
@@ -349,8 +350,20 @@ else:
     #proficiencia_edicao_2_ce['Proficiência Média Formatada'] = proficiencia_edicao_2_ce['Proficiência Média'].apply(lambda x: locale.format('%.1f', x))
     proficiencia_edicao_2_ce['Proficiência Média Formatada'] = proficiencia_edicao_2_ce['Proficiência Média'].apply(lambda x: f'{x:.1f}'.replace('.', ','))
 
-
     fig_proficiencia_edicao_2_ce_bar = go.Figure()
+
+    # Número máximo e mínimo de edições que você deseja exibir com a largura adaptável
+    numero_maximo_edicoes = 15  # Variar esse valor sempre que for atualizar o script
+    numero_minimo_edicoes = 1
+
+    # Calculando o número de edições exibidas no gráfico
+    num_edicoes_exibidas = len(proficiencia_edicao_2_ce['Edição'].unique())
+
+    # Calculando a largura das barras com base no número de edições
+    # Utilizando uma regra de três para ajustar o valor do width
+    width_maximo = 0.8
+    width_minimo = 0.1
+    width_adaptavel = width_minimo + (width_maximo - width_minimo) * ((num_edicoes_exibidas - numero_minimo_edicoes) / (numero_maximo_edicoes - numero_minimo_edicoes))
 
     for i, intervalo in enumerate(intervalos_2_ano[:-1]):
         data = proficiencia_edicao_2_ce[proficiencia_edicao_2_ce['Intervalo'] == i]
@@ -360,7 +373,8 @@ else:
             marker=dict(color=cores[i]),
             name=padrao_map[i],
             text=data['Proficiência Média Formatada'],
-            textposition='outside'
+            textposition='outside',
+            width=width_adaptavel  # Utilizando o width adaptável calculado
         ))
 
     fig_proficiencia_edicao_2_ce_bar.update_layout(
@@ -401,6 +415,22 @@ else:
     # Criação da figura
     fig_barras_empilhadas_2_ce = go.Figure()
 
+    # Número máximo de edições que você deseja exibir sem aplicar auto scale
+    numero_maximo_edicoes = 15
+
+    # Verificando quantas edições serão exibidas no gráfico
+    num_edicoes_exibidas = len(dados_barras_empilhadas_2_ce['Edição'])
+
+    # Definindo a altura mínima e máxima do gráfico
+    altura_minima = 250
+    altura_maxima = 675
+
+    # Calculando a altura ideal do gráfico com base no número de edições exibidas
+    altura_ideal = altura_minima + (altura_maxima - altura_minima) * (num_edicoes_exibidas / numero_maximo_edicoes)
+
+    # Limitando a altura do gráfico entre a altura mínima e máxima
+    altura_final = max(altura_minima, min(altura_ideal, altura_maxima))
+
     # Usando um loop for para iterar e gerar cada barra
     for intervalo in intervalos_2_ano:
             fig_barras_empilhadas_2_ce.add_trace(go.Bar(
@@ -418,11 +448,11 @@ else:
     fig_barras_empilhadas_2_ce.update_layout(
         barmode='stack',
         title=f'DISTRIBUIÇÃO POR PADRÃO DE DESEMPENHO - 2º ANO - REDE {(rede).upper()}',
-        xaxis_title='Percentual',
-        yaxis_title='Edição',
+        xaxis_title='', # Percentual
+        yaxis_title='', # Edição
         showlegend=True,
         xaxis=dict(range=[0, 100],  showticklabels = False),
-        height=675,
+        height=altura_final,
         bargap=0.1 # ajuste de espaçamento das barras 
         #margin=dict(l=300)  # Ajuste a margem esquerda conforme necessário
     )
@@ -450,7 +480,7 @@ fig_proficiencia_edicao_5_ce = px.line(proficiencia_edicao_5_ce,
                             )
 
 #fig_proficiencia_edicao_5_ce.update_layout(yaxis_title = 'Proficiência Média')
-fig_proficiencia_edicao_5_ce.update_layout(xaxis=dict(type='category', categoryorder='category ascending'))  # Definir o tipo de eixo como categoria
+fig_proficiencia_edicao_5_ce.update_layout(xaxis=dict(type='category', categoryorder='category ascending', title_text=''))  # Definir o tipo de eixo como categoria
 #proficiencia_edicao_5_ce.update_xaxes(showgrid=False, showline=True, linecolor='lightgray')
 #proficiencia_edicao_5_ce.update_yaxes(showgrid=True, showline=True, linecolor='lightgray')
 fig_proficiencia_edicao_5_ce.update_traces(textposition='bottom center', line=dict(color='#548235'))  # Ajustar a posição dos rótulos de dados
@@ -472,7 +502,7 @@ fig_participacao_edicao_5_ce = px.line(dados_linhas_participação_5_ce,
                             title = f'PARTICIPAÇÃO - 5º ANO - REDE {(rede).upper()}'
                             )
 
-fig_participacao_edicao_5_ce.update_layout(xaxis=dict(type='category', categoryorder='category ascending'))  # Definir o tipo de eixo como categoria
+fig_participacao_edicao_5_ce.update_layout(xaxis=dict(type='category', categoryorder='category ascending', title_text=''))  # Definir o tipo de eixo como categoria
 # fig_participacao_edicao_5_ce.update_xaxes(showgrid=False, showline=True, linecolor='lightgray')
 # fig_participacao_edicao_5_ce.update_yaxes(showgrid=True, showline=True, linecolor='lightgray')
 fig_participacao_edicao_5_ce.update_traces(textposition='bottom center', line=dict(color='#548235'))  # Ajustar a posição dos rótulos de dados
@@ -502,6 +532,19 @@ if componente == 'Língua Portuguesa': # >>>>>> LÍNGUA PORTUGUESA
 
     fig_proficiencia_edicao_5_ce_bar = go.Figure()
 
+    # Número máximo e mínimo de edições que você deseja exibir com a largura adaptável
+    numero_maximo_edicoes = 15  # Variar esse valor sempre que for atualizar o script
+    numero_minimo_edicoes = 1
+
+    # Calculando o número de edições exibidas no gráfico
+    num_edicoes_exibidas = len(proficiencia_edicao_5_ce['Edição'].unique())
+
+    # Calculando a largura das barras com base no número de edições
+    # Utilizando uma regra de três para ajustar o valor do width
+    width_maximo = 0.8
+    width_minimo = 0.1
+    width_adaptavel = width_minimo + (width_maximo - width_minimo) * ((num_edicoes_exibidas - numero_minimo_edicoes) / (numero_maximo_edicoes - numero_minimo_edicoes))
+
     for i, intervalo in enumerate(intervalos_5_ano_lp[:-1]):
         data = proficiencia_edicao_5_ce[proficiencia_edicao_5_ce['Intervalo'] == i]
         fig_proficiencia_edicao_5_ce_bar.add_trace(go.Bar(
@@ -510,7 +553,8 @@ if componente == 'Língua Portuguesa': # >>>>>> LÍNGUA PORTUGUESA
             marker=dict(color=cores[i]),
             name=padrao_map[i],
             text=data['Proficiência Média Formatada'],
-            textposition='outside'
+            textposition='outside',
+            width=width_adaptavel  # Utilizando o width adaptável calculado
         ))
 
     fig_proficiencia_edicao_5_ce_bar.update_layout(
@@ -543,6 +587,19 @@ else: # >>>>>> MATEMÁTICA
 
     fig_proficiencia_edicao_5_ce_bar = go.Figure()
 
+    # Número máximo e mínimo de edições que você deseja exibir com a largura adaptável
+    numero_maximo_edicoes = 15  # Variar esse valor sempre que for atualizar o script
+    numero_minimo_edicoes = 1
+
+    # Calculando o número de edições exibidas no gráfico
+    num_edicoes_exibidas = len(proficiencia_edicao_5_ce['Edição'].unique())
+
+    # Calculando a largura das barras com base no número de edições
+    # Utilizando uma regra de três para ajustar o valor do width
+    width_maximo = 0.8 # (ocupar mais espaço da plotagem)
+    width_minimo = 0.1 
+    width_adaptavel = width_minimo + (width_maximo - width_minimo) * ((num_edicoes_exibidas - numero_minimo_edicoes) / (numero_maximo_edicoes - numero_minimo_edicoes))
+
     for i, intervalo in enumerate(intervalos_5_ano_mt[:-1]):
         data = proficiencia_edicao_5_ce[proficiencia_edicao_5_ce['Intervalo'] == i]
         fig_proficiencia_edicao_5_ce_bar.add_trace(go.Bar(
@@ -551,7 +608,8 @@ else: # >>>>>> MATEMÁTICA
             marker=dict(color=cores[i]),
             name=padrao_map[i],
             text=data['Proficiência Média Formatada'],
-            textposition='outside'
+            textposition='outside',
+            width=width_adaptavel  # Utilizando o width adaptável calculado
         ))
 
     fig_proficiencia_edicao_5_ce_bar.update_layout(
@@ -559,9 +617,6 @@ else: # >>>>>> MATEMÁTICA
         yaxis=dict(range=[150, 250]),
         title=f'PADRÃO DE DESEMPENHO - 5º ANO - REDE {(rede).upper()} - {(componente).upper()}'
     )
-
-    # fig_proficiencia_edicao_5_ce_bar.update_traces(marker=dict(line=dict(color='rgb(8,8,8)',width=1.5)))
-    # fig_proficiencia_edicao_5_ce_bar.show()
 
 
 ### Gráfico de BARRAS EMPILHADAS para padrões de desempenho percentual
@@ -593,6 +648,22 @@ mapeamento_cores = dict(zip(intervalos_5_ano, cores))
 # Criação da figura
 fig_barras_empilhadas_5_ce = go.Figure()
 
+# Número máximo de edições que você deseja exibir sem aplicar auto scale
+numero_maximo_edicoes = 15
+
+# Verificando quantas edições serão exibidas no gráfico
+num_edicoes_exibidas = len(dados_barras_empilhadas_5_ce['Edição'])
+
+# Definindo a altura mínima e máxima do gráfico
+altura_minima = 240
+altura_maxima = 675
+
+# Calculando a altura ideal do gráfico com base no número de edições exibidas
+altura_ideal = altura_minima + (altura_maxima - altura_minima) * (num_edicoes_exibidas / numero_maximo_edicoes)
+
+# Limitando a altura do gráfico entre a altura mínima e máxima
+altura_final = max(altura_minima, min(altura_ideal, altura_maxima))
+
 # Usando um loop for para iterar e gerar cada barra
 for intervalo in intervalos_5_ano:
         fig_barras_empilhadas_5_ce.add_trace(go.Bar(
@@ -610,14 +681,15 @@ for intervalo in intervalos_5_ano:
 fig_barras_empilhadas_5_ce.update_layout(
     barmode='stack',
     title=f'DISTRIBUIÇÃO POR PADRÃO DE DESEMPENHO - 5º ANO - REDE {(rede).upper()} - {(componente).upper()}',
-    xaxis_title='Percentual',
-    yaxis_title='Edição',
+    xaxis_title='', # Percentual
+    yaxis_title='', # Edição
     showlegend=True,
     xaxis=dict(range=[0, 100],  showticklabels = False),
-    height=675,
+    height=altura_final,  # Usando a altura final calculada com base no número de edições exibidas
     bargap=0.1 # ajuste de espaçamento das barras 
     #margin=dict(l=300)  # Ajuste a margem esquerda conforme necessário
 )
+
 #fig_barras_empilhadas_5_ce.update_layout(width=1400)
 
 ## ------------------------ 9º ANO ------------------------- ##
@@ -641,7 +713,7 @@ fig_proficiencia_edicao_9_ce = px.line(proficiencia_edicao_9_ce,
                             )
 
 #fig_proficiencia_edicao_9_ce.update_layout(yaxis_title = 'Proficiência Média')
-fig_proficiencia_edicao_9_ce.update_layout(xaxis=dict(type='category', categoryorder='category ascending'))  # Definir o tipo de eixo como categoria
+fig_proficiencia_edicao_9_ce.update_layout(xaxis=dict(type='category', categoryorder='category ascending', title_text=''))  # Definir o tipo de eixo como categoria
 #proficiencia_edicao_9_ce.update_xaxes(showgrid=False, showline=True, linecolor='lightgray')
 #proficiencia_edicao_9_ce.update_yaxes(showgrid=True, showline=True, linecolor='lightgray')
 fig_proficiencia_edicao_9_ce.update_traces(textposition='bottom center', line=dict(color='#548235'))  # Ajustar a posição dos rótulos de dados
@@ -663,7 +735,7 @@ fig_participacao_edicao_9_ce = px.line(dados_linhas_participação_9_ce,
                             title = f'PARTICIPAÇÃO - 9º ANO - REDE {(rede).upper()}'
                             )
 
-fig_participacao_edicao_9_ce.update_layout(xaxis=dict(type='category', categoryorder='category ascending'))  # Definir o tipo de eixo como categoria
+fig_participacao_edicao_9_ce.update_layout(xaxis=dict(type='category', categoryorder='category ascending', title_text=''))  # Definir o tipo de eixo como categoria
 # fig_participacao_edicao_9_ce.update_xaxes(showgrid=False, showline=True, linecolor='lightgray')
 # fig_participacao_edicao_9_ce.update_yaxes(showgrid=True, showline=True, linecolor='lightgray')
 fig_participacao_edicao_9_ce.update_traces(textposition='bottom center', line=dict(color='#548235'))  # Ajustar a posição dos rótulos de dados
@@ -692,6 +764,19 @@ if componente == 'Língua Portuguesa': # >>>>>> LÍNGUA PORTUGUESA
     
     fig_proficiencia_edicao_9_ce_bar = go.Figure()
 
+    # Número máximo e mínimo de edições que você deseja exibir com a largura adaptável
+    numero_maximo_edicoes = 15  # Variar esse valor sempre que for atualizar o script
+    numero_minimo_edicoes = 1
+
+    # Calculando o número de edições exibidas no gráfico
+    num_edicoes_exibidas = len(proficiencia_edicao_9_ce['Edição'].unique())
+
+    # Calculando a largura das barras com base no número de edições
+    # Utilizando uma regra de três para ajustar o valor do width
+    width_maximo = 0.8
+    width_minimo = 0.1
+    width_adaptavel = width_minimo + (width_maximo - width_minimo) * ((num_edicoes_exibidas - numero_minimo_edicoes) / (numero_maximo_edicoes - numero_minimo_edicoes))
+
     for i, intervalo in enumerate(intervalos_9_ano_lp[:-1]):
         data = proficiencia_edicao_9_ce[proficiencia_edicao_9_ce['Intervalo'] == i]
         fig_proficiencia_edicao_9_ce_bar.add_trace(go.Bar(
@@ -700,7 +785,8 @@ if componente == 'Língua Portuguesa': # >>>>>> LÍNGUA PORTUGUESA
             marker=dict(color=cores[i]),
             name=padrao_map[i],
             text=data['Proficiência Média Formatada'],
-            textposition='outside'
+            textposition='outside',
+            width = width_adaptavel
         ))
 
     fig_proficiencia_edicao_9_ce_bar.update_layout(
@@ -732,8 +818,20 @@ else: # >>>>>> MATEMÁTICA
     # proficiencia_edicao_9_ce['Proficiência Média Formatada'] = proficiencia_edicao_9_ce['Proficiência Média'].apply(lambda x: locale.format('%.1f', x))
     proficiencia_edicao_9_ce['Proficiência Média Formatada'] = proficiencia_edicao_9_ce['Proficiência Média'].apply(lambda x: f'{x:.1f}'.replace('.',','))
 
-
     fig_proficiencia_edicao_9_ce_bar = go.Figure()
+
+    # Número máximo e mínimo de edições que você deseja exibir com a largura adaptável
+    numero_maximo_edicoes = 15  # Variar esse valor sempre que for atualizar o script
+    numero_minimo_edicoes = 1
+
+    # Calculando o número de edições exibidas no gráfico
+    num_edicoes_exibidas = len(proficiencia_edicao_9_ce['Edição'].unique())
+
+    # Calculando a largura das barras com base no número de edições
+    # Utilizando uma regra de três para ajustar o valor do width
+    width_maximo = 0.8
+    width_minimo = 0.1
+    width_adaptavel = width_minimo + (width_maximo - width_minimo) * ((num_edicoes_exibidas - numero_minimo_edicoes) / (numero_maximo_edicoes - numero_minimo_edicoes))
 
     for i, intervalo in enumerate(intervalos_9_ano_mt[:-1]):
         data = proficiencia_edicao_9_ce[proficiencia_edicao_9_ce['Intervalo'] == i]
@@ -743,13 +841,15 @@ else: # >>>>>> MATEMÁTICA
             marker=dict(color=cores[i]),
             name=padrao_map[i],
             text=data['Proficiência Média Formatada'],
-            textposition='outside'
+            textposition='outside',
+            width = width_adaptavel
         ))
 
     fig_proficiencia_edicao_9_ce_bar.update_layout(
         xaxis=dict(type='category', categoryorder='category ascending'),
         yaxis=dict(range=[150, 300]),
-        title=f'PADRÃO DE DESEMPENHO - 9º ANO - REDE {(rede).upper()} - {(componente).upper()}'
+        title=f'PADRÃO DE DESEMPENHO - 9º ANO - REDE {(rede).upper()} - {(componente).upper()}',
+        showlegend = True   # Usar esse parametro sempre que as barras forem de um só tipo, forçar a legenda
     )
 
     # fig_proficiencia_edicao_9_ce_bar.update_traces(marker=dict(line=dict(color='rgb(8,8,8)',width=1.5)))
@@ -784,6 +884,22 @@ mapeamento_cores = dict(zip(intervalos_9_ano, cores))
 # Criação da figura
 fig_barras_empilhadas_9_ce = go.Figure()
 
+# Número máximo de edições que você deseja exibir sem aplicar auto scale
+numero_maximo_edicoes = 15
+
+# Verificando quantas edições serão exibidas no gráfico
+num_edicoes_exibidas = len(dados_barras_empilhadas_9_ce['Edição'])
+
+# Definindo a altura mínima e máxima do gráfico
+altura_minima = 240
+altura_maxima = 675
+
+# Calculando a altura ideal do gráfico com base no número de edições exibidas
+altura_ideal = altura_minima + (altura_maxima - altura_minima) * (num_edicoes_exibidas / numero_maximo_edicoes)
+
+# Limitando a altura do gráfico entre a altura mínima e máxima
+altura_final = max(altura_minima, min(altura_ideal, altura_maxima))
+
 # Usando um loop for para iterar e gerar cada barra
 for intervalo in intervalos_9_ano:
         fig_barras_empilhadas_9_ce.add_trace(go.Bar(
@@ -801,11 +917,11 @@ for intervalo in intervalos_9_ano:
 fig_barras_empilhadas_9_ce.update_layout(
     barmode='stack',
     title=f'DISTRIBUIÇÃO POR PADRÃO DE DESEMPENHO - 9º ANO - REDE {(rede).upper()} - {(componente).upper()}', 
-    xaxis_title='Percentual',
-    yaxis_title='Edição',
+    xaxis_title='', # Percentual
+    yaxis_title='', # Edição
     showlegend=True,
     xaxis=dict(range=[0, 100],  showticklabels = False),
-    height=675,
+    height=altura_final,
     bargap=0.1 # ajuste de espaçamento das barras 
     #margin=dict(l=300)  # Ajuste a margem esquerda conforme necessário
 )
@@ -824,7 +940,6 @@ else:
     #proficiencia_edicao_3_ce['Proficiência Média Formatada'] = proficiencia_edicao_3_ce['Proficiência Média'].apply(lambda x: locale.format('%.1f', x))
     proficiencia_edicao_3_ce['Proficiência Média Formatada'] = proficiencia_edicao_3_ce['Proficiência Média'].apply(lambda x: f'{x:.1f}'.replace('.',','))
 
-
     fig_proficiencia_edicao_3_ce = px.line(proficiencia_edicao_3_ce,
                                 x = 'Edição',
                                 y = 'Proficiência Média',
@@ -837,7 +952,7 @@ else:
                                 )
 
     #fig_proficiencia_edicao_3_ce.update_layout(yaxis_title = 'Proficiência Média')
-    fig_proficiencia_edicao_3_ce.update_layout(xaxis=dict(type='category', categoryorder='category ascending'))  # Definir o tipo de eixo como categoria
+    fig_proficiencia_edicao_3_ce.update_layout(xaxis=dict(type='category', categoryorder='category ascending', title_text=''))  # Definir o tipo de eixo como categoria
     #proficiencia_edicao_3_ce.update_xaxes(showgrid=False, showline=True, linecolor='lightgray')
     #proficiencia_edicao_3_ce.update_yaxes(showgrid=True, showline=True, linecolor='lightgray')
     fig_proficiencia_edicao_3_ce.update_traces(textposition='bottom center', line=dict(color='#548235'))  # Ajustar a posição dos rótulos de dados
@@ -859,7 +974,7 @@ else:
                                 title = f'PARTICIPAÇÃO - 3ª SÉRIE - REDE {(rede).upper()}'
                                 )
 
-    fig_participacao_edicao_3_ce.update_layout(xaxis=dict(type='category', categoryorder='category ascending'))  # Definir o tipo de eixo como categoria
+    fig_participacao_edicao_3_ce.update_layout(xaxis=dict(type='category', categoryorder='category ascending', title_text=''))  # Definir o tipo de eixo como categoria
     # fig_participacao_edicao_3_ce.update_xaxes(showgrid=False, showline=True, linecolor='lightgray')
     # fig_participacao_edicao_3_ce.update_yaxes(showgrid=True, showline=True, linecolor='lightgray')
     fig_participacao_edicao_3_ce.update_traces(textposition='bottom center', line=dict(color='#548235'))  # Ajustar a posição dos rótulos de dados
@@ -888,6 +1003,19 @@ else:
 
         fig_proficiencia_edicao_3_ce_bar = go.Figure()
 
+        # Número máximo e mínimo de edições que você deseja exibir com a largura adaptável
+        numero_maximo_edicoes = 15  # Variar esse valor sempre que for atualizar o script
+        numero_minimo_edicoes = 1
+
+        # Calculando o número de edições exibidas no gráfico
+        num_edicoes_exibidas = len(proficiencia_edicao_3_ce['Edição'].unique())
+
+        # Calculando a largura das barras com base no número de edições
+        # Utilizando uma regra de três para ajustar o valor do width
+        width_maximo = 0.8
+        width_minimo = 0.1
+        width_adaptavel = width_minimo + (width_maximo - width_minimo) * ((num_edicoes_exibidas - numero_minimo_edicoes) / (numero_maximo_edicoes - numero_minimo_edicoes))
+
         for i, intervalo in enumerate(intervalos_3_ano_lp[:-1]):
             data = proficiencia_edicao_3_ce[proficiencia_edicao_3_ce['Intervalo'] == i]
             fig_proficiencia_edicao_3_ce_bar.add_trace(go.Bar(
@@ -896,7 +1024,8 @@ else:
                 marker=dict(color=cores[i]),
                 name=padrao_map[i],
                 text=data['Proficiência Média Formatada'],
-                textposition='outside'
+                textposition='outside',
+                width = width_adaptavel
             ))
 
         fig_proficiencia_edicao_3_ce_bar.update_layout(
@@ -930,6 +1059,19 @@ else:
         
         fig_proficiencia_edicao_3_ce_bar = go.Figure()
 
+        # Número máximo e mínimo de edições que você deseja exibir com a largura adaptável
+        numero_maximo_edicoes = 15  # Variar esse valor sempre que for atualizar o script
+        numero_minimo_edicoes = 1
+
+        # Calculando o número de edições exibidas no gráfico
+        num_edicoes_exibidas = len(proficiencia_edicao_3_ce['Edição'].unique())
+
+        # Calculando a largura das barras com base no número de edições
+        # Utilizando uma regra de três para ajustar o valor do width
+        width_maximo = 0.8
+        width_minimo = 0.1
+        width_adaptavel = width_minimo + (width_maximo - width_minimo) * ((num_edicoes_exibidas - numero_minimo_edicoes) / (numero_maximo_edicoes - numero_minimo_edicoes))
+
         for i, intervalo in enumerate(intervalos_3_ano_mt[:-1]):
             data = proficiencia_edicao_3_ce[proficiencia_edicao_3_ce['Intervalo'] == i]
             fig_proficiencia_edicao_3_ce_bar.add_trace(go.Bar(
@@ -938,7 +1080,8 @@ else:
                 marker=dict(color=cores[i]),
                 name=padrao_map[i],
                 text=data['Proficiência Média Formatada'],
-                textposition='outside'
+                textposition='outside',
+                width = width_adaptavel
             ))
 
         fig_proficiencia_edicao_3_ce_bar.update_layout(
@@ -979,6 +1122,22 @@ else:
     # Criação da figura
     fig_barras_empilhadas_3_ce = go.Figure()
 
+    # Número máximo de edições que você deseja exibir sem aplicar auto scale
+    numero_maximo_edicoes = 15
+
+    # Verificando quantas edições serão exibidas no gráfico
+    num_edicoes_exibidas = len(dados_barras_empilhadas_3_ce['Edição'])
+
+    # Definindo a altura mínima e máxima do gráfico
+    altura_minima = 240
+    altura_maxima = 675
+
+    # Calculando a altura ideal do gráfico com base no número de edições exibidas
+    altura_ideal = altura_minima + (altura_maxima - altura_minima) * (num_edicoes_exibidas / numero_maximo_edicoes)
+
+    # Limitando a altura do gráfico entre a altura mínima e máxima
+    altura_final = max(altura_minima, min(altura_ideal, altura_maxima))
+
     # Usando um loop for para iterar e gerar cada barra
     for intervalo in intervalos_3_ano:
             fig_barras_empilhadas_3_ce.add_trace(go.Bar(
@@ -996,11 +1155,11 @@ else:
     fig_barras_empilhadas_3_ce.update_layout(
         barmode='stack',
         title=f'DISTRIBUIÇÃO POR PADRÃO DE DESEMPENHO - 3ª SÉRIE - REDE {(rede).upper()} - {(componente).upper()}',
-        xaxis_title='Percentual',
-        yaxis_title='Edição',
+        xaxis_title='', # Percentual
+        yaxis_title='', # Edição
         showlegend=True,
         xaxis=dict(range=[0, 100],  showticklabels = False),
-        height=675,
+        height=altura_final,
         bargap=0.1 # ajuste de espaçamento das barras 
         #margin=dict(l=300)  # Ajuste a margem esquerda conforme necessário
     )
@@ -1206,6 +1365,5 @@ st.markdown("""
     - LinkedIn: [José Alves Ferreira Neto](https://www.linkedin.com/in/jos%C3%A9-alves-ferreira-neto-1bbbb8192/)  
     - E-mail: jose.alvesfn@gmail.com
 """)
-
 
 
