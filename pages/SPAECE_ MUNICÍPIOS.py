@@ -102,7 +102,7 @@ def mensagem_sucesso():
 # ------------------------ SOLICITACOES / FILTRAGENS ------------------------ ##
 
 # Carregar o arquivo para MUN em CSV do GitHub
-url_mun = 'https://raw.githubusercontent.com/jose-alves-fn/jose-alves-fn-tabelas_spaece_memoria_2008_2022/main/memoria_mun_todas_etapas_v2.csv'
+url_mun = 'https://raw.githubusercontent.com/jose-alves-fn/jose-alves-fn-tabelas_spaece_memoria_2008_2022/main/memoria_mun_todas_etapas_v4.csv'
 dados_mun = pd.read_csv(url_mun)
 
 ## Titulo do sidebar
