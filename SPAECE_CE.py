@@ -144,7 +144,7 @@ rede = st.sidebar.selectbox('Rede', redes)
 
 # Filtragem de componente
 componentes = ['Língua Portuguesa', 'Matemática']
-componente = st.sidebar.selectbox('Componente ', componentes)  # Acresci um ' ' ao final do albel, para evitar que a seleção do filtro seja carregada nas demais páginas
+componente = st.sidebar.selectbox('Componente ', componentes)  # Acresci um ' ' ao final do label, para evitar que a seleção do filtro seja carregada nas demais páginas
 
 # Filtragem das edições
 st.sidebar.markdown('<span style="font-size: 13.7px;">Desmarque para escolher uma ou mais opções</span>', unsafe_allow_html=True)
