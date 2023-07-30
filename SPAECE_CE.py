@@ -148,7 +148,7 @@ componente = st.sidebar.selectbox('Componente ', componentes)  # Acresci um ' ' 
 
 # Filtragem das edições
 st.sidebar.markdown('<span style="font-size: 13.7px;">Desmarque para escolher uma ou mais opções</span>', unsafe_allow_html=True)
-todos_as_edicoes = st.sidebar.checkbox('Todas as edições ', value = True) # Acresci um ' ' ao final do albel, para evitar que a seleção do filtro seja carregada nas demais páginas
+todos_as_edicoes = st.sidebar.checkbox('Todas as edições ', value = True) # Acresci um ' ' ao final do label, para evitar que a seleção do filtro seja carregada nas demais páginas
 if todos_as_edicoes: 
     edicao = dados_ce['Edição'].unique()
 else:
